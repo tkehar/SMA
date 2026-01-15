@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="https://aframe.io/releases/1.4.0/aframe.min.js"></script>
+    <script src="https://unpkg.com/aframe-look-at-component@0.8.0/dist/aframe-look-at-component.min.js"></script>
+    <script src="https://unpkg.com/aframe-rounded@1.0.3/dist/aframe-rounded-component.min.js"></script>
+    <script>
+        AFRAME.registerComponent('hover-info', {
+        schema: { 
+        id: {type: 'string', default: ''},
+        title: {type: 'string', default: ''} 
+        },
+        init: function () {
+        const el = this.el;
+        
+        el.addEventListener('mouseenter', () => {
+            const worldTooltip = document.querySelector('#world-tooltip');
+            const tooltipText = document.querySelector('#tooltip-text');
+            const tooltipBg = document.querySelector('#tooltip-bg');
+            let displayTitle = "";
+
+            if (this.data.id && typeof ARCHIVE_DATABASE !== 'undefined') {
+                const itemData = ARCHIVE_DATABASE[this.data.id];
+                if (itemData) displayTitle = itemData.title;
+            } else if (this.data.title) {
+                displayTitle = this.data.title;
+            }
+
+            if (displayTitle && worldTooltip && tooltipText && tooltipBg) {
+                // 1. Set the text value
+                tooltipText.setAttribute('value', displayTitle);
+                
+                // 2. DYNAMIC SIZING: Calculate width based on character count
+                // A multiplier of 0.1 to 0.12 usually fits standard fonts well
+                const estimatedWidth = Math.max(0.5, displayTitle.length * 0.1);
+                
+                // Update the background size
+                tooltipBg.setAttribute('width', estimatedWidth);
+                
+                // 3. CENTERING: a-rounded expands from the bottom-left. 
+                // We must offset its X position by half its width to keep it centered under the text.
+                tooltipBg.setAttribute('position', {
+                    x: -(estimatedWidth / 2), 
+                    y: 0, 
+                    z: 0
+                });
+
+                // 4. Position the whole tooltip above the target icon
+                const pos = el.getAttribute('position');
+                worldTooltip.setAttribute('position', {
+                    x: pos.x, 
+                    y: pos.y + 0.4, 
+                    z: pos.z
+                });
+                
+                // Force look-at refresh and show
+                if (worldTooltip.components['look-at']) worldTooltip.components['look-at'].update();
+                worldTooltip.setAttribute('visible', true);
+            }
+        });
+
+        el.addEventListener('mouseleave', () => {
+            const worldTooltip = document.querySelector('#world-tooltip');
+            if (worldTooltip) worldTooltip.setAttribute('visible', false);
+        });
+             }
+        });
+    </script>
+
+    <style>
+        /* Landing Page Overlay *//* Updated Landing Page Overlay */
+            #landing-overlay {
+             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+             background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.9)), url('/Users/talhakehar/Desktop/Sabeen Mahmud Archive Folder/Assets/Videos/Under the Amaltaas Tree-17.09.25.mp4');
+             background-size: cover;
+            z-index: 999;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            color: white; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+         /* Container for the two boxes */
+            .content-container {
+            display: flex;
+            flex-direction: row;
+            gap: 30px;
+            max-width: 900px;
+            margin: 20px;
+}
+
+        /* Styling for individual boxes */
+            .info-box {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 30px;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            flex: 1; /* Makes them equal width */
+}
+
+            .info-box h3 {
+            color: #ffffff;
+            margin-top: 0;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+}
+
+            .start-btn { 
+            padding: 15px 50px; 
+            background: #f1c40f; 
+            color: black; 
+            cursor: pointer; 
+            border: none; 
+            border-radius: 30px;
+            font-weight: bold; 
+            font-size: 1.2rem;
+            margin-top: 30px;
+            transition: transform 0.2s;
+}
+
+.start-btn:hover { transform: scale(1.05); }
+
+/* Responsive: Stack columns on mobile */
+@media (max-width: 768px) {
+    .content-container { flex-direction: column; }
+}
+    </style>
+</head>
+<body>
+
+    <div id="landing-overlay">
+    <h1 style="font-size: 3rem; margin-bottom: 0;">Under the Amaltaas Tree</h1>
+    <h2 style="font-weight: 300; margin-top: 5px; opacity: 0.8;">Remembering Sabeen Mahmud (1974 - 2015)</h2> 
+
+    <div class="content-container">
+        <div class="info-box">
+            <h3>About the Project</h3>
+            <p>
+                Sabeen was Pakistani human rights activist, entrepreneur, and designer.
+                A digital memory project celebrating the life and legacy of Sabeen Mahmud.
+                She stood for community, culture and open dialogue and with these principles 
+                founded The Second Floor (T2F), a coffee house and community space.
+            </p>
+            <p>    
+                In 2015 after hosting a panel titled “Unsilencing Balochistan” Sabeen was shot 
+                at a signal as she was leaving the event.
+            </p>
+            <p>
+                This archive allows viewers to get to get to know Sabeen and her work through virtual reconstructions 
+                of spaces she inhabited. Explore her most personal spaces to discover the stories behind 
+                the objects she cherished and memories from her loved ones she loved.
+            </p>
+        </div>
+
+        <div class="info-box">
+            <h3>How to Explore</h3>
+            <ul style="line-height: 1.6; padding-left: 20px;">
+                <li><strong>Look Around:</strong> Click and drag your mouse.</li>
+                <li><strong>Interact:</strong> Hover over icons to see titles. Click to open details.</li>
+                <li><strong>Navigation:</strong> Look for the 'Exit' icons to move between rooms.</li>
+            </ul>
+        </div>
+    </div>
+
+    <button class="start-btn" onclick="startExperience()">ENTER ARCHIVE</button>
+</div>
+
+    <a-scene>
+        <a-assets>
+            <video id="intro-video" src="Assets/Videos/Under the Amaltaas Tree-17.09.25.mp4" rotation="0 90 0"autoplay="false" loop="true" crossorigin="anonymous"></video>
+            <img id="bg-office" src="Assets/Models/Sabeens_office.webp">
+            <img id="bg-bedroom" src="Assets/Models/Sabeens_bedroom.webp">
+            <img id="bg-Baby_Box" src="Assets/Models/Baby_Box.webp">
+            <img id="bg-T2F_Gallery" src="Assets/Models/T2F Gallery.webp">
+            <img id="bg-T2F_Cafe" src="Assets/Models/T2F_Cafe.webp">
+        </a-assets>
+
+        <a-videosphere id="landing-video" src="#intro-video" visible="true"></a-videosphere>
+
+        <a-entity id="room-bedroom" visible="false">
+            <a-sky src="#bg-bedroom"></a-sky>
+            
+            <a-circle class="clickable" src="Assets/Icons/Audio.png" rotation="0 45 0" position="-3 3 -2.75" radius="0.08" color="#FFFFFF" onclick="interact('plants_mahenaz')" hover-info="id: plants_mahenaz"></a-circle>
+            
+            <a-circle class="clickable" src="Assets/Icons/Audio.png" rotation="0 0 0" position="0 0.5 -2" radius="0.08" color="#FFFFFF" onclick="interact('fun_zahir')" hover-info="id: fun_zahir"></a-circle>
+            
+            <a-circle class="clickable" src="Assets/Icons/Audio.png" rotation="0 -90 0" position="3 3.4 -2" radius="0.08" color="#FFFFFF" onclick="interact('music_sheila')" hover-info="id: music_sheila"></a-circle>
+
+            <a-circle class="clickable" src="Assets/Icons/Audio.png" rotation="0 0 0" position="-0.1 2.4 -3" radius="0.08" color="#FFFFFF" onclick="interact('mother_zahir')" hover-info="id: mother_zahir"></a-circle>
+            
+            <a-circle class="clickable" src="Assets/Icons/Audio.png" rotation="0 0 0" position="-1 2.4 -3" radius="0.08" color="#FFFFFF" onclick="interact('meeting_zak')" hover-info="id: meeting_zak"></a-circle>
+
+            <a-circle class="clickable" src="Assets/Icons/Audio.png" rotation="0 45 0" position="-2 1.2 -0.9" radius="0.08" color="#FFFFFF" onclick="interact('mac_zak')" hover-info="id: mac_zak"></a-circle>
+
+            <a-circle class="clickable" src="Assets/Icons/Audio.png" rotation="0 0 0" position="0.65 2.4 -3" radius="0.08" color="#FFFFFF" onclick="interact('tech_faiz')" hover-info="id: tech_faiz"></a-circle>
+
+            <a-circle class="clickable" src="Assets/Icons/Audio.png" rotation="0 45 0" position="-2 1.5 -3" radius="0.08" color="#FFFFFF" onclick="interact('school_zareena')" hover-info="id: school_zareena"></a-circle>
+
+            <a-circle class="clickable" src="Assets/Icons/Audio.png" rotation="0 180 0" position="-0.5 1.5 2" radius="0.08" color="#FFFFFF" onclick="interact('free_hafza')" hover-info="id: free_hafza"></a-circle>
+
+            <a-circle class="clickable" src="Assets/Icons/Audio.png" rotation="0 0 0" position="-0.3 2.4 -3" radius="0.08" color="#FFFFFF" onclick="interact('mother_salima')" hover-info="id: mother_salima"></a-circle>
+
+            <a-circle class="clickable" src="Assets/Icons/Audio.png" rotation="0 45 0" position="-2 0.75 -3" radius="0.08" color="#FFFFFF" onclick="interact('poem_zak')" hover-info="id: poem_zak"></a-circle>
+            
+            <a-circle class="clickable" src="Assets/Icons/Audio.png" rotation="0 180 0" position="-1 0.75 2" radius="0.08" color="#FFFFFF" onclick="interact('adoption_ayesha')" hover-info="id: adoption_ayesha"></a-circle>
+
+            <a-circle class="clickable" src="Assets/Icons/Audio.png" rotation="0 90 0" position="-2.2 1.2 1" radius="0.08" color="#FFFFFF" onclick="interact('catchphrase_hafza')" hover-info="id: catchphrase_hafza"></a-circle>
+
+            <a-circle class="clickable" src="Assets/Icons/Audio.png" rotation="0 45 0" position="-2 2.1 -3" radius="0.08" color="#FFFFFF" onclick="interact('diana_zareena')" hover-info="id: diana_zareena"></a-circle>
+
+            <a-circle class="clickable" src="Assets/Icons/Audio.png" rotation="0 0 0" position="0.65 2.7 -3" radius="0.08" color="#FFFFFF" onclick="interact('tech_omer')" hover-info="id: tech_omer"></a-circle>
+
+            <a-circle class="clickable" src="Assets/Icons/Audio.png" rotation="0 45 0" position="-2 0.25 -3" radius="0.08" color="#FFFFFF" onclick="interact('kinnaird_zak')" hover-info="id: kinnaird_zak"></a-circle>
+
+            <a-circle class="clickable" src="Assets/Icons/Audio.png" rotation="0 0 0" position="-0.6 2.4 -3" radius="0.08" color="#FFFFFF" onclick="interact('bikes_tallat')" hover-info="id: bikes_tallat"></a-circle>
+
+            <a-circle class="clickable" src="Assets/Icons/Audio.png" rotation="0 0 0" position="0.8 0.5 -2" radius="0.08" color="#FFFFFF" onclick="interact('humour_sheba')" hover-info="id: humour_sheba"></a-circle>
+
+            <a-circle class="clickable" src="Assets/Icons/Audio.png" rotation="0 0 0" position="-0.8 0.5 -2" radius="0.08" color="#FFFFFF" onclick="interact('humour_salima')" hover-info="id: humour_salima"></a-circle>
+
+            <a-circle class="clickable" src="Assets/Icons/Audio.png" rotation="0 0 0" position="1.4 1.5 -3" radius="0.08" color="#FFFFFF" onclick="interact('music_faiz')" hover-info="id: music_faiz"></a-circle>
+
+            <a-circle class="clickable" src="Assets/Icons/Audio.png" rotation="-90 90 0" position="-1.2 0.5 1.2" radius="0.08" color="#FFFFFF" onclick="interact('back_mahenaz')" hover-info="id: back_mahenaz"></a-circle>
+
+            <a-circle class="clickable" src="Assets/Icons/Audio.png" rotation="0 0 0" position="0.25 2.4 -3" radius="0.08" color="#FFFFFF" onclick="interact('sabeen_sabina')" hover-info="id: sabeen_sabina"></a-circle>
+
+            <a-circle class="clickable" src="Assets/Icons/Audio.png" rotation="0 90 0" position="-2.2 1.75 1" radius="0.08" color="#FFFFFF" onclick="interact('open_shirin')" hover-info="id: open_shirin"></a-circle>
+
+            <a-circle class="clickable" src="Assets/Icons/Image.png" rotation="-90 90 0" position="-1.5 0.5 0.6" radius="0.08" color="#FFFFFF" onclick="interact('bedside_table')" hover-info="id: bedside_table"></a-circle>
+
+            <a-circle class="clickable" src="Assets/Icons/Image.png" rotation="0 -90 0" position="3 1 -1" radius="0.08" color="#FFFFFF" onclick="interact('kgs_kameez')" hover-info="id: kgs_kameez"></a-circle>
+
+            <a-circle class="clickable" src="Assets/Icons/Image.png" rotation="0 45 0" position="-2 1 -0.9" radius="0.08" color="#FFFFFF" onclick="interact('macintosh_se')" hover-info="id: macintosh_se"></a-circle>
+
+            <a-circle class="clickable" src="Assets/Icons/Image.png" rotation="0 45 0" position="-2 1 -1.1" radius="0.08" color="#FFFFFF" onclick="interact('sabeens_mac_in_kc')" hover-info="id: sabeens_mac_in_kc"></a-circle>
+
+            <a-circle class="clickable" src="Assets/Icons/Image.png" rotation="0 0 0" position="0.65 2.1 -3" radius="0.08" color="#FFFFFF" onclick="interact('apple_poster')" hover-info="id: apple_poster"></a-circle>
+
+            <a-circle class="clickable" src="Assets/Icons/Image.png" rotation="90 -90 90" position="0.75 4 1.5" radius="0.08" color="#FFFFFF" onclick="interact('ball_marks_on_ceiling')" hover-info="id: ball_marks_on_ceiling"></a-circle>
+
+            <a-circle class="clickable" src="Assets/Icons/Image.png" rotation="0 180 0" position="0.2 3 2" radius="0.08" color="#FFFFFF" onclick="interact('chamakpati_ac')" hover-info="id: chamakpati_ac"></a-circle>
+
+            <a-circle class="clickable" src="Assets/Icons/Image.png" rotation="0 90 0" position="-2.2 1.2 0.1" radius="0.08" color="#FFFFFF" onclick="interact('license Plate')" hover-info="id: license Plate"></a-circle>
+
+            <a-circle class="clickable" src="Assets/Icons/Image.png" rotation="0 45 0" position="-2 2.1 -3" radius="0.08" color="#FFFFFF" onclick="interact('sabeens_shelf')" hover-info="id: sabeens_shelf"></a-circle>
+
+            <a-circle class="clickable" src="Assets/Icons/Image.png" rotation="-90 90 0" position="-1.5 0.75 -0.5" radius="0.08" color="#FFFFFF" onclick="interact('sabeens_desk')" hover-info="id: sabeens_desk"></a-circle>
+
+            <a-circle class="clickable" src="Assets/Icons/Image.png" rotation="0 -90 0" position="3 3.6 -2" radius="0.08" color="#FFFFFF" onclick="interact('jim_morrison_poster')" hover-info="id: jim_morrison_poster"></a-circle>
+
+            <a-circle class="clickable" src="Assets/Icons/Image.png" rotation="0 90 0" position="-1.75 2 -0.4" radius="0.08" color="#FFFFFF" onclick="interact('hugh_laurie_portrait')" hover-info="id: hugh_laurie_portrait"></a-circle>
+
+            <a-circle class="clickable" src="Assets/Icons/Image.png" rotation="0 180 0" position="2 2 2" radius="0.08" color="#FFFFFF" onclick="interact('cupboard')" hover-info="id: cupboard"></a-circle>
+
+            <a-circle class="clickable" src="Assets/Icons/Image.png" rotation="0 0 0" position="2 -0.2 -3" radius="0.08" color="#FFFFFF" onclick="interact('cricket_bats')" hover-info="id: cricket_bats"></a-circle>
+
+            <a-circle class="clickable" src="Assets/Icons/Exit_Room.png" rotation="0 0 0" position="2 1 -2" radius="0.08" color="#FFFFFF" onclick="switchRoom('office')" hover-info="title: Go to Sabeen's Office"></a-circle>
+
+            <a-circle class="clickable" src="Assets/Icons/Exit_Room.png" rotation="0 -90 0" position="3 1 -0.5" radius="0.08" color="#FFFFFF" onclick="switchRoom('babybox')" hover-info="title: Go to Baby Box"></a-circle>
+
+        </a-entity>
+       
+        <a-entity id="room-office" visible="false">
+            <a-sky src="#bg-office"></a-sky>
+            
+            <a-circle class="clickable" src="Assets/Icons/Image.png" rotation="0 90 0" position="-2 1.5 1" radius="0.08" color="#FFFFFF" onclick="interact('artefact_note_fahad_and_marium')" hover-info="id: artefact_note_fahad_and_marium"></a-circle>
+
+            <a-circle class="clickable" src="Assets/Icons/Image.png" rotation="0 90 0" position="-2 1.5 -0.5" radius="0.08" color="#FFFFFF" onclick="interact('artefact_note_goethe')" hover-info="id: artefact_note_goethe"></a-circle>
+
+            <a-circle class="clickable" src="Assets/Icons/Image.png" rotation="0 90 0" position="-2 2 -1" radius="0.08" color="#FFFFFF" onclick="interact('artefact_note_natasha_ejaz')" hover-info="id: artefact_note_natasha_ejaz"></a-circle>
+
+            <a-circle class="clickable" src="Assets/Icons/Image.png" rotation="0 90 0" position="-2 1.5 0" radius="0.08" color="#FFFFFF" onclick="interact('artefact_note_nilofer_halai')" hover-info="id: artefact_note_nilofer_halai"></a-circle>
+
+            <a-circle class="clickable" src="Assets/Icons/Image.png" rotation="0 90 0" position="-2 2.1 1" radius="0.08" color="#FFFFFF" onclick="interact('artefact_note_shanzay_subzwari')" hover-info="id: artefact_note_shanzay_subzwari"></a-circle>
+
+            <a-circle class="clickable" src="Assets/Icons/Image.png" rotation="0 90 0" position="-2 1 0" radius="0.08" color="#FFFFFF" onclick="interact('artefact_sabeens_pinboard')" hover-info="id: artefact_sabeens_pinboard"></a-circle>
+
+            <a-circle class="clickable" src="Assets/Icons/Image.png" rotation="0 180 0" position="0 1.2 4" radius="0.08" color="#FFFFFF" onclick="interact('artefact_white_board')" hover-info="id: artefact_white_board"></a-circle>
+
+            <a-circle class="clickable" src="Assets/Icons/Image.png" rotation="0 180 0" position="0.75 2 4" radius="0.08" color="#FFFFFF" onclick="interact('artefact_whiteboard_urdu')" hover-info="id: artefact_whiteboard_urdu"></a-circle>
+
+            <a-circle class="clickable" src="Assets/Icons/Image.png" rotation="0 180 0" position="-0.6 3 4" radius="0.08" color="#FFFFFF" onclick="interact('artefact_hackathon_sticker')" hover-info="id: artefact_hackathon_sticker"></a-circle>
+
+            <a-circle class="clickable" src="Assets/Icons/Image.png" rotation="0 180 0" position="0 3 4" radius="0.08" color="#FFFFFF" onclick="interact('artefact_dil_phaink')" hover-info="id: artefact_dil_phaink"></a-circle>
+            
+            <a-circle class="clickable" src="Assets/Icons/Image.png" rotation="0 0 0" position="0 1.5 -3.5" radius="0.08" color="#FFFFFF" onclick="interact('artefact_paper_tray')" hover-info="id: artefact_paper_tray"></a-circle>
+            
+            <a-circle class="clickable" src="Assets/Icons/Image.png" rotation="0 0 0" position="-0.5 2.25 -3.5" radius="0.08" color="#FFFFFF" onclick="interact('artefact_last_sticky_note')" hover-info="id: artefact_last_sticky_note"></a-circle>
+
+            <a-circle class="clickable" src="Assets/Icons/Image.png" rotation="0 0 0" position="-0.75 2 -3.5" radius="0.08" color="#FFFFFF" onclick="interact('artefact_magnet_board')" hover-info="id: artefact_magnet_board"></a-circle>
+
+            <a-circle class="clickable" src="Assets/Icons/Image.png" rotation="0 -90 0" position="2.5 2 -1" radius="0.08" color="#FFFFFF" onclick="interact('artefact_billie_holiday_poster')" hover-info="id: artefact_billie_holiday_poster"></a-circle>
+
+            <a-circle class="clickable" src="Assets/Icons/Image.png" rotation="0 -90 0" position="2.2 1 -2" radius="0.08" color="#FFFFFF" onclick="interact('artefact_books')" hover-info="id: artefact_books"></a-circle>
+
+            <a-circle class="clickable" src="Assets/Icons/Image.png" rotation="0 -90 0" position="2.5 2.5 2.5" radius="0.08" color="#FFFFFF" onclick="interact('artefact_steve_jobs_painting')" hover-info="id: artefact_steve_jobs_painting"></a-circle>
+
+            <a-circle class="clickable" src="Assets/Icons/Image.png" rotation="0 -90 0" position="2.5 2 1.8" radius="0.08" color="#FFFFFF" onclick="interact('artefact_steve_jobs_quote')" hover-info="id: artefact_steve_jobs_quote"></a-circle>
+
+            <a-circle class="clickable" src="Assets/Icons/Image.png" rotation="0 -90 0" position="2.75 4 -2" radius="0.08" color="#FFFFFF" onclick="interact('artefact_peaceniche_patch')" hover-info="id: artefact_peaceniche_patch"></a-circle>
+
+            <a-circle class="clickable" src="Assets/Icons/Image.png" rotation="0 180 0" position="2.5 1.5 3.75" radius="0.08" color="#FFFFFF" onclick="interact('artefact_macintosh_se')" hover-info="id: artefact_macintosh_se"></a-circle>
+
+            <a-circle class="clickable" src="Assets/Icons/Image.png" rotation="0 0 0" position="2 1.25 -3.75" radius="0.08" color="#FFFFFF" onclick="interact('artefact_faiz_aaj_kay_naam_cd_rom')" hover-info="id: artefact_faiz_aaj_kay_naam_cd_rom"></a-circle>
+
+            <a-circle class="clickable" src="Assets/Icons/Exit_Room.png" rotation="0 -45 0" position="2.25 2 -3.5" radius="0.15" color="#FFFFFF" onclick="switchRoom('bedroom')" hover-info="title: Go to Sabeen's Bedroom"></a-circle>
+
+            <a-circle class="clickable" src="Assets/Icons/Exit_Room.png" rotation="0 90 0" position="-2 2.1 2.5" radius="0.15" color="#FFFFFF" onclick="switchRoom('cafe')" hover-info="title: Go to T2F Cafe"></a-circle>
+        </a-entity>     
+
+        <a-entity id="room-babybox" visible="false">
+            <a-sky src="#bg-Baby_Box"></a-sky>
+            <a-circle class="clickable" src="Assets/Icons/Audio.png" position="1 1.5 -4" radius="0.1" color="#FFFFFF" onclick="interact('plants_mahenaz')"></a-circle>
+            
+            <a-circle class="clickable" src="Assets/Icons/Image.png" rotation="0 90 0" position="-2.5 1.5 0" radius="0.08" color="#FFFFFF" onclick="interact('artefact_raggedy_ann')" hover-info="id: artefact_raggedy_ann"></a-circle>
+
+            <a-circle class="clickable" src="Assets/Icons/Image.png" rotation="0 90 0" position="0 -1.5 -1.5" radius="0.08" color="#FFFFFF" onclick="interact('artefact_flower_earrings')" hover-info="id: artefact_flower_earrings"></a-circle>
+
+            <a-circle class="clickable" src="Assets/Icons/Image.png" rotation="0 180 0" position="1 2.5 2" radius="0.08" color="#FFFFFF" onclick="interact('artefact_view_master')" hover-info="id: artefact_view_master"></a-circle>
+
+
+            <a-circle class="clickable"src="Assets/Icons/Exit_Room.png" position="2 1 -2" radius="0.1" color="#FFFFFF" onclick="switchRoom('bedroom')">
+                <a-text value="RETURN TO OFFICE" align="center" position="0 0.6 0"></a-text>
+            </a-circle>
+        </a-entity>
+
+        <a-entity id="room-gallery" visible="false">
+            <a-sky src="#bg-T2F_Gallery"></a-sky>
+            <a-circle class="clickable" src="Assets/Icons/Audio.png" position="1 1.5 -4" radius="0.1" color="#FFFFFF" onclick="interact('plants_mahenaz')"></a-circle>
+            
+            <a-circle class="clickable"src="Assets/Icons/Exit_Room.png" position="2 1 -2" radius="0.1" color="#FFFFFF" onclick="switchRoom('office')">
+                <a-text value="RETURN TO OFFICE" align="center" position="0 0.6 0"></a-text>
+            </a-circle>
+        </a-entity>
+
+        <a-entity id="room-cafe" visible="false">
+            <a-sky src="#bg-T2F_Cafe"></a-sky>
+            <a-circle class="clickable" src="Assets/Icons/Audio.png" position="1 1.5 -4" radius="0.1" color="#FFFFFF" onclick="interact('plants_mahenaz')" hover-info="id: plants_mahenaz"></a-circle>
+            
+            <a-circle class="clickable" src="Assets/Icons/Exit_Room.png" rotation="0 90 0" position="-3 2 4" radius="0.08" color="#FFFFFF" onclick="switchRoom('office')" hover-info="title: Go to Sabeen's Office"></a-circle>
+
+            <a-circle class="clickable" src="Assets/Icons/Exit_Room.png" rotation="0 90 0" position="-3 2 1" radius="0.08" color="#FFFFFF" onclick="switchRoom('gallery')" hover-info="title: Go to T2F Gallery"></a-circle>
+
+            </a-circle>
+        </a-entity>
+
+        <a-entity id="rig">
+            <a-camera id="main-camera">
+                 <a-cursor 
+                    raycaster="objects: .clickable"
+                    color="#f1c40f"
+                    position="0 0 -0.5" 
+                    scale="2 2 2"
+                    opacity="0.8">
+                </a-cursor>
+               
+            </a-camera>
+            <a-entity laser-controls="hand: right" raycaster="objects: .clickable"></a-entity>
+        </a-entity>
+        <a-entity id="info-panel" visible="false" scale="0.7 0.7 0.7" look-at="#main-camera">
+    <a-plane id="panel-bg" width="1.6" height="2.2" color="#1a1a1a" opacity="0.9"></a-plane>
+
+    <a-text id="panel-title" value="" position="0 0.9 0.02" align="center" width="1.5" color="#f1c40f"></a-text>
+    <a-image id="panel-img" visible="false" position="0 0.3 0.02" width="1.2" height="0.8"></a-image>
+    <a-text id="panel-desc" value="" position="-0.7 -0.1 0.02" align="left" width="1.4"></a-text>
+
+    <a-entity id="audio-player-ui" visible="false" position="0 -0.5 0.02">
+        <a-plane id="progress-bg" width="1" height="0.01" color="#555" position="0 0.1 0"></a-plane>
+        <a-plane id="progress-fill" width="0" height="0.01" color="#f1c40f" position="-0.5 0.1 0.001" pivot="-0.5 0 0"></a-plane>
+        <a-entity id="progress-dot" geometry="primitive: circle; radius: 0.02" material="color: #f1c40f" position="-0.5 0.1 0.002"></a-entity>
+
+        <a-text id="audio-time" value="0:00 / 0:00" align="center" width="1.2" position="0 0.2 0" scale="0.8 0.8 0.8"></a-text>
+
+        <a-circle class="clickable panel-button" src="Assets/Icons/Play.png" position="-0.15 -0.1 0.01" radius="0.08" color="#f1c40f" onclick="playAudio()"></a-circle>
+        <a-circle class="clickable panel-button" src="Assets/Icons/Pause.png" position="0.15 -0.1 0.01" radius="0.08" color="#f1c40f" onclick="pauseAudio()"></a-circle>
+    </a-entity>
+
+    <a-circle class="clickable panel-button" src="Assets/Icons/Cross Circle.png" position="0 -0.9 0.05" radius="0.08" onclick="closePanel()"></a-circle>
+</a-entity>
+
+        <a-entity id="global-audio" sound="src: ; autoplay: false"></a-entity>
+
+        <a-entity id="world-tooltip" visible="false" look-at="#main-camera">
+             <a-rounded id="tooltip-bg" 
+               width="1" height="0.4" 
+               radius="0.05" 
+               color="black" 
+               opacity="0.8">
+            </a-rounded>
+                <a-text id="tooltip-text" 
+                 value="" 
+                 align="center" 
+                    width="2.5" 
+                    position="0 0.2 0.01">
+                </a-text>
+        </a-entity>
+        
+    </a-scene>
+    
+
+    <script src="database.js"></script>
+    <script>
+// 1. GLOBAL OBJECTS (Keep at the top)
+let currentAudio = new Audio();
+let updateTimer = null;
+
+// 2. CONSOLIDATED INTERACT FUNCTION
+function interact(id) {
+    const data = ARCHIVE_DATABASE[id];
+    const panel = document.querySelector('#info-panel');
+    const camera = document.querySelector('#main-camera');
+    const panelImg = document.querySelector('#panel-img');
+    const panelDesc = document.querySelector('#panel-desc');
+    const audioPlayerUI = document.querySelector('#audio-player-ui');
+
+    // --- POSITION PANEL IN WORLD SPACE ---
+    const pos = new THREE.Vector3();
+    camera.object3D.getWorldPosition(pos);
+    const direction = new THREE.Vector3(0, 0, -1).applyQuaternion(camera.object3D.quaternion);
+    const spawnPos = new THREE.Vector3().copy(pos).add(direction.multiplyScalar(1.2));
+    
+    panel.setAttribute('position', spawnPos);
+    panel.setAttribute('look-at', '#main-camera');
+
+    // --- RESET PANEL STATE ---
+    stopAudio(); 
+    panelImg.setAttribute('visible', 'false');
+    audioPlayerUI.setAttribute('visible', 'false');
+    document.querySelector('#panel-title').setAttribute('value', data.title);
+
+    // --- HANDLE DATA TYPES ---
+    if(data.type === 'image') {
+        const imgLoader = new Image();
+        imgLoader.onload = function() {
+            const maxWidth = 1.3, maxHeight = 0.9;
+            const aspectRatio = imgLoader.naturalWidth / imgLoader.naturalHeight;
+            let finalWidth = maxWidth, finalHeight = maxWidth / aspectRatio;
+
+            if (finalHeight > maxHeight) {
+                finalHeight = maxHeight;
+                finalWidth = maxHeight * aspectRatio;
+            }
+
+            panelImg.setAttribute('width', finalWidth);
+            panelImg.setAttribute('height', finalHeight);
+            panelImg.setAttribute('src', data.src);
+            panelImg.setAttribute('visible', 'true');
+
+            // Dynamic spacing for description
+            const gap = 0.2; 
+            const newDescY = 0.2 - (finalHeight / 2) - gap;
+            panelDesc.setAttribute('position', {x: -0.7, y: newDescY, z: 0.05});
+            panelDesc.setAttribute('value', `${data.meta.description}\n\nPhotographer: ${data.meta.author}\n\nDate: ${data.meta.date}`);
+        };
+        imgLoader.src = data.src;
+
+    } else if(data.type === 'audio') {
+        audioPlayerUI.setAttribute('visible', 'true');
+        panelDesc.setAttribute('position', {x: -0.7, y: -0.1, z: 0.05}); // Fixed position for audio player
+        panelDesc.setAttribute('value', `${data.meta.description}\n\nSpeaker: ${data.meta.author}\n\nRelation: ${data.meta.relation}\n\nRecorded on: ${data.meta.date}`);
+        
+        // Load and Auto-play
+        currentAudio.src = data.src;
+        currentAudio.play().catch(e => console.log("Audio play blocked:", e));
+        startProgressTracker();
+    }
+
+    panel.setAttribute('visible', 'true');
+}
+
+// 3. PROGRESS TRACKER
+function startProgressTracker() {
+    const fill = document.querySelector('#progress-fill');
+    const dot = document.querySelector('#progress-dot');
+    const timeText = document.querySelector('#audio-time');
+
+    function update() {
+        if (!currentAudio.paused && !currentAudio.ended) {
+            const progress = currentAudio.currentTime / currentAudio.duration || 0;
+            const barWidth = 1;
+            
+            fill.setAttribute('width', progress * barWidth);
+            const dotX = -0.5 + (progress * barWidth);
+            dot.setAttribute('position', {x: dotX, y: 0.1, z: 0.002});
+            timeText.setAttribute('value', `${formatTime(currentAudio.currentTime)} / ${formatTime(currentAudio.duration)}`);
+            
+            updateTimer = requestAnimationFrame(update);
+        }
+    }
+    updateTimer = requestAnimationFrame(update);
+}
+
+function formatTime(secs) {
+    if (isNaN(secs)) return "0:00";
+    const mins = Math.floor(secs / 60);
+    const s = Math.floor(secs % 60);
+    return `${mins}:${s < 10 ? '0' : ''}${s}`;
+}
+
+// 4. CONTROL FUNCTIONS
+function playAudio() { currentAudio.play(); startProgressTracker(); }
+function pauseAudio() { currentAudio.pause(); cancelAnimationFrame(updateTimer); }
+function stopAudio() { 
+    currentAudio.pause(); 
+    currentAudio.currentTime = 0; 
+    cancelAnimationFrame(updateTimer);
+}
+
+function closePanel() {
+    document.querySelector('#info-panel').setAttribute('visible', 'false');
+    stopAudio(); 
+}
+
+// 5. APP FLOW (Start & Room Switch)
+function startExperience() {
+    document.getElementById('landing-overlay').style.display = 'none';
+    document.getElementById('intro-video').play();
+    setTimeout(() => { switchRoom('babybox'); }, 2000); 
+}
+
+function switchRoom(roomID) {
+    // 1. Close any open panels and stop audio
+    closePanel(); 
+
+    // 2. Hide Landing Video
+    const landingVideo = document.getElementById('landing-video');
+    if(landingVideo) landingVideo.setAttribute('visible', 'false');
+    const introVid = document.getElementById('intro-video');
+    if(introVid) introVid.pause();
+
+    // 3. DISABLE ALL INTERACTION
+    // Remove clickable from everything EXCEPT buttons inside the info panel
+    document.querySelectorAll('.clickable:not(.panel-button)').forEach(el => {
+    el.classList.remove('clickable');
+    });
+
+    // 4. ROOM VISIBILITY TOGGLE
+    document.querySelectorAll('[id^="room-"]').forEach(room => {
+        room.setAttribute('visible', 'false');
+    });
+
+    // 5. ENABLE CURRENT ROOM
+    const targetRoom = document.getElementById('room-' + roomID);
+    if(targetRoom) {
+        targetRoom.setAttribute('visible', 'true');
+        
+        // RE-ENABLE INTERACTION for this room only
+        // This finds all children inside the room and makes them clickable again
+        targetRoom.querySelectorAll('a-circle, a-image').forEach(el => {
+            el.classList.add('clickable');
+        });
+    }
+}
+    </script>
+    
+</body>
+</html>
