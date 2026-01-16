@@ -447,6 +447,20 @@
                     opacity="0.8">
                 </a-cursor>
                
+               <a-entity id="fade-screen"
+                    geometry="primitive: plane; width: 4; height: 4"
+                    material="color: #F9F6E4; opacity: 0; transparent: true; shader: flat"
+                    position="0 0 -0.1">
+        
+                     <a-image id="loader-graphic"
+                        src="Assets/Images/LoadingScreen.webp" 
+                        position="0 0 0.01"
+                        width="0.1" 
+                        height="0.1"
+                        material="transparent: true; opacity: 0"
+                        animation="property: rotation; to: 0 0 -360; loop: true; dur: 2000; easing: linear; enabled: false">
+        </a-image>
+    </a-entity>
             </a-camera>
             <a-entity laser-controls="hand: right" raycaster="objects: .clickable"></a-entity>
         </a-entity>
@@ -603,11 +617,35 @@ function closePanel() {
 
 // 4. ROOM & APP LOGIC
 function startExperience() {
-    // 1. Hide the 2D overlay
-    document.getElementById('landing-overlay').style.display = 'none';
+    const fadeScreen = document.querySelector('#fade-screen');
+    const loader = document.querySelector('#loader-graphic');
     
-    // 2. Immediately switch to the first room
-    switchRoom('bedroom');
+    // 1. Fade the background to dark gray/black
+    fadeScreen.setAttribute('animation', 'property: material.opacity; from: 0; to: 1; dur: 500; easing: easeInOutQuad');
+
+    // 2. Fade in the loader image and start its spinning animation
+    loader.setAttribute('animation__fade', 'property: material.opacity; from: 0; to: 1; dur: 500; easing: easeInOutQuad');
+    loader.setAttribute('animation', 'enabled: true'); // Starts the rotation defined in HTML
+
+    // 3. Timing for the room switch
+    setTimeout(() => {
+        // Hide the landing page UI
+        document.getElementById('landing-overlay').style.display = 'none';
+        
+        // Change the 360 view
+        switchRoom('bedroom');
+        
+        // 4. Wait a moment so the user sees the loader, then fade everything out
+        setTimeout(() => {
+            fadeScreen.setAttribute('animation', 'property: material.opacity; from: 1; to: 0; dur: 800; easing: easeInOutQuad');
+            loader.setAttribute('animation__fade', 'property: material.opacity; from: 1; to: 0; dur: 800; easing: easeInOutQuad');
+            
+            // Stop rotation after fade out to save performance
+            setTimeout(() => { loader.setAttribute('animation', 'enabled: false'); }, 800);
+        }, 1000); // How long the loader stays visible after the room is "loaded"
+
+    }, 600);
+}
 }
 
 function switchRoom(roomID) {
