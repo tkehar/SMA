@@ -17,6 +17,9 @@
         this.camera = document.querySelector('#main-camera');
     },
     tick: function () {
+    // If the room is hidden, don't do anything
+        if (!this.el.getAttribute('visible')) return; 
+
         const targetPos = new THREE.Vector3();
         const cameraPos = new THREE.Vector3();
         
@@ -89,11 +92,13 @@
                 });
 
                 // 4. Position the whole tooltip above the target icon
-                const pos = el.getAttribute('position');
+                const worldPos = new THREE.Vector3();
+                    el.object3D.getWorldPosition(worldPos); // Gets the absolute 3D coordinate
+
                 worldTooltip.setAttribute('position', {
-                    x: pos.x, 
-                    y: pos.y + 0.4, 
-                    z: pos.z
+                    x: worldPos.x, 
+                    y: worldPos.y + 0.4, 
+                     z: worldPos.z
                 });
                 
                 // Force look-at refresh and show
@@ -449,26 +454,24 @@
 
         <a-entity id="room-gallery" visible="false">
             <a-sky src="#bg-T2F_Gallery"></a-sky>
+
             <a-circle class="clickable" src="Assets/Icons/Audio.png" position="1 1.5 -4" radius="0.1" color="#FFFFFF" onclick="interact('plants_mahenaz')"></a-circle>
-            
-            <a-circle class="clickable"src="Assets/Icons/Exit_Room.png" position="2 1 -2" radius="0.1" color="#FFFFFF" onclick="switchRoom('office')">
-                <a-text value="RETURN TO OFFICE" align="center" position="0 0.6 0"></a-text>
-            </a-circle>
+
+            <a-circle class="clickable"src="Assets/Icons/Exit_Room.png" position="2 1 -2" radius="0.1" color="#FFFFFF" onclick="switchRoom('office')" hover-info="title: Go to Sabeen's Office"></a-circle>
         </a-entity>
 
         <a-entity id="room-cafe" visible="false">
             <a-sky src="#bg-T2F_Cafe"></a-sky>
+
             <a-circle class="clickable" src="Assets/Icons/Audio.png" position="1 1.5 -4" radius="0.1" color="#FFFFFF" onclick="interact('plants_mahenaz')" hover-info="id: plants_mahenaz"></a-circle>
             
             <a-circle class="clickable" src="Assets/Icons/Exit_Room.png" rotation="0 90 0" position="-3 2 4" radius="0.08" color="#FFFFFF" onclick="switchRoom('office')" hover-info="title: Go to Sabeen's Office"></a-circle>
 
             <a-circle class="clickable" src="Assets/Icons/Exit_Room.png" rotation="0 90 0" position="-3 2 1" radius="0.08" color="#FFFFFF" onclick="switchRoom('gallery')" hover-info="title: Go to T2F Gallery"></a-circle>
-
-            </a-circle>
         </a-entity>
 
         <a-entity id="rig">
-            <a-camera id="main-camera" position="0 -2.5 0">
+            <a-camera id="main-camera"">
                 
                  <a-cursor 
                     raycaster="objects: .clickable"
