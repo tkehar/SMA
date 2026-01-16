@@ -223,10 +223,38 @@
             max-width: 300px;
         }
     }
+     /* 1. Change the Loading Text */
+        .a-loader-title {
+            color: #393939 !important; /* Matches your dot color */
+            font-family: sans-serif;
+            font-size: 1.5rem !important;
+            font-weight: thin !important;
+            align-content: center;
+    }
+
+    /* To replace the "A-Frame" text with your project name: */
+        .a-loader-title::after {
+            content: "Entering the Archive"; /* Your custom text */
+            display: block;
+            margin-top: 350px;
+            
+    }
+
+    /* 2. Change the Size of the Dots */
+        .a-loader {
+        /* Scale the entire loader container */
+        transform: scale(1.5) !important; 
+        border-color: #393939 !important;
+    }
+
+    /* 3. Ensure the background covers everything */
+        .a-canvas {
+        background-color: #F9F6E4 !important;
+    }
 </style>
 </head>
 <body>
-
+    
     <div id="landing-overlay">
     <h1 style="font-size: 3rem; margin-bottom: 0;">Under the Amaltaas Tree</h1>
     <h2 style="font-weight: 300; margin-top: 5px; opacity: 0.8;">Remembering Sabeen Mahmud (1974 - 2015)</h2> 
@@ -262,7 +290,10 @@
     <button class="start-btn" onclick="startExperience()">ENTER ARCHIVE</button>
 </div>
 
-    <a-scene>
+
+
+    <a-scene loading-screen="dotsColor: #393939; backgroundColor: #F9F6E4">
+        
         <a-assets>
             <img id="bg-office" src="Assets/Models/Sabeens_office.webp">
             <img id="bg-bedroom" src="Assets/Models/Sabeens_Bedroom.webp">
@@ -271,7 +302,6 @@
             <img id="bg-T2F_Cafe" src="Assets/Models/T2F_Cafe.webp">
         </a-assets>
 
-    
         <!-- World Space -->
         <a-entity id="room-bedroom" visible="false">
             <a-sky src="#bg-bedroom"></a-sky>
@@ -446,21 +476,6 @@
                     scale="2 2 2"
                     opacity="0.8">
                 </a-cursor>
-               
-               <a-entity id="fade-screen"
-                    geometry="primitive: plane; width: 4; height: 4"
-                    material="color: #F9F6E4; opacity: 0; transparent: true; shader: flat"
-                    position="0 0 -0.1">
-        
-                     <a-image id="loader-graphic"
-                        src="Assets/Images/LoadingScreen.webp" 
-                        position="0 0 0.01"
-                        width="0.1" 
-                        height="0.1"
-                        material="transparent: true; opacity: 0"
-                        animation="property: rotation; to: 0 0 -360; loop: true; dur: 2000; easing: linear; enabled: false">
-        </a-image>
-    </a-entity>
             </a-camera>
             <a-entity laser-controls="hand: right" raycaster="objects: .clickable"></a-entity>
         </a-entity>
@@ -617,59 +632,24 @@ function closePanel() {
 
 // 4. ROOM & APP LOGIC
 function startExperience() {
-    const fadeScreen = document.querySelector('#fade-screen');
-    const loader = document.querySelector('#loader-graphic');
-    
-    // 1. Fade the background to dark gray/black
-    fadeScreen.setAttribute('animation', 'property: material.opacity; from: 0; to: 1; dur: 500; easing: easeInOutQuad');
+    // 1. Hide the Landing Overlay
+    document.getElementById('landing-overlay').style.display = 'none';
 
-    // 2. Fade in the loader image and start its spinning animation
-    loader.setAttribute('animation__fade', 'property: material.opacity; from: 0; to: 1; dur: 500; easing: easeInOutQuad');
-    loader.setAttribute('animation', 'enabled: true'); // Starts the rotation defined in HTML
-
-    // 3. Timing for the room switch
-    setTimeout(() => {
-        // Hide the landing page UI
-        document.getElementById('landing-overlay').style.display = 'none';
-        
-        // Change the 360 view
-        switchRoom('bedroom');
-        
-        // 4. Wait a moment so the user sees the loader, then fade everything out
-        setTimeout(() => {
-            fadeScreen.setAttribute('animation', 'property: material.opacity; from: 1; to: 0; dur: 800; easing: easeInOutQuad');
-            loader.setAttribute('animation__fade', 'property: material.opacity; from: 1; to: 0; dur: 800; easing: easeInOutQuad');
-            
-            // Stop rotation after fade out to save performance
-            setTimeout(() => { loader.setAttribute('animation', 'enabled: false'); }, 800);
-        }, 1000); // How long the loader stays visible after the room is "loaded"
-
-    }, 600);
-}
+    // 2. Switch to the bedroom
+    // The built-in loader will stay visible until the bedroom image 
+    // is actually ready to be seen.
+    switchRoom('bedroom');
 }
 
 function switchRoom(roomID) {
-    closePanel();
-    
-    // Disable all icons except panel buttons
-    document.querySelectorAll('.clickable:not(.panel-button)').forEach(el => {
-        el.classList.remove('clickable');
-    });
-
-    // Toggle Room Visibility
+    // Hide all rooms
     document.querySelectorAll('[id^="room-"]').forEach(room => room.setAttribute('visible', 'false'));
     
+    // Show target room
     const targetRoom = document.getElementById('room-' + roomID);
     if (targetRoom) {
         targetRoom.setAttribute('visible', 'true');
-        // Enable icons only in current room
-        targetRoom.querySelectorAll('a-circle, a-image').forEach(el => {
-            el.classList.add('clickable');
-        });
     }
-
-    const landingVideo = document.getElementById('landing-video');
-    if (landingVideo) landingVideo.setAttribute('visible', 'false');
 }
     </script>
     
