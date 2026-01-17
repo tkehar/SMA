@@ -240,12 +240,23 @@ nav button:hover { color: #D6B743; }
                 <h2>The Sabeen Mahmud Archive</h2>
                 
                 <nav>
-                    <button onclick="startExperience()">Enter Archive</button>
+                    <button onclick="showSection('instructions-section')">Enter Archive</button>
                     <button onclick="showSection('message-section')">Message to the Archive</button>
                     <button onclick="showSection('submit-section')">Submit Entry</button>
                     <button onclick="showSection('acknowledgments-section')">Acknowledgments</button>
                 </nav>
             </div>
+    </div>
+
+    <div id="instructions-section" class="overlay-content" style="display:none">
+        <h3>How to Navigate</h3>
+        <div style="text-align: left; margin-bottom: 25px; line-height: 1.6;">
+            <p><strong>Look Around:</strong> Click and drag your cursor or move your device.</p>
+            <p><strong>Interact:</strong> Hover over icons to reveal titles. Click to view content.</p>
+            <p><strong>Explore:</strong> Look for 'Exit' icons to move between rooms.</p>
+        </div>
+        <button class="back-btn" onclick="showSection('home-section')">← Back</button>
+        <button class="back-btn" onclick="startExperience()">Enter Archive</button>
     </div>
 
     <div id="message-section" class="overlay-content" style="display:none">
