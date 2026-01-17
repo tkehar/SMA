@@ -5,52 +5,48 @@
     <script src="https://unpkg.com/aframe-look-at-component@0.8.0/dist/aframe-look-at-component.min.js"></script>
     <script src="https://unpkg.com/aframe-rounded@1.0.3/dist/aframe-rounded-component.min.js"></script>
     <script>
+
         AFRAME.registerComponent('proximity-reveal', {
-    schema: {
-        threshold: {type: 'number', default: 2}, // The distance at which it appears
-        fadeInDur: {type: 'number', default: 500} // How fast it fades in
-    },
-    init: function () {
-        // Start hidden
-        this.el.setAttribute('active', false);
+        schema: {
+        threshold: {type: 'number', default: 0.95}, // Lower is easier to find
+        fadeInDur: {type: 'number', default: 500}
+        },
+        init: function () {
         this.el.setAttribute('material', 'opacity', 0);
         this.camera = document.querySelector('#main-camera');
-    },
-    tick: function () {
-    // If the room is hidden, don't do anything
-        if (!this.el.getAttribute('visible')) return; 
+        this.active = false;
+        },
+        tick: function () {
+        // ERROR FIX: Stop running if the parent room is hidden
+        if (!this.el.object3D.visible) return;
 
         const targetPos = new THREE.Vector3();
         const cameraPos = new THREE.Vector3();
         
-        // Get world positions
+        // Use World Positions to avoid coordinate mismatches between rooms
         this.el.object3D.getWorldPosition(targetPos);
         this.camera.object3D.getWorldPosition(cameraPos);
 
-        // Get the direction the camera is looking
         const cameraDir = new THREE.Vector3(0, 0, -1).applyQuaternion(this.camera.object3D.quaternion);
-        
-        // Calculate the vector from camera to the icon
         const vecToTarget = targetPos.clone().sub(cameraPos).normalize();
-        
-        // Use Dot Product to find how closely the camera is pointing at the target
-        // 1.0 is a perfect look-at, lower is further away
         const angleMatch = cameraDir.dot(vecToTarget);
 
-        // If the angle is tight enough (approx 0.95 to 0.99), reveal it
-        if (angleMatch > 0.98) { // Adjust 0.98 to make it easier/harder to find
+        if (angleMatch > this.data.threshold) {
             if (!this.active) {
-                this.el.setAttribute('animation', `property: material.opacity; to: 1; dur: ${this.data.fadeInDur}; easing: easeOutQuad`);
+                this.el.removeAttribute('animation'); // Clear old animations
+                this.el.setAttribute('animation', `property: material.opacity; from: 0; to: 1; dur: ${this.data.fadeInDur}; easing: easeOutQuad`);
                 this.active = true;
             }
         } else {
             if (this.active) {
-                this.el.setAttribute('animation', `property: material.opacity; to: 0; dur: ${this.data.fadeInDur}; easing: easeInQuad`);
+                this.el.removeAttribute('animation');
+                this.el.setAttribute('animation', `property: material.opacity; from: 1; to: 0; dur: ${this.data.fadeInDur}; easing: easeInQuad`);
                 this.active = false;
             }
         }
-    }
-});
+        }
+        });
+
         AFRAME.registerComponent('hover-info', {
         schema: { 
         id: {type: 'string', default: ''},
@@ -60,11 +56,15 @@
         const el = this.el;
         
         el.addEventListener('mouseenter', () => {
+            // ERROR FIX: If the icon is hidden, don't show tooltip
+            if (!el.object3D.visible || el.getAttribute('material').opacity < 0.1) return;
+
             const worldTooltip = document.querySelector('#world-tooltip');
             const tooltipText = document.querySelector('#tooltip-text');
             const tooltipBg = document.querySelector('#tooltip-bg');
             let displayTitle = "";
 
+            // Check database or use manual title
             if (this.data.id && typeof ARCHIVE_DATABASE !== 'undefined') {
                 const itemData = ARCHIVE_DATABASE[this.data.id];
                 if (itemData) displayTitle = itemData.title;
@@ -73,36 +73,29 @@
             }
 
             if (displayTitle && worldTooltip && tooltipText && tooltipBg) {
-                // 1. Set the text value
                 tooltipText.setAttribute('value', displayTitle);
                 
-                // 2. DYNAMIC SIZING: Calculate width based on character count
-                // A multiplier of 0.1 to 0.12 usually fits standard fonts well
-                const estimatedWidth = Math.max(0.5, displayTitle.length * 0.1);
-                
-                // Update the background size
+                // Dynamic width calculation
+                const estimatedWidth = Math.max(0.6, displayTitle.length * 0.12);
                 tooltipBg.setAttribute('width', estimatedWidth);
                 
-                // 3. CENTERING: a-rounded expands from the bottom-left. 
-                // We must offset its X position by half its width to keep it centered under the text.
-                tooltipBg.setAttribute('position', {
-                    x: -(estimatedWidth / 2), 
-                    y: 0, 
-                    z: 0
-                });
+                // Center the background relative to the text
+                tooltipBg.setAttribute('position', { x: -(estimatedWidth / 2), y: 0, z: 0 });
 
-                // 4. Position the whole tooltip above the target icon
+                // ERROR FIX: Use World Position so rooms don't overlap
                 const worldPos = new THREE.Vector3();
-                    el.object3D.getWorldPosition(worldPos); // Gets the absolute 3D coordinate
-
+                el.object3D.getWorldPosition(worldPos);
+                
                 worldTooltip.setAttribute('position', {
                     x: worldPos.x, 
                     y: worldPos.y + 0.4, 
-                     z: worldPos.z
+                    z: worldPos.z
                 });
                 
-                // Force look-at refresh and show
-                if (worldTooltip.components['look-at']) worldTooltip.components['look-at'].update();
+                // Refresh look-at so it faces the camera immediately
+                if (worldTooltip.components['look-at']) {
+                    worldTooltip.components['look-at'].update();
+                }
                 worldTooltip.setAttribute('visible', true);
             }
         });
@@ -111,7 +104,7 @@
             const worldTooltip = document.querySelector('#world-tooltip');
             if (worldTooltip) worldTooltip.setAttribute('visible', false);
         });
-             }
+        }
         });
     </script>
 
@@ -268,9 +261,9 @@
         <div class="info-box">
             <h3>About the Project</h3>
             <p>
-                Sabeen was Pakistani human rights activist, entrepreneur, and designer.
+                Sabeen Mahmud was a Pakistani human rights activist, entrepreneur, and designer.
                 She stood for community, culture, and open dialogue. With these principles 
-                founded The Second Floor (T2F), a coffee house and community space.
+                founded The Second Floor (T2F), a coffee house and community space in Karachi.
             </p>
             <p>    
                 In 2015 after hosting a panel titled “Unsilencing Balochistan” Sabeen was shot 
@@ -278,7 +271,7 @@
             </p>
             <p>
                 This archive allows viewers to get to know Sabeen and her work through virtual reconstructions 
-                of spaces she inhabited. Explore these spaces to discover the stories behind objects she cherished and memories from her friends, colleagues, and family.
+                of spaces she inhabited. This virtual museum explores these spaces to discover the stories behind artefacts and memories from her friends, colleagues, and family.
             </p>
         </div>
 
@@ -290,6 +283,7 @@
                 <li><strong>Navigation:</strong> Look for the 'Exit' icons to move between rooms.</li>
             </ul>
         </div>
+
     </div>
 
     <button class="start-btn" onclick="startExperience()">ENTER ARCHIVE</button>
@@ -385,7 +379,7 @@
 
             <a-circle class="clickable" src="Assets/Icons/Image.png" rotation="0 0 0" position="2 -0.2 -3" radius="0.1" material="transparent: true; opacity: 0.9"proximity-reveal="threshold: 0.98"color="#000000" onclick="interact('cricket_bats')" hover-info="id: cricket_bats"></a-circle>
 
-            <a-circle class="clickable" src="Assets/Icons/Exit_Room.png" rotation="0 0 0" position="2 1 -2" radius="0.1" material="transparent: true; opacity: 0.9"proximity-reveal="threshold: 0.98"color="#000000" onclick="switchRoom('office')" hover-info="title: Go to Sabeen's Office"></a-circle>
+            <a-circle class="clickable" src="Assets/Icons/Exit_Room.png" rotation="0 0 0" position="2 1 -2" radius="0.1" material="transparent: true; opacity: 0.9" color="#000000" onclick="switchRoom('office')" hover-info="title: Go to Sabeen's Office"></a-circle>
 
             <a-circle class="clickable" src="Assets/Icons/Exit_Room.png" rotation="0 -90 0" position="3 1 -0.5" radius="0.1" material="transparent: true; opacity: 0.9"proximity-reveal="threshold: 0.98"color="#000000" onclick="switchRoom('babybox')" hover-info="title: Go to Baby Box"></a-circle>
 
@@ -394,92 +388,93 @@
         <a-entity id="room-office" visible="false">
             <a-sky src="#bg-office"></a-sky>
             
-            <a-circle class="clickable" src="Assets/Icons/Image.png" rotation="0 90 0" position="-2 1.5 1" radius="0.08" color="#FFFFFF" onclick="interact('artefact_note_fahad_and_marium')" hover-info="id: artefact_note_fahad_and_marium"></a-circle>
+            <a-circle class="clickable" src="Assets/Icons/Image.png" rotation="0 90 0" position="-2 1.5 1" radius="0.1" material="transparent: true; opacity: 0.9"proximity-reveal="threshold: 0.98"color="#000000" onclick="interact('artefact_note_fahad_and_marium')" hover-info="id: artefact_note_fahad_and_marium"></a-circle>
 
-            <a-circle class="clickable" src="Assets/Icons/Image.png" rotation="0 90 0" position="-2 1.5 -0.5" radius="0.08" color="#FFFFFF" onclick="interact('artefact_note_goethe')" hover-info="id: artefact_note_goethe"></a-circle>
+            <a-circle class="clickable" src="Assets/Icons/Image.png" rotation="0 90 0" position="-2 1.5 -0.5" radius="0.1" material="transparent: true; opacity: 0.9"proximity-reveal="threshold: 0.98"color="#000000" onclick="interact('artefact_note_goethe')" hover-info="id: artefact_note_goethe"></a-circle>
 
-            <a-circle class="clickable" src="Assets/Icons/Image.png" rotation="0 90 0" position="-2 2 -1" radius="0.08" color="#FFFFFF" onclick="interact('artefact_note_natasha_ejaz')" hover-info="id: artefact_note_natasha_ejaz"></a-circle>
+            <a-circle class="clickable" src="Assets/Icons/Image.png" rotation="0 90 0" position="-2 2 -1" radius="0.1" material="transparent: true; opacity: 0.9"proximity-reveal="threshold: 0.98"color="#000000" onclick="interact('artefact_note_natasha_ejaz')" hover-info="id: artefact_note_natasha_ejaz"></a-circle>
 
-            <a-circle class="clickable" src="Assets/Icons/Image.png" rotation="0 90 0" position="-2 1.5 0" radius="0.08" color="#FFFFFF" onclick="interact('artefact_note_nilofer_halai')" hover-info="id: artefact_note_nilofer_halai"></a-circle>
+            <a-circle class="clickable" src="Assets/Icons/Image.png" rotation="0 90 0" position="-2 1.5 0" radius="0.1" material="transparent: true; opacity: 0.9"proximity-reveal="threshold: 0.98"color="#000000" onclick="interact('artefact_note_nilofer_halai')" hover-info="id: artefact_note_nilofer_halai"></a-circle>
 
-            <a-circle class="clickable" src="Assets/Icons/Image.png" rotation="0 90 0" position="-2 2.1 1" radius="0.08" color="#FFFFFF" onclick="interact('artefact_note_shanzay_subzwari')" hover-info="id: artefact_note_shanzay_subzwari"></a-circle>
+            <a-circle class="clickable" src="Assets/Icons/Image.png" rotation="0 90 0" position="-2 2.1 1" radius="0.1" material="transparent: true; opacity: 0.9"proximity-reveal="threshold: 0.98"color="#000000" onclick="interact('artefact_note_shanzay_subzwari')" hover-info="id: artefact_note_shanzay_subzwari"></a-circle>
 
-            <a-circle class="clickable" src="Assets/Icons/Image.png" rotation="0 90 0" position="-2 1 0" radius="0.08" color="#FFFFFF" onclick="interact('artefact_sabeens_pinboard')" hover-info="id: artefact_sabeens_pinboard"></a-circle>
+            <a-circle class="clickable" src="Assets/Icons/Image.png" rotation="0 90 0" position="-2 1 0" radius="0.1" material="transparent: true; opacity: 0.9"proximity-reveal="threshold: 0.98"color="#000000" onclick="interact('artefact_sabeens_pinboard')" hover-info="id: artefact_sabeens_pinboard"></a-circle>
 
-            <a-circle class="clickable" src="Assets/Icons/Image.png" rotation="0 180 0" position="0 1.2 4" radius="0.08" color="#FFFFFF" onclick="interact('artefact_white_board')" hover-info="id: artefact_white_board"></a-circle>
+            <a-circle class="clickable" src="Assets/Icons/Image.png" rotation="0 180 0" position="0 1.2 4" radius="0.1" material="transparent: true; opacity: 0.9"proximity-reveal="threshold: 0.98"color="#000000" onclick="interact('artefact_white_board')" hover-info="id: artefact_white_board"></a-circle>
 
-            <a-circle class="clickable" src="Assets/Icons/Image.png" rotation="0 180 0" position="0.75 2 4" radius="0.08" color="#FFFFFF" onclick="interact('artefact_whiteboard_urdu')" hover-info="id: artefact_whiteboard_urdu"></a-circle>
+            <a-circle class="clickable" src="Assets/Icons/Image.png" rotation="0 180 0" position="0.75 2 4" radius="0.1" material="transparent: true; opacity: 0.9"proximity-reveal="threshold: 0.98"color="#000000" onclick="interact('artefact_whiteboard_urdu')" hover-info="id: artefact_whiteboard_urdu"></a-circle>
 
-            <a-circle class="clickable" src="Assets/Icons/Image.png" rotation="0 180 0" position="-0.6 3 4" radius="0.08" color="#FFFFFF" onclick="interact('artefact_hackathon_sticker')" hover-info="id: artefact_hackathon_sticker"></a-circle>
+            <a-circle class="clickable" src="Assets/Icons/Image.png" rotation="0 180 0" position="-0.6 3 4" radius="0.1" material="transparent: true; opacity: 0.9"proximity-reveal="threshold: 0.98"color="#000000" onclick="interact('artefact_hackathon_sticker')" hover-info="id: artefact_hackathon_sticker"></a-circle>
 
-            <a-circle class="clickable" src="Assets/Icons/Image.png" rotation="0 180 0" position="0 3 4" radius="0.08" color="#FFFFFF" onclick="interact('artefact_dil_phaink')" hover-info="id: artefact_dil_phaink"></a-circle>
+            <a-circle class="clickable" src="Assets/Icons/Image.png" rotation="0 180 0" position="0 3 4" radius="0.1" material="transparent: true; opacity: 0.9"proximity-reveal="threshold: 0.98"color="#000000" onclick="interact('artefact_dil_phaink')" hover-info="id: artefact_dil_phaink"></a-circle>
             
-            <a-circle class="clickable" src="Assets/Icons/Image.png" rotation="0 0 0" position="0 1.5 -3.5" radius="0.08" color="#FFFFFF" onclick="interact('artefact_paper_tray')" hover-info="id: artefact_paper_tray"></a-circle>
-            
-            <a-circle class="clickable" src="Assets/Icons/Image.png" rotation="0 0 0" position="-0.5 2.25 -3.5" radius="0.08" color="#FFFFFF" onclick="interact('artefact_last_sticky_note')" hover-info="id: artefact_last_sticky_note"></a-circle>
+            <a-circle class="clickable" src="Assets/Icons/Image.png" rotation="0 0 0" position="0 1.5 -3.5" radius="0.1" material="transparent: true; opacity: 0.9"proximity-reveal="threshold: 0.98"color="#000000" onclick="interact('artefact_paper_tray')" hover-info="id: artefact_paper_tray"></a-circle>
 
-            <a-circle class="clickable" src="Assets/Icons/Image.png" rotation="0 0 0" position="-0.75 2 -3.5" radius="0.08" color="#FFFFFF" onclick="interact('artefact_magnet_board')" hover-info="id: artefact_magnet_board"></a-circle>
+            <a-circle class="clickable" src="Assets/Icons/Image.png" rotation="0 0 0" position="-0.5 2.25 -3.5" radius="0.1" material="transparent: true; opacity: 0.9"proximity-reveal="threshold: 0.98"color="#FFFFFF" onclick="interact('artefact_last_sticky_note')" hover-info="id: artefact_last_sticky_note"></a-circle>
 
-            <a-circle class="clickable" src="Assets/Icons/Image.png" rotation="0 -90 0" position="2.5 2 -1" radius="0.08" color="#FFFFFF" onclick="interact('artefact_billie_holiday_poster')" hover-info="id: artefact_billie_holiday_poster"></a-circle>
+            <a-circle class="clickable" src="Assets/Icons/Image.png" rotation="0 0 0" position="-0.75 2 -3.5" radius="0.1" material="transparent: true; opacity: 0.9"proximity-reveal="threshold: 0.98"color="#000000" onclick="interact('artefact_magnet_board')" hover-info="id: artefact_magnet_board"></a-circle>
 
-            <a-circle class="clickable" src="Assets/Icons/Image.png" rotation="0 -90 0" position="2.2 1 -2" radius="0.08" color="#FFFFFF" onclick="interact('artefact_books')" hover-info="id: artefact_books"></a-circle>
+            <a-circle class="clickable" src="Assets/Icons/Image.png" rotation="0 -90 0" position="2.5 2 -1" radius="0.1" material="transparent: true; opacity: 0.9"proximity-reveal="threshold: 0.98"color="#000000" onclick="interact('artefact_billie_holiday_poster')" hover-info="id: artefact_billie_holiday_poster"></a-circle>
 
-            <a-circle class="clickable" src="Assets/Icons/Image.png" rotation="0 -90 0" position="2.5 2.5 2.5" radius="0.08" color="#FFFFFF" onclick="interact('artefact_steve_jobs_painting')" hover-info="id: artefact_steve_jobs_painting"></a-circle>
+            <a-circle class="clickable" src="Assets/Icons/Image.png" rotation="0 -90 0" position="2.2 1 -2" radius="0.1" material="transparent: true; opacity: 0.9"proximity-reveal="threshold: 0.98"color="#000000" onclick="interact('artefact_books')" hover-info="id: artefact_books"></a-circle>
 
-            <a-circle class="clickable" src="Assets/Icons/Image.png" rotation="0 -90 0" position="2.5 2 1.8" radius="0.08" color="#FFFFFF" onclick="interact('artefact_steve_jobs_quote')" hover-info="id: artefact_steve_jobs_quote"></a-circle>
+            <a-circle class="clickable" src="Assets/Icons/Image.png" rotation="0 -90 0" position="2.5 2.5 2.5" radius="0.1" material="transparent: true; opacity: 0.9"proximity-reveal="threshold: 0.98"color="#000000" onclick="interact('artefact_steve_jobs_painting')" hover-info="id: artefact_steve_jobs_painting"></a-circle>
 
-            <a-circle class="clickable" src="Assets/Icons/Image.png" rotation="0 -90 0" position="2.75 4 -2" radius="0.08" color="#FFFFFF" onclick="interact('artefact_peaceniche_patch')" hover-info="id: artefact_peaceniche_patch"></a-circle>
+            <a-circle class="clickable" src="Assets/Icons/Image.png" rotation="0 -90 0" position="2.5 2 1.8" radius="0.1" material="transparent: true; opacity: 0.9"proximity-reveal="threshold: 0.98"color="#000000" onclick="interact('artefact_steve_jobs_quote')" hover-info="id: artefact_steve_jobs_quote"></a-circle>
 
-            <a-circle class="clickable" src="Assets/Icons/Image.png" rotation="0 180 0" position="2.5 1.5 3.75" radius="0.08" color="#FFFFFF" onclick="interact('artefact_macintosh_se')" hover-info="id: artefact_macintosh_se"></a-circle>
+            <a-circle class="clickable" src="Assets/Icons/Image.png" rotation="0 -90 0" position="2.75 4 -2" radius="0.1" material="transparent: true; opacity: 0.9"proximity-reveal="threshold: 0.98"color="#000000" onclick="interact('artefact_peaceniche_patch')" hover-info="id: artefact_peaceniche_patch"></a-circle>
 
-            <a-circle class="clickable" src="Assets/Icons/Image.png" rotation="0 0 0" position="2 1.25 -3.75" radius="0.08" color="#FFFFFF" onclick="interact('artefact_faiz_aaj_kay_naam_cd_rom')" hover-info="id: artefact_faiz_aaj_kay_naam_cd_rom"></a-circle>
+            <a-circle class="clickable" src="Assets/Icons/Image.png" rotation="0 180 0" position="2.5 1.5 3.75" radius="0.1" material="transparent: true; opacity: 0.9"proximity-reveal="threshold: 0.98"color="#000000" onclick="interact('artefact_macintosh_se')" hover-info="id: artefact_macintosh_se"></a-circle>
 
-            <a-circle class="clickable" src="Assets/Icons/Exit_Room.png" rotation="0 -45 0" position="2.25 2 -3.5" radius="0.15" color="#FFFFFF" onclick="switchRoom('bedroom')" hover-info="title: Go to Sabeen's Bedroom"></a-circle>
+            <a-circle class="clickable" src="Assets/Icons/Image.png" rotation="0 0 0" position="2 1.25 -3.75" radius="0.1" material="transparent: true; opacity: 0.9"proximity-reveal="threshold: 0.98"color="#000000" onclick="interact('artefact_faiz_aaj_kay_naam_cd_rom')" hover-info="id: artefact_faiz_aaj_kay_naam_cd_rom"></a-circle>
 
-            <a-circle class="clickable" src="Assets/Icons/Exit_Room.png" rotation="0 90 0" position="-2 2.1 2.5" radius="0.15" color="#FFFFFF" onclick="switchRoom('cafe')" hover-info="title: Go to T2F Cafe"></a-circle>
+            <a-circle class="clickable" src="Assets/Icons/Exit_Room.png" rotation="0 -45 0" position="2.25 2 -3.5" radius="0.1" material="transparent: true; opacity: 0.9"proximity-reveal="threshold: 0.98"color="#000000" onclick="switchRoom('bedroom')" hover-info="title: Go to Sabeen's Bedroom"></a-circle>
+
+            <a-circle class="clickable" src="Assets/Icons/Exit_Room.png" rotation="0 90 0" position="-2 2.1 2.5" radius="0.1" material="transparent: true; opacity: 0.9"proximity-reveal="threshold: 0.98"color="#000000" onclick="switchRoom('cafe')" hover-info="title: Go to T2F Cafe"></a-circle>
         </a-entity>     
 
         <a-entity id="room-babybox" visible="false">
             <a-sky src="#bg-Baby_Box"></a-sky>
             <a-circle class="clickable" src="Assets/Icons/Audio.png" position="1 1.5 -4" radius="0.1" color="#FFFFFF" onclick="interact('plants_mahenaz')"></a-circle>
+
+            <a-circle class="clickable" src="Assets/Icons/Image.png" rotation="0 90 0" position="-2.5 1.5 0" radius="0.1" material="transparent: true; opacity: 0.9"proximity-reveal="threshold: 0.98"color="#000000" onclick="interact('artefact_raggedy_ann')" hover-info="id: artefact_raggedy_ann"></a-circle>
+
+            <a-circle class="clickable" src="Assets/Icons/Image.png" rotation="0 90 0" position="0 -1.5 -1.5" radius="0.1" material="transparent: true; opacity: 0.9"proximity-reveal="threshold: 0.98"color="#000000" onclick="interact('artefact_flower_earrings')" hover-info="id: artefact_flower_earrings"></a-circle>
+
+            <a-circle class="clickable" src="Assets/Icons/Image.png" rotation="0 180 0" position="1 2.5 2" radius="0.1" material="transparent: true; opacity: 0.9"proximity-reveal="threshold: 0.98"color="#000000" onclick="interact('artefact_view_master')" hover-info="id: artefact_view_master"></a-circle>
             
-            <a-circle class="clickable" src="Assets/Icons/Image.png" rotation="0 90 0" position="-2.5 1.5 0" radius="0.08" color="#FFFFFF" onclick="interact('artefact_raggedy_ann')" hover-info="id: artefact_raggedy_ann"></a-circle>
-
-            <a-circle class="clickable" src="Assets/Icons/Image.png" rotation="0 90 0" position="0 -1.5 -1.5" radius="0.08" color="#FFFFFF" onclick="interact('artefact_flower_earrings')" hover-info="id: artefact_flower_earrings"></a-circle>
-
-            <a-circle class="clickable" src="Assets/Icons/Image.png" rotation="0 180 0" position="1 2.5 2" radius="0.08" color="#FFFFFF" onclick="interact('artefact_view_master')" hover-info="id: artefact_view_master"></a-circle>
-
-            <a-circle class="clickable"src="Assets/Icons/Exit_Room.png" position="2 1 -2" radius="0.1" color="#FFFFFF" onclick="switchRoom('bedroom')" hover-info="title: Go to Sabeen's Bedroom"></a-circle>
+            <a-circle class="clickable"src="Assets/Icons/Exit_Room.png" position="2 1 -2" radius="0.1" material="transparent: true; opacity: 0.9"proximity-reveal="threshold: 0.98"color="#000000" onclick="switchRoom('bedroom')" hover-info="title: Go to Sabeen's Bedroom"></a-circle>
         </a-entity>
 
         <a-entity id="room-gallery" visible="false">
             <a-sky src="#bg-T2F_Gallery"></a-sky>
 
-            <a-circle class="clickable" src="Assets/Icons/Audio.png" position="1 1.5 -4" radius="0.1" color="#FFFFFF" onclick="interact('plants_mahenaz')"></a-circle>
+            <a-circle class="clickable" src="Assets/Icons/Audio.png" position="1 1.5 -4" radius="0.1" material="transparent: true; opacity: 0.9"proximity-reveal="threshold: 0.98"color="#000000" onclick="interact('plants_mahenaz')"></a-circle>
 
-            <a-circle class="clickable"src="Assets/Icons/Exit_Room.png" position="2 1 -2" radius="0.1" color="#FFFFFF" onclick="switchRoom('office')" hover-info="title: Go to Sabeen's Office"></a-circle>
+            <a-circle class="clickable"src="Assets/Icons/Exit_Room.png" position="2 1 -2" radius="0.1" material="transparent: true; opacity: 0.9"proximity-reveal="threshold: 0.98"color="#000000" onclick="switchRoom('office')" hover-info="title: Go to Sabeen's Office"></a-circle>
         </a-entity>
 
         <a-entity id="room-cafe" visible="false">
             <a-sky src="#bg-T2F_Cafe"></a-sky>
 
-            <a-circle class="clickable" src="Assets/Icons/Audio.png" position="1 1.5 -4" radius="0.1" color="#FFFFFF" onclick="interact('plants_mahenaz')" hover-info="id: plants_mahenaz"></a-circle>
-            
-            <a-circle class="clickable" src="Assets/Icons/Exit_Room.png" rotation="0 90 0" position="-3 2 4" radius="0.08" color="#FFFFFF" onclick="switchRoom('office')" hover-info="title: Go to Sabeen's Office"></a-circle>
+            <a-circle class="clickable" src="Assets/Icons/Audio.png" position="1 1.5 -4" radius="0.1" material="transparent: true; opacity: 0.9"proximity-reveal="threshold: 0.98"color="#000000" onclick="interact('plants_mahenaz')" hover-info="id: plants_mahenaz"></a-circle>
 
-            <a-circle class="clickable" src="Assets/Icons/Exit_Room.png" rotation="0 90 0" position="-3 2 1" radius="0.08" color="#FFFFFF" onclick="switchRoom('gallery')" hover-info="title: Go to T2F Gallery"></a-circle>
+            <a-circle class="clickable" src="Assets/Icons/Exit_Room.png" rotation="0 90 0" position="-3 2 4" radius="0.1" material="transparent: true; opacity: 0.9"proximity-reveal="threshold: 0.98"color="#000000" onclick="switchRoom('office')" hover-info="title: Go to Sabeen's Office"></a-circle>
+
+            <a-circle class="clickable" src="Assets/Icons/Exit_Room.png" rotation="0 90 0" position="-3 2 1" radius="0.1" material="transparent: true; opacity: 0.9"proximity-reveal="threshold: 0.98"color="#000000" onclick="switchRoom('gallery')" hover-info="title: Go to T2F Gallery"></a-circle>
         </a-entity>
 
         <a-entity id="rig">
             <a-camera id="main-camera"">
                 
                  <a-cursor 
-                    raycaster="objects: .clickable"
+                    raycaster="objects: .clickable; showLine: false; far: 100; interval: 50"
                     color="#D6B743"
-                    position="0 0 -0.5" 
-                    scale="2 2 2"
-                    opacity="0.8">
+                    scale="4 4 4"
+                    border-color="#000000"
+                    border-width="1">
                 </a-cursor>
+
             </a-camera>
             <a-entity laser-controls="hand: right" raycaster="objects: .clickable"></a-entity>
         </a-entity>
@@ -646,10 +641,16 @@ function startExperience() {
 }
 
 function switchRoom(roomID) {
-    // Hide all rooms
-    document.querySelectorAll('[id^="room-"]').forEach(room => room.setAttribute('visible', 'false'));
+    // FIX 1: Manually hide the tooltip so it doesn't carry over
+    const worldTooltip = document.querySelector('#world-tooltip');
+    if (worldTooltip) worldTooltip.setAttribute('visible', 'false');
+
+    // 2. Hide all rooms
+    document.querySelectorAll('[id^="room-"]').forEach(room => {
+        room.setAttribute('visible', 'false');
+    });
     
-    // Show target room
+    // 3. Show target room
     const targetRoom = document.getElementById('room-' + roomID);
     if (targetRoom) {
         targetRoom.setAttribute('visible', 'true');
