@@ -486,6 +486,43 @@ nav button:hover { color: #D6B743; }
     flex-shrink: 0;
 }
 .custom-audio-btn:active { transform: scale(0.9); }
+
+#global-mute-btn {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    z-index: 9999;
+    background: #D6B743;
+    color: #393939;
+    border: none;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s;
+    padding: 10px;
+}
+#global-mute-btn:hover { transform: scale(1.1); }
+
+/* Icon Color Control */
+#mute-icon {
+    width: 100%;
+    height: 100%;
+    background-color: #393939; /* CHANGE THIS to control icon color */
+    -webkit-mask-size: contain;
+    mask-size: contain;
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    -webkit-mask-position: center;
+    mask-position: center;
+}
+.icon-sound-on { -webkit-mask-image: url('Assets/Icons/Unmute.png'); mask-image: url('Assets/Icons/Unmute.png'); }
+.icon-sound-off { -webkit-mask-image: url('Assets/Icons/Mute.png'); mask-image: url('Assets/Icons/Mute.png'); }
+
 </style>
 </head>
 <body>
@@ -570,6 +607,10 @@ nav button:hover { color: #D6B743; }
     </div>
 </div>
 
+    <button id="global-mute-btn" onclick="toggleGlobalAudio()">
+        <div id="mute-icon" class="icon-sound-on"></div>
+    </button>
+
     <a-scene loading-screen="dotsColor: #393939; backgroundColor: #F9F6E4">
         
         <a-assets>
@@ -578,6 +619,7 @@ nav button:hover { color: #D6B743; }
             <img id="bg-Baby_Box" src="Assets/Models/Baby_Box.webp">
             <img id="bg-T2F_Gallery" src="Assets/Models/T2F Gallery.webp">
             <img id="bg-T2F_Cafe" src="Assets/Models/T2F_Cafe.webp">
+            <audio id="bg-music" src="Assets/Audios/Background_Score.mp3" loop="true" preload="auto"></audio>
         </a-assets>
 
         <!-- World Space -->
@@ -774,7 +816,8 @@ nav button:hover { color: #D6B743; }
              <a-circle class="clickable panel-button" src="Assets/Icons/Cross Circle.png" position="0 -0.9 0.05" radius="0.08" onclick="closePanel()"></a-circle>
         </a-entity>
 
-        <a-entity id="global-audio" sound="src: ; autoplay: false"></a-entity>
+        <!-- Global Background Audio: Adjust 'volume' (0 to 1) and 'src' here -->
+        <a-entity id="global-audio" sound="src: #bg-music; autoplay: false; loop: true; volume: 0.25; positional: false"></a-entity>
 
         <a-entity id="world-tooltip" visible="false" look-at="#main-camera">
              <a-rounded id="tooltip-bg" 
@@ -952,9 +995,43 @@ function submitEntry(event) {
     document.getElementById('submit-confirmation').style.display = 'block';
 }
 
+// Show mute button immediately since autoplay is enabled
+const muteBtn = document.getElementById('global-mute-btn');
+if (muteBtn) muteBtn.style.display = 'flex';
+
+// Helper to start audio on first interaction
+let hasAudioStarted = false;
+function initGlobalAudio() {
+    if (hasAudioStarted) return;
+    const globalAudio = document.querySelector('#global-audio');
+    const muteBtn = document.getElementById('global-mute-btn');
+    
+    if (globalAudio && globalAudio.components && globalAudio.components.sound) {
+        globalAudio.components.sound.playSound();
+        // Ensure icon is correct
+        const icon = document.getElementById('mute-icon');
+        if (icon) icon.className = 'icon-sound-on';
+        
+        hasAudioStarted = true;
+        
+        // Cleanup listeners
+        document.removeEventListener('click', initGlobalAudio);
+        document.removeEventListener('touchstart', initGlobalAudio);
+        document.removeEventListener('keydown', initGlobalAudio);
+    }
+}
+
+// Attempt to play audio on first user interaction
+document.addEventListener('click', initGlobalAudio);
+document.addEventListener('touchstart', initGlobalAudio);
+document.addEventListener('keydown', initGlobalAudio);
+
 function startExperience() {
     const overlay = document.getElementById('landing-overlay');
     
+    // Ensure audio is playing (if not already started)
+    initGlobalAudio();
+
     // Fade out the overlay
     overlay.style.opacity = '0';
     
@@ -967,6 +1044,21 @@ function startExperience() {
             switchRoom('bedroom'); 
         }
     }, 800);
+}
+
+function toggleGlobalAudio() {
+    const globalAudio = document.querySelector('#global-audio');
+    const icon = document.getElementById('mute-icon');
+    
+    if (globalAudio && globalAudio.components.sound) {
+        if (globalAudio.components.sound.isPlaying) {
+            globalAudio.components.sound.pauseSound();
+            if (icon) icon.className = 'icon-sound-off';
+        } else {
+            globalAudio.components.sound.playSound();
+            if (icon) icon.className = 'icon-sound-on';
+        }
+    }
 }
 
 function switchRoom(roomID) {
