@@ -19,6 +19,8 @@
         tick: function () {
         // ERROR FIX: Stop running if the parent room is hidden
         if (!this.el.object3D.visible) return;
+        // Extra check: ensure the room (parent) is actually visible
+        if (this.el.parentNode && this.el.parentNode.object3D && !this.el.parentNode.object3D.visible) return;
 
         const targetPos = new THREE.Vector3();
         const cameraPos = new THREE.Vector3();
@@ -58,6 +60,8 @@
         el.addEventListener('mouseenter', () => {
             // ERROR FIX: If the icon is hidden, don't show tooltip
             if (!el.object3D.visible || el.getAttribute('material').opacity < 0.1) return;
+            // Extra check: ensure the room (parent) is actually visible
+            if (el.parentNode && el.parentNode.object3D && !el.parentNode.object3D.visible) return;
 
             const worldTooltip = document.querySelector('#world-tooltip');
             const tooltipText = document.querySelector('#tooltip-text');
@@ -109,118 +113,94 @@
     </script>
 
   <style>
-    /* 1. Landing Page Overlay - Added scrolling and alignment fixes */
+    
     #landing-overlay {
-        position: fixed; 
-        top: 0; 
-        left: 0; 
-        width: 100%; 
-        height: 100%;
-        background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.9)), url('Assets/Images/Landing image.webp');
-        background-size: cover;
-        background-position: center;
-        z-index: 999;
-        
-        /* Enable mobile scrolling */
-        overflow-y: auto;
-        -webkit-overflow-scrolling: touch;
-        
-        display: flex; 
-        flex-direction: column; 
-        align-items: center; 
-        /* Uses flex-start so content doesn't get cut off at the top on small screens */
-        justify-content: flex-start; 
-        
-        color: white; 
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        padding: 60px 20px; /* Space for the header and footer button */
-        box-sizing: border-box;
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: #F9F6E4 url('Assets/Images/Home page.png') no-repeat center center;
+    background-size: cover;
+    z-index: 9999; /* Stay above A-Frame */
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    justify-items: center;
+    align-items: center;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    transition: opacity 0.8s ease;
+}
+
+
+.home-menu {
+    text-align: center;
+    color: #393939;
+}
+
+.home-menu h1 { font-family:'Helvetica Neue', Arial, sans-serif; font-style:bold; font-size:200; letter-spacing: 4px; margin-bottom: 5px; }
+.home-menu h2 { font-family:'Helvetica Neue', Arial, sans-serif; font-weight: 200; font-style: italic; margin-bottom: 40px; }
+
+nav button {
+    display: block;
+    background: none;
+    border: none;
+    color: #393939;
+    font-size: 1.2rem;
+    margin: 15px auto;
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+nav button:hover { color: #D6B743; }
+
+.overlay-content {
+    animation: fadeIn 0.5s ease;
+    grid-column: 2;
+    width: 80%;
+    max-width: 450px;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Additional styles for the new home layout */
+.overlay-content input, .overlay-content textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-family: inherit;
+    box-sizing: border-box;
+}
+
+.overlay-content button[type="submit"] {
+    padding: 10px 20px;
+    background: #D6B743;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    color: #393939;
+}
+
+.back-btn {
+    background: transparent !important;
+    border: 1px solid #393939 !important;
+    margin-top: 20px;
+    padding: 8px 16px;
+    border-radius: 5px;
+}
+
+@media (max-width: 768px) {
+    #landing-overlay {
+        grid-template-columns: 1fr;
     }
-
-    /* 2. Container - Swaps from side-by-side to stacked on mobile */
-    .content-container {
-        display: flex;
-        flex-direction: row;
-        gap: 20px;
-        max-width: 900px;
-        width: 100%;
-        margin: 30px 0;
+    .overlay-content {
+        grid-column: 1;
     }
+}
 
-    /* 3. Individual Boxes - Reduced padding on mobile for better fit */
-    .info-box {
-        background: rgba(255, 255, 255, 0.1);
-        backdrop-filter: blur(10px);
-        -webkit-backdrop-filter: blur(10px);
-        padding: 25px;
-        border-radius: 15px;
-        border: 1px solid rgba(255, 255, 255, 0.2);
-        flex: 1;
-    }
-
-    .info-box h3 {
-        color: #D6B743; /* Matched to button color for visual hierarchy */
-        margin-top: 0;
-        font-size: 1.1rem;
-        text-transform: uppercase;
-        letter-spacing: 1px;
-    }
-
-    .info-box p, .info-box li {
-        font-size: 0.95rem;
-        line-height: 1.5;
-        opacity: 0.9;
-    }
-
-    /* 4. Start Button - Added margin-bottom to prevent it sticking to the edge */
-    .start-btn { 
-        padding: 15px 50px; 
-        background: #D6B743; 
-        color: black; 
-        cursor: pointer; 
-        border: none; 
-        border-radius: 30px;
-        font-weight: bold; 
-        font-size: 1.2rem;
-        margin-top: 10px;
-        margin-bottom: 60px; /* Critical for mobile scroll clearance */
-        transition: transform 0.2s;
-        flex-shrink: 0;
-    }
-
-    .start-btn:hover { transform: scale(1.05); }
-
-    /* 5. Mobile Specific Media Queries */
-    @media (max-width: 768px) {
-        #landing-overlay {
-            padding-top: 40px;
-        }
-
-        #landing-overlay h1 {
-            font-size: 2rem !important;
-            text-align: center;
-        }
-
-        #landing-overlay h2 {
-            font-size: 1.1rem !important;
-            text-align: center;
-            margin-bottom: 10px;
-        }
-
-        .content-container { 
-            flex-direction: column; 
-            margin: 20px 0;
-        }
-
-        .info-box {
-            padding: 20px;
-        }
-
-        .start-btn {
-            width: 100%; /* Full width button is easier to tap on mobile */
-            max-width: 300px;
-        }
-    }
      /* 1. Change the Loading Text */
         .a-loader-title {
             color: #393939 !important; /* Matches your dot color */
@@ -254,42 +234,46 @@
 <body>
     
     <div id="landing-overlay">
-    <h1 style="font-size: 3rem; margin-bottom: 0;">Under the Amaltaas Tree</h1>
-    <h2 style="font-weight: 300; margin-top: 5px; opacity: 0.8;">Remembering Sabeen Mahmud (1974 - 2015)</h2> 
-
-    <div class="content-container">
-        <div class="info-box">
-            <h3>About the Project</h3>
-            <p>
-                Sabeen Mahmud was a Pakistani human rights activist, entrepreneur, and designer.
-                She stood for community, culture, and open dialogue. With these principles 
-                founded The Second Floor (T2F), a coffee house and community space in Karachi.
-            </p>
-            <p>    
-                In 2015 after hosting a panel titled “Unsilencing Balochistan” Sabeen was shot 
-                at a signal as she was leaving the event.
-            </p>
-            <p>
-                This archive allows viewers to get to know Sabeen and her work through virtual reconstructions 
-                of spaces she inhabited. This virtual museum explores these spaces to discover the stories behind artefacts and memories from her friends, colleagues, and family.
-            </p>
-        </div>
-
-        <div class="info-box">
-            <h3>How to Explore</h3>
-            <ul style="line-height: 1.6; padding-left: 20px;">
-                <li><strong>Look Around:</strong> Click and drag your mouse.</li>
-                <li><strong>Interact:</strong> Hover over icons to see titles. Click to open details.</li>
-                <li><strong>Navigation:</strong> Look for the 'Exit' icons to move between rooms.</li>
-            </ul>
-        </div>
-
+    <div id="home-section" class="overlay-content">
+            <div class="home-menu">
+                <h1>UNDER THE AMALTAAS TREE</h1>
+                <h2>The Sabeen Mahmud Archive</h2>
+                
+                <nav>
+                    <button onclick="startExperience()">Enter Archive</button>
+                    <button onclick="showSection('message-section')">Message to the Archive</button>
+                    <button onclick="showSection('submit-section')">Submit Entry</button>
+                    <button onclick="showSection('acknowledgments-section')">Acknowledgments</button>
+                </nav>
+            </div>
     </div>
 
-    <button class="start-btn" onclick="startExperience()">ENTER ARCHIVE</button>
+    <div id="message-section" class="overlay-content" style="display:none">
+        <h3>Message to the Archive</h3>
+        <p>Your content here...</p>
+        <button class="back-btn" onclick="showSection('home-section')">← Back</button>
+    </div>
+
+    <div id="acknowledgments-section" class="overlay-content" style="display:none">
+        <h3>Acknowledgments</h3>
+        <p>Your content here...</p>
+        <button class="back-btn" onclick="showSection('home-section')">← Back</button>
+    </div>
+
+    <div id="submit-section" class="overlay-content" style="display:none">
+        <h3>Submit Entry</h3>
+        <form id="entry-form" onsubmit="submitEntry(event)">
+            <input type="text" name="name" placeholder="Your Name" required>
+            <input type="email" name="email" placeholder="Your Email" required>
+            <textarea name="message" placeholder="Describe your entry..." required></textarea>
+            <button type="submit">Send Entry</button>
+        </form>
+        <div id="submit-confirmation" style="display:none; text-align: center; margin-bottom: 20px; color: #393939;">
+            <p>Thank you! Your entry has been submitted.</p>
+        </div>
+        <button class="back-btn" onclick="showSection('home-section')">← Back</button>
+    </div>
 </div>
-
-
 
     <a-scene loading-screen="dotsColor: #393939; backgroundColor: #F9F6E4">
         
@@ -630,14 +614,64 @@ function closePanel() {
 }
 
 // 4. ROOM & APP LOGIC
-function startExperience() {
-    // 1. Hide the Landing Overlay
-    document.getElementById('landing-overlay').style.display = 'none';
+function showSection(sectionId) {
+    // Hide all sections
+    document.querySelectorAll('.overlay-content').forEach(section => {
+        section.style.display = 'none';
+    });
+    
+    // Reset submit form state if opening submit section
+    if (sectionId === 'submit-section') {
+        const form = document.getElementById('entry-form');
+        const confirm = document.getElementById('submit-confirmation');
+        if (form) {
+            form.style.display = 'block';
+            form.reset();
+        }
+        if (confirm) confirm.style.display = 'none';
+    }
 
-    // 2. Switch to the bedroom
-    // The built-in loader will stay visible until the bedroom image 
-    // is actually ready to be seen.
-    switchRoom('bedroom');
+    // Show the chosen one
+    document.getElementById(sectionId).style.display = 'block';
+}
+
+function submitEntry(event) {
+    event.preventDefault();
+    
+    // NOTE: To send email directly without opening a mail app, you need a backend service.
+    // You can use a service like Formspree.io. Register there, get a form ID, 
+    // and uncomment the fetch code below, replacing 'YOUR_FORM_ID'.
+    
+    /*
+    const form = event.target;
+    const data = new FormData(form);
+    fetch("https://formspree.io/f/YOUR_FORM_ID", {
+        method: "POST",
+        body: data,
+        headers: { 'Accept': 'application/json' }
+    });
+    */
+
+    // Show confirmation message
+    document.getElementById('entry-form').style.display = 'none';
+    document.getElementById('submit-confirmation').style.display = 'block';
+}
+
+function startExperience() {
+    const overlay = document.getElementById('landing-overlay');
+    
+    // Fade out the overlay
+    overlay.style.opacity = '0';
+    
+    // Remove from DOM after fade completes so it doesn't block clicks
+    setTimeout(() => {
+        overlay.style.display = 'none';
+        
+        // Trigger your A-Frame room logic
+        if (typeof switchRoom === "function") {
+            switchRoom('bedroom'); 
+        }
+    }, 800);
 }
 
 function switchRoom(roomID) {
