@@ -262,11 +262,11 @@ nav button:hover { color: #D6B743; }
 
     <div id="submit-section" class="overlay-content" style="display:none">
         <h3>Submit Entry</h3>
-        <form id="entry-form" onsubmit="submitEntry(event)">
-            <input type="text" name="name" placeholder="Your Name" required>
-            <input type="email" name="email" placeholder="Your Email" required>
-            <textarea name="message" placeholder="Describe your entry..." required></textarea>
-            <button type="submit">Send Entry</button>
+        <form action="https://formspree.io/f/mbdddbqd" method="POST">
+        <input type="text" name="name" placeholder="Your Name" required>
+        <input type="email" name="_replyto" placeholder="Your Email" required>
+        <textarea name="message" placeholder="Describe your entry..." required></textarea>
+        <button type="submit">Send Entry</button>
         </form>
         <div id="submit-confirmation" style="display:none; text-align: center; margin-bottom: 20px; color: #393939;">
             <p>Thank you! Your entry has been submitted.</p>
@@ -689,6 +689,21 @@ function switchRoom(roomID) {
     if (targetRoom) {
         targetRoom.setAttribute('visible', 'true');
     }
+}
+function submitEntry(event) {
+    event.preventDefault(); // Prevents the page from refreshing
+
+    const form = document.getElementById('entry-form');
+    const confirmation = document.getElementById('submit-confirmation');
+    
+    // You would typically use 'fetch' here to send data to a server
+    // For now, we will simulate a successful send:
+    
+    form.style.display = 'none'; // Hide the form
+    confirmation.style.display = 'block'; // Show "Thank you"
+    
+    // Note: To actually get an email, you still need an API 
+    // like EmailJS or a backend server.
 }
     </script>
     
