@@ -1,6 +1,156 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-storage-compat.js"></script>
+
+<script>
+    // Replace this with YOUR actual config from the Firebase Console
+    const firebaseConfig = {
+        apiKey: "AIzaSyAvA4JDbbaHCLenqM1hOLBIW55-9SnVLQI",
+        authDomain: "sabeen-mahmud-archive.firebaseapp.com",
+        databaseURL: "https://sabeen-mahmud-archive-default-rtdb.europe-west1.firebasedatabase.app/",
+        projectId: "sabeen-mahmud-archive",
+        storageBucket: "sabeen-mahmud-archive.appspot.com",
+        messagingSenderId: "1024567890123",
+        appId: "YOUR_APP_ID"
+    };
+
+// Initialize Firebase (using compat versions as per previous setup)
+firebase.initializeApp(firebaseConfig);
+const database = firebase.database();
+const storage = firebase.storage();
+
+// --- 2. GLOBAL STATE ---
+let isAdmin = false;
+let mediaRecorder;
+let audioChunks = [];
+
+// --- 3. TEXT MESSAGE LOGIC ---
+function saveTextMessage() {
+    const name = document.getElementById('guest-name').value || "Anonymous";
+    const text = document.getElementById('guest-text').value;
+
+    if (!text) return alert("Please share your thoughts first!");
+
+    database.ref('messages').push({
+        name: name,
+        text: text,
+        type: 'text',
+        timestamp: Date.now()
+    });
+
+    document.getElementById('guest-text').value = "";
+}
+
+// --- 4. AUDIO RECORDING LOGIC ---
+async function startRecording() {
+    try {
+        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+        mediaRecorder = new MediaRecorder(stream);
+        audioChunks = [];
+
+        mediaRecorder.ondataavailable = (event) => audioChunks.push(event.data);
+
+        mediaRecorder.onstop = async () => {
+            const audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
+            const fileName = `voice_${Date.now()}.wav`;
+            const storageRef = storage.ref('recordings/' + fileName);
+
+            // Upload to Storage
+            const snapshot = await storageRef.put(audioBlob);
+            const downloadURL = await snapshot.ref.getDownloadURL();
+
+            // Save URL to Database
+            database.ref('messages').push({
+                name: document.getElementById('guest-name').value || "Voice Entry",
+                audioUrl: downloadURL,
+                type: 'audio',
+                timestamp: Date.now()
+            });
+        };
+
+        mediaRecorder.start();
+        document.getElementById('record-btn').innerText = "🛑 Stop Recording";
+        document.getElementById('record-btn').onclick = stopRecording;
+    } catch (err) {
+        alert("Could not access microphone: " + err);
+    }
+}
+
+function stopRecording() {
+    mediaRecorder.stop();
+    document.getElementById('record-btn').innerText = "🎤 Start Recording";
+    document.getElementById('record-btn').onclick = startRecording;
+}
+
+// --- 5. LIVE FEED & RENDERING ---
+database.ref('messages').orderByChild('timestamp').on('value', (snapshot) => {
+    const container = document.getElementById('feed-container');
+    const data = snapshot.val();
+    let html = "";
+
+    const messages = data ? Object.entries(data).reverse() : [];
+
+    messages.forEach(([key, m]) => {
+        // Admin Delete Button
+        const deleteBtn = isAdmin ? 
+            `<button class="delete-btn" onclick="deleteMessage('${key}', '${m.type}', '${m.audioUrl || ''}')">Delete</button>` : '';
+
+        if (m.type === 'text') {
+            html += `
+                <div class="feed-item" id="${key}">
+                    ${deleteBtn}
+                    <strong>${m.name}</strong>
+                    <p>${m.text}</p>
+                </div>`;
+        } else if (m.type === 'audio') {
+            html += `
+                <div class="feed-item" id="${key}">
+                    ${deleteBtn}
+                    <strong>${m.name}</strong>
+                    <audio controls src="${m.audioUrl}"></audio>
+                </div>`;
+        }
+    });
+
+    container.innerHTML = html || "<p>No messages yet. Be the first!</p>";
+});
+
+// --- 6. MODERATION & ADMIN ---
+function enterAdminMode() {
+    const pw = prompt("Enter Moderation Password:");
+    if (pw === "SabeenArchive2024") { 
+        isAdmin = true;
+        alert("Admin Mode Active. Red delete buttons will appear.");
+        // Re-trigger the data listener to show buttons
+        database.ref('messages').once('value', () => {}); 
+    } else {
+        alert("Incorrect password.");
+    }
+}
+
+async function deleteMessage(key, type, audioUrl) {
+    if (!confirm("Are you sure you want to delete this entry?")) return;
+
+    try {
+        if (type === 'audio' && audioUrl) {
+            const storageRef = firebase.storage().refFromURL(audioUrl);
+            await storageRef.delete();
+        }
+        await database.ref('messages').child(key).remove();
+        console.log("Deleted successfully");
+    } catch (error) {
+        console.error("Error deleting:", error);
+    }
+}
+
+</script>
+
+<script>
+    </script>
+
     <script src="https://aframe.io/releases/1.4.0/aframe.min.js"></script>
     <script src="https://unpkg.com/aframe-look-at-component@0.8.0/dist/aframe-look-at-component.min.js"></script>
     <script src="https://unpkg.com/aframe-rounded@1.0.3/dist/aframe-rounded-component.min.js"></script>
@@ -230,6 +380,83 @@ nav button:hover { color: #D6B743; }
         .a-canvas {
         background-color: #F9F6E4 !important;
     }
+    .delete-btn {
+    float: right;
+    background: #ff4d4d;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 0.8rem;
+    margin-left: 10px;
+}
+
+.delete-btn:hover {
+    background: #cc0000;
+}
+
+.feed-item {
+    position: relative;
+    overflow: hidden; /* Clears the float */
+    background: #F9F6E4;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    text-align: left;
+}
+
+.feed-item strong {
+    display: block;
+    color: #D6B743;
+    font-size: 0.9rem;
+    margin-bottom: 5px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.feed-item p {
+    margin: 0;
+    line-height: 1.4;
+    color: #555;
+}
+
+.feed-item audio {
+    width: 100%;
+    height: 30px;
+    margin-top: 5px;
+}
+
+#feed-container {
+    max-height: 40vh;
+    overflow-y: auto;
+    background: rgba(255, 255, 255, 0.6);
+    border-radius: 8px;
+    padding: 10px;
+    margin-top: 20px;
+    border: 1px solid rgba(0,0,0,0.1);
+}
+
+.message-controls {
+    display: flex;
+    gap: 10px;
+}
+
+.message-controls button {
+    flex: 1;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: transform 0.1s;
+}
+
+.btn-post { background: #D6B743; color: #393939; }
+.btn-record { background: #e74c3c; color: white; }
+
+.message-controls button:active { transform: scale(0.98); }
 </style>
 </head>
 <body>
@@ -243,7 +470,7 @@ nav button:hover { color: #D6B743; }
                 <nav>
                     <button onclick="showSection('instructions-section')">Enter Archive</button>
                     <button onclick="showSection('message-section')">Message to the Archive</button>
-                    <button onclick="showSection('submit-section')">Submit Entry</button>
+                    <button onclick="showSection('submit-section')">Contribute to the Archive</button>
                     <button onclick="showSection('acknowledgments-section')">Acknowledgments</button>
                 </nav>
             </div>
@@ -262,7 +489,21 @@ nav button:hover { color: #D6B743; }
 
     <div id="message-section" class="overlay-content" style="display:none">
         <h3>Message to the Archive</h3>
-        <p>Your content here...</p>
+        
+        <div class="input-group">
+            <input type="text" id="guest-name" placeholder="Your Name (Optional)">
+            <textarea id="guest-text" placeholder="Share your memory or message..." rows="3"></textarea>
+            
+            <div class="message-controls">
+                <button class="btn-post" onclick="saveTextMessage()">Post Message</button>
+                <button id="record-btn" class="btn-record" onclick="startRecording()">🎤 Record Audio</button>
+            </div>
+        </div>
+
+        <div id="feed-container">
+            <p style="text-align:center; opacity:0.6;">Loading archive entries...</p>
+        </div>
+
         <button class="back-btn" onclick="showSection('home-section')">← Back</button>
     </div>
 
@@ -278,11 +519,11 @@ nav button:hover { color: #D6B743; }
     </div>
 
     <div id="submit-section" class="overlay-content" style="display:none">
-        <h3>Submit Entry</h3>
+        <h3>Contribute to the Archive</h3>
         <form action="https://formspree.io/f/mbdddbqd" method="POST">
         <input type="text" name="name" placeholder="Your Name" required>
         <input type="email" name="_replyto" placeholder="Your Email" required>
-        <textarea name="message" placeholder="Describe your entry..." required></textarea>
+        <textarea name="message" placeholder="How would you like to contribute..." required></textarea>
         <button type="submit">Send Entry</button>
         </form>
         <div id="submit-confirmation" style="display:none; text-align: center; margin-bottom: 20px; color: #393939;">
@@ -707,21 +948,8 @@ function switchRoom(roomID) {
         targetRoom.setAttribute('visible', 'true');
     }
 }
-function submitEntry(event) {
-    event.preventDefault(); // Prevents the page from refreshing
 
-    const form = document.getElementById('entry-form');
-    const confirmation = document.getElementById('submit-confirmation');
-    
-    // You would typically use 'fetch' here to send data to a server
-    // For now, we will simulate a successful send:
-    
-    form.style.display = 'none'; // Hide the form
-    confirmation.style.display = 'block'; // Show "Thank you"
-    
-    // Note: To actually get an email, you still need an API 
-    // like EmailJS or a backend server.
-}
+
     </script>
     
 </body>
