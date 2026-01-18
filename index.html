@@ -169,7 +169,7 @@ async function deleteMessage(key) {
             // Extra check: ensure the room (parent) is actually visible
             if (el.parentNode && el.parentNode.object3D && !el.parentNode.object3D.visible) return;
 
-            const worldTooltip = document.querySelector('#world-tooltip');
+            const cursorTooltip = document.querySelector('#cursor-tooltip');
             const tooltipText = document.querySelector('#tooltip-text');
             const tooltipBg = document.querySelector('#tooltip-bg');
             let displayTitle = "";
@@ -182,7 +182,7 @@ async function deleteMessage(key) {
                 displayTitle = this.data.title;
             }
 
-            if (displayTitle && worldTooltip && tooltipText && tooltipBg) {
+            if (displayTitle && cursorTooltip && tooltipText && tooltipBg) {
                 tooltipText.setAttribute('value', displayTitle);
                 
                 // Dynamic width calculation
@@ -192,27 +192,13 @@ async function deleteMessage(key) {
                 // Center the background relative to the text
                 tooltipBg.setAttribute('position', { x: -(estimatedWidth / 2), y: 0, z: 0 });
 
-                // ERROR FIX: Use World Position so rooms don't overlap
-                const worldPos = new THREE.Vector3();
-                el.object3D.getWorldPosition(worldPos);
-                
-                worldTooltip.setAttribute('position', {
-                    x: worldPos.x, 
-                    y: worldPos.y + 0.4, 
-                    z: worldPos.z
-                });
-                
-                // Refresh look-at so it faces the camera immediately
-                if (worldTooltip.components['look-at']) {
-                    worldTooltip.components['look-at'].update();
-                }
-                worldTooltip.setAttribute('visible', true);
+                cursorTooltip.setAttribute('visible', true);
             }
         });
 
         el.addEventListener('mouseleave', () => {
-            const worldTooltip = document.querySelector('#world-tooltip');
-            if (worldTooltip) worldTooltip.setAttribute('visible', false);
+            const cursorTooltip = document.querySelector('#cursor-tooltip');
+            if (cursorTooltip) cursorTooltip.setAttribute('visible', false);
         });
         }
         });
@@ -568,7 +554,7 @@ nav button:hover { color: #D6B743; }
             
             <a-circle class="clickable" src="Assets/Icons/Audio.png" rotation="0 0 0" position="-1 2.4 -3" radius="0.1" material="transparent: true; opacity: 0.9"proximity-reveal="threshold: 0.98"color="#000000" onclick="interact('meeting_zak')" hover-info="id: meeting_zak"></a-circle>
 
-            <a-circle class="clickable" src="Assets/Icons/Audio.png" rotation="0 45 0" position="-2 1.2 -0.9" radius="0.1" material="transparent: true; opacity: 0.9"proximity-reveal="threshold: 0.98"color="#000000" onclick="interact('mac_zak')" hover-info="id: mac_zak"></a-circle>
+            <a-circle class="clickable" src="Assets/Icons/Image.png" rotation="0 45 0" position="-2 1.1 -1" radius="0.1" material="transparent: true; opacity: 0.9" proximity-reveal="threshold: 0.98" color="#000000" onclick="interact('mac_zak_combined')" hover-info="id: mac_zak_combined"></a-circle>
 
             <a-circle class="clickable" src="Assets/Icons/Audio.png" rotation="0 0 0" position="0.65 2.4 -3" radius="0.1" material="transparent: true; opacity: 0.9"proximity-reveal="threshold: 0.98"color="#000000" onclick="interact('tech_faiz')" hover-info="id: tech_faiz"></a-circle>
 
@@ -609,8 +595,6 @@ nav button:hover { color: #D6B743; }
             <a-circle class="clickable" src="Assets/Icons/Image.png" rotation="0 -90 0" position="3 1 -1" radius="0.1" material="transparent: true; opacity: 0.9"proximity-reveal="threshold: 0.98"color="#000000" onclick="interact('kgs_kameez')" hover-info="id: kgs_kameez"></a-circle>
 
             <a-circle class="clickable" src="Assets/Icons/Image.png" rotation="0 45 0" position="-2 1 -0.9" radius="0.1" material="transparent: true; opacity: 0.9"proximity-reveal="threshold: 0.98"color="#000000" onclick="interact('macintosh_se')" hover-info="id: macintosh_se"></a-circle>
-
-            <a-circle class="clickable" src="Assets/Icons/Image.png" rotation="0 45 0" position="-2 1 -1.1" radius="0.1" material="transparent: true; opacity: 0.9"proximity-reveal="threshold: 0.98"color="#000000" onclick="interact('sabeens_mac_in_kc')" hover-info="id: sabeens_mac_in_kc"></a-circle>
 
             <a-circle class="clickable" src="Assets/Icons/Image.png" rotation="0 0 0" position="0.65 2.1 -3" radius="0.1" material="transparent: true; opacity: 0.9"proximity-reveal="threshold: 0.98"color="#000000" onclick="interact('apple_poster')" hover-info="id: apple_poster"></a-circle>
 
@@ -727,6 +711,21 @@ nav button:hover { color: #D6B743; }
                     scale="4 4 4"
                     border-color="#000000"
                     border-width="1">
+                    <a-entity id="cursor-tooltip" visible="false" position="0 0.04 -0.02" scale="0.1 0.1 0.1">
+                        <a-rounded id="tooltip-bg" 
+                            width="1" height="0.4" 
+                            radius="0.05" 
+                            color="black" 
+                            opacity="0.8">
+                        </a-rounded>
+                        <a-text id="tooltip-text" 
+                            value="" 
+                            align="center" 
+                            color="#FFFFFF"
+                            width="2.5" 
+                            position="0 0.2 0.01">
+                        </a-text>
+                    </a-entity>
                 </a-cursor>
 
             </a-camera>
@@ -736,36 +735,23 @@ nav button:hover { color: #D6B743; }
         <a-entity id="info-panel" visible="false" scale="0.7 0.7 0.7" look-at="#main-camera">
             <a-plane id="panel-bg" width="1.6" height="2.2" color="#1a1a1a" opacity="0.9"></a-plane>
 
-            <a-text id="panel-title" value="" position="0 0.9 0.02" align="center" width="1.5" color="#f1c40f"></a-text>
-            <a-image id="panel-img" visible="false" position="0 0.3 0.02" width="1.2" height="0.8"></a-image>
-            <a-text id="panel-desc" value="" position="-0.7 0.2 0.02" align="left" width="1.4"></a-text>
+            <a-text id="panel-title" value="" position="-0.6 0.9 0.02" align="left" width="1.2" color="#f1c40f"></a-text>
+            <a-image id="panel-img" visible="false" position="0 0.3 0.02" width="1.2" height="1.5"></a-image>
+            <a-text id="panel-desc" value="" position="-0.6 0.2 0.02" align="left" width="1.2"></a-text>
+            <a-text id="panel-meta" value="" position="-0.6 0 0.02" align="left" width="1.2"></a-text>
 
             <a-entity id="audio-player-ui" visible="false" position="0 -0.6 0.02">
-                <a-text id="audio-time" value="0:00 / 0:00" align="center" width="1.2" position="0 0.25 0" scale="0.8 0.8 0.8"></a-text>
+                <a-text id="audio-time" value="0:00 / 0:00" align="center" width="1.2" position="0 0.1 0" scale="0.8 0.8 0.8"></a-text>
         
                 <a-circle id="play-pause-btn" class="clickable panel-button" src="Assets/Icons/Pause.png" position="0 -0.1 0.01" radius="0.1" color="#ffffff" onclick="togglePlayback()"></a-circle>
             </a-entity>
 
-             <a-circle class="clickable panel-button" src="Assets/Icons/Cross Circle.png" position="0 -0.9 0.05" radius="0.08" onclick="closePanel()"></a-circle>
+             <a-circle class="clickable panel-button" src="Assets/Icons/Cross Circle.png" position="0.6 0.9 0.05" radius="0.08" onclick="closePanel()"></a-circle>
         </a-entity>
 
         <!-- Global Background Audio: Adjust 'volume' (0 to 1) and 'src' here -->
         <a-entity id="global-audio" sound="src: #bg-music; autoplay: false; loop: true; volume: 0.25; positional: false"></a-entity>
 
-        <a-entity id="world-tooltip" visible="false" look-at="#main-camera">
-             <a-rounded id="tooltip-bg" 
-               width="1" height="0.4" 
-               radius="0.05" 
-               color="black" 
-               opacity="0.8">
-            </a-rounded>
-                <a-text id="tooltip-text" 
-                 value="" 
-                 align="center" 
-                    width="2.5" 
-                    position="0 0.2 0.01">
-                </a-text>
-        </a-entity>
         
     </a-scene>
     
@@ -783,8 +769,10 @@ function interact(id) {
     const camera = document.querySelector('#main-camera');
     const panelImg = document.querySelector('#panel-img');
     const panelDesc = document.querySelector('#panel-desc');
+    const panelMeta = document.querySelector('#panel-meta');
     const audioPlayerUI = document.querySelector('#audio-player-ui');
     const playPauseBtn = document.querySelector('#play-pause-btn');
+    const audioTime = document.querySelector('#audio-time');
 
     // Position Panel
     const pos = new THREE.Vector3();
@@ -798,7 +786,10 @@ function interact(id) {
     stopAudio();
     panelImg.setAttribute('visible', 'false');
     audioPlayerUI.setAttribute('visible', 'false');
+    panelImg.setAttribute('position', '0 0.3 0.02');
     document.querySelector('#panel-title').setAttribute('value', data.title);
+    panelMeta.setAttribute('value', '');
+    audioTime.setAttribute('position', '0 0.1 0');
 
     if (data.type === 'image') {
         const imgLoader = new Image();
@@ -815,21 +806,61 @@ function interact(id) {
             
             // Adjust text position based on image height
             const imageBottomY = 0.3 - (finalHeight / 2);
-            const textPadding = 0.5; // <--- ADJUST THIS to increase/decrease gap
-            const descY = imageBottomY - textPadding;
-            panelDesc.setAttribute('position', {x: -0.7, y: descY, z: 0.02});
+            panelDesc.setAttribute('position', {x: -0.6, y: -0.4, z: 0.02});
             panelDesc.setAttribute('value', `${data.meta.description}\n\nPhotographer: ${data.meta.author}`);
+            panelMeta.setAttribute('position', {x: -0.6, y: -0.8, z: 0.02});
         };
         imgLoader.src = data.src;
 
     } else if (data.type === 'audio') {
         audioPlayerUI.setAttribute('visible', 'true');
+        audioPlayerUI.setAttribute('position', '0 0.2 0.02');
         playPauseBtn.setAttribute('src', 'Assets/Icons/Pause.png'); // Reset to pause icon
-        panelDesc.setAttribute('position', {x: -0.7, y: 0.2, z: 0.02});
+        panelDesc.setAttribute('position', {x: -0.6, y: -0.2, z: 0.02});
         panelDesc.setAttribute('value', `${data.meta.description}\n\nSpeaker: ${data.meta.author}\nRelation: ${data.meta.relation}\nDate: ${data.meta.date}`);
         
         currentAudio.src = data.src;
         currentAudio.play().then(() => startProgressTracker()).catch(e => console.log("Play blocked"));
+    } else if (data.type === 'audio-image') {
+        audioPlayerUI.setAttribute('visible', 'true');
+        playPauseBtn.setAttribute('src', 'Assets/Icons/Pause.png');
+        panelDesc.setAttribute('position', {x: -0.6, y: -0.4, z: 0.02});
+        
+        // 1. Set Description
+        panelDesc.setAttribute('value', data.meta.description);
+
+        // 2. Calculate offset based on description length (approximate)
+        // const lineCount = Math.max(1, Math.ceil(data.meta.description.length / 40)); 
+        // const descHeight = lineCount * 0.06; 
+        // const metaY = -0.15 - descHeight - 0.05; // Position below description
+
+        // 3. Set Metadata with custom spacing
+        panelMeta.setAttribute('position', {x: -0.6, y: -0.8, z: 0.02});
+        panelMeta.setAttribute('value', `Speaker: ${data.meta.author}\nRelation: ${data.meta.relation}\nRecorded On: ${data.meta.date}\nPhotographer: ${data.meta.photographer}\nPicture Date: ${data.meta.picture_date}`);
+        panelMeta.setAttribute('line-height', 60); // <--- ADJUST THIS VALUE to control spacing
+        
+        if (data.audioSrc) {
+            currentAudio.src = data.audioSrc;
+            currentAudio.play().then(() => startProgressTracker()).catch(e => console.log("Play blocked"));
+        }
+
+        const imgLoader = new Image();
+        imgLoader.onload = function() {
+            const maxWidth = 1.3, maxHeight = 0.5;
+            const aspectRatio = imgLoader.naturalWidth / imgLoader.naturalHeight;
+            let finalWidth = maxWidth, finalHeight = maxWidth / aspectRatio;
+            if (finalHeight > maxHeight) { finalHeight = maxHeight; finalWidth = maxHeight * aspectRatio; }
+            
+            panelImg.setAttribute('width', finalWidth);
+            panelImg.setAttribute('height', finalHeight);
+            panelImg.setAttribute('src', data.src);
+            panelImg.setAttribute('visible', 'true');
+            panelImg.setAttribute('position', {x: 0, y: 0.45, z: 0.02});
+
+            const playerY = 0.45 - (finalHeight / 2) - 0.15;
+            audioPlayerUI.setAttribute('position', {x: 0, y: playerY, z: 0.02});
+        };
+        imgLoader.src = data.src;
     }
     panel.setAttribute('visible', 'true');
 }
@@ -967,8 +998,8 @@ function toggleGlobalAudio() {
 
 function switchRoom(roomID) {
     // FIX 1: Manually hide the tooltip so it doesn't carry over
-    const worldTooltip = document.querySelector('#world-tooltip');
-    if (worldTooltip) worldTooltip.setAttribute('visible', 'false');
+    const cursorTooltip = document.querySelector('#cursor-tooltip');
+    if (cursorTooltip) cursorTooltip.setAttribute('visible', 'false');
 
     // 2. Hide all rooms
     document.querySelectorAll('[id^="room-"]').forEach(room => {

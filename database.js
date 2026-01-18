@@ -1690,6 +1690,23 @@ const ARCHIVE_DATABASE = {
         title: "Entering the World of Blogging",
         date: "March 29, 2003",
         content: "Feel ancient entering the world of blogging as late as 2003... The 'shock and awe' of the Iraq war has pushed me to finally find my voice."
+    },
+    
+    // --- Combined Audio-Image Entries ---
+    "mac_zak_combined": {
+        type: "audio-image",
+        room: "bedroom",
+        title: "Sabeen's First Mac",
+        src: "Assets/Images/Sabeens Bedroom_Artefact_ Macintosh SE.webp",
+        audioSrc: "Assets/Audios/Sabeens Bedroom_How Sabeen got her first mac_Zaheer Kidvai_25.09.25.mp3",
+        meta: {
+            photographer: "Unknown",
+            author: "Zaheer Alam Kidvai (deceased)",
+            picture_date: "N/A",
+            date: "September 25, 2025",
+            relation: "Sabeen’s Mentor",
+            description: "How Sabeen got her first mac."
+        }
     }
     
 };
