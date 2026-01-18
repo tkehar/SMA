@@ -53,31 +53,17 @@ function renderFeed() {
 
     messages.forEach(([key, m]) => {
         if (!m) return;
-        const type = m.type || (m.audioUrl ? 'audio' : 'text');
 
         // Admin Delete Button
         const deleteBtn = isAdmin ? 
-            `<button class="delete-btn" onclick="deleteMessage('${key}', '${type}', '${m.audioUrl || ''}')">Delete</button>` : '';
+            `<button class="delete-btn" onclick="deleteMessage('${key}')">Delete</button>` : '';
 
-        if (type === 'audio') {
-            html += `
-                <div class="feed-item" id="${key}">
-                    ${deleteBtn}
-                    <strong>${m.name || 'Voice Entry'}</strong>
-                    <div style="display: flex; align-items: center; margin-top: 5px;">
-                        <button id="btn-${key}" class="custom-audio-btn" onclick="toggleFeedAudio('${key}')">▶</button>
-                        <span style="font-size: 0.85rem; margin-left: 10px; color: #555; font-style: italic;">Voice Note</span>
-                        <audio id="audio-${key}" src="${m.audioUrl}" onended="resetFeedAudioButton('${key}')"></audio>
-                    </div>
-                </div>`;
-        } else {
-            html += `
-                <div class="feed-item" id="${key}">
-                    ${deleteBtn}
-                    <strong>${m.name || 'Anonymous'}</strong>
-                    <p>${m.text || ''}</p>
-                </div>`;
-        }
+        html += `
+            <div class="feed-item" id="${key}">
+                ${deleteBtn}
+                <strong>${m.name || 'Anonymous'}</strong>
+                <p>${m.text || ''}</p>
+            </div>`;
     });
 
     container.innerHTML = html || "<p>No messages yet. Be the first!</p>";
@@ -87,44 +73,6 @@ database.ref('messages').orderByChild('timestamp').on('value', (snapshot) => {
     feedSnapshot = snapshot;
     renderFeed();
 });
-
-// --- 5b. AUDIO FEED CONTROLS ---
-function toggleFeedAudio(key) {
-    const audio = document.getElementById(`audio-${key}`);
-    const btn = document.getElementById(`btn-${key}`);
-    
-    // Stop other playing audios to prevent overlap
-    document.querySelectorAll('audio[id^="audio-"]').forEach(a => {
-        if (a !== audio) {
-            a.pause();
-            a.currentTime = 0;
-            const k = a.id.replace('audio-', '');
-            const b = document.getElementById(`btn-${k}`);
-            if (b) {
-                b.innerText = "▶";
-                b.style.paddingLeft = "3px";
-            }
-        }
-    });
-
-    if (audio.paused) {
-        audio.play();
-        btn.innerText = "⏸";
-        btn.style.paddingLeft = "0"; // Center pause icon
-    } else {
-        audio.pause();
-        btn.innerText = "▶";
-        btn.style.paddingLeft = "3px"; // Offset play icon visually
-    }
-}
-
-function resetFeedAudioButton(key) {
-    const btn = document.getElementById(`btn-${key}`);
-    if (btn) {
-        btn.innerText = "▶";
-        btn.style.paddingLeft = "3px";
-    }
-}
 
 // --- 6. MODERATION & ADMIN ---
 function enterAdminMode() {
@@ -145,7 +93,7 @@ document.addEventListener('keydown', (e) => {
     }
 });
 
-async function deleteMessage(key, type, audioUrl) {
+async function deleteMessage(key) {
     if (!confirm("Are you sure you want to delete this entry?")) return;
 
     try {
@@ -157,9 +105,6 @@ async function deleteMessage(key, type, audioUrl) {
 }
 
 </script>
-
-<script>
-    </script>
 
     <script src="https://aframe.io/releases/1.4.0/aframe.min.js"></script>
     <script src="https://unpkg.com/aframe-look-at-component@0.8.0/dist/aframe-look-at-component.min.js"></script>
@@ -285,7 +230,10 @@ async function deleteMessage(key, type, audioUrl) {
     display: grid;
     grid-template-columns: 1fr 1fr;
     justify-items: center;
-    align-items: center;
+    align-items: start;
+    padding-top: 80px;
+    box-sizing: border-box;
+    overflow-y: auto;
     font-family: 'Helvetica Neue', Arial, sans-serif;
     transition: opacity 0.8s ease;
 }
@@ -465,27 +413,6 @@ nav button:hover { color: #D6B743; }
 }
 
 .btn-post { background: #D6B743; color: #393939; }
-.btn-record { background: #e74c3c; color: white; }
-
-.message-controls button:active { transform: scale(0.98); }
-
-.custom-audio-btn {
-    background: #D6B743;
-    border: none;
-    border-radius: 50%;
-    width: 35px;
-    height: 35px;
-    color: #393939;
-    font-size: 14px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding-left: 3px; /* Visual adjustment for play triangle */
-    transition: transform 0.1s;
-    flex-shrink: 0;
-}
-.custom-audio-btn:active { transform: scale(0.9); }
 
 #global-mute-btn {
     position: fixed;
@@ -506,6 +433,7 @@ nav button:hover { color: #D6B743; }
     transition: transform 0.2s;
     padding: 10px;
 }
+#landing-overlay, #global-mute-btn { pointer-events: auto; }
 #global-mute-btn:hover { transform: scale(1.1); }
 
 /* Icon Color Control */
@@ -523,11 +451,18 @@ nav button:hover { color: #D6B743; }
 .icon-sound-on { -webkit-mask-image: url('Assets/Icons/Unmute.png'); mask-image: url('Assets/Icons/Unmute.png'); }
 .icon-sound-off { -webkit-mask-image: url('Assets/Icons/Mute.png'); mask-image: url('Assets/Icons/Mute.png'); }
 
+/* Hide VR button initially */
+.a-enter-vr { display: none; }
+
 </style>
 </head>
 <body>
     
-    <div id="landing-overlay">
+    <a-scene loading-screen="dotsColor: #393939; backgroundColor: #F9F6E4"
+             webxr="overlayElement: #dom-overlay-root; optionalFeatures: dom-overlay">
+
+    <div id="dom-overlay-root" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 9999;">
+        <div id="landing-overlay">
     <div id="home-section" class="overlay-content">
             <div class="home-menu">
                 <h1>UNDER THE AMALTAAS TREE</h1>
@@ -536,8 +471,8 @@ nav button:hover { color: #D6B743; }
                 <nav>
                     <button onclick="showSection('about-section')">About</button>
                     <button onclick="showSection('instructions-section')">Enter Archive</button>
-                    <button onclick="showSection('message-section')">Message to the Archive</button>
-                    <button onclick="showSection('submit-section')">Contribute to the Archive</button>
+                    <button onclick="showSection('message-section')">Leave a message</button>
+                    <button onclick="showSection('submit-section')">Contribute</button>
                     <button onclick="showSection('acknowledgments-section')">Acknowledgments</button>
                 </nav>
             </div>
@@ -589,6 +524,7 @@ nav button:hover { color: #D6B743; }
         <p>Data compilation by Marvi Mazhar & Associates</p>
         <p>Initial Design Concept by Najia Sabahat Khan</p>
         <p>Special Thanks to Mahenaz Mahmud and Prof. Emily Smith at UE Berlin for their continued support</p>
+        <p>Background Score - "Dhun" by Sandeep Das & Aneesh Mishra</p>
         <p> </p>
     </div>
 
@@ -601,18 +537,14 @@ nav button:hover { color: #D6B743; }
         <textarea name="message" placeholder="How would you like to contribute..." required></textarea>
         <button type="submit">Send Message</button>
         </form>
-        <div id="submit-confirmation" style="display:none; text-align: center; margin-bottom: 20px; color: #393939;">
-            <p>Thank you! Your entry has been submitted.</p>
-        </div>
     </div>
 </div>
 
     <button id="global-mute-btn" onclick="toggleGlobalAudio()">
         <div id="mute-icon" class="icon-sound-on"></div>
     </button>
+    </div>
 
-    <a-scene loading-screen="dotsColor: #393939; backgroundColor: #F9F6E4">
-        
         <a-assets>
             <img id="bg-office" src="Assets/Models/Sabeens_office.webp">
             <img id="bg-bedroom" src="Assets/Models/Sabeens_Bedroom.webp">
@@ -786,9 +718,10 @@ nav button:hover { color: #D6B743; }
         </a-entity>
 
         <a-entity id="rig">
-            <a-camera id="main-camera"">
+            <a-camera id="main-camera">
                 
                  <a-cursor 
+                    fuse="false"
                     raycaster="objects: .clickable; showLine: false; far: 100; interval: 50"
                     color="#D6B743"
                     scale="4 4 4"
@@ -958,41 +891,8 @@ function showSection(sectionId) {
         section.style.display = 'none';
     });
     
-    // Reset submit form state if opening submit section
-    if (sectionId === 'submit-section') {
-        const form = document.getElementById('entry-form');
-        const confirm = document.getElementById('submit-confirmation');
-        if (form) {
-            form.style.display = 'block';
-            form.reset();
-        }
-        if (confirm) confirm.style.display = 'none';
-    }
-
     // Show the chosen one
     document.getElementById(sectionId).style.display = 'block';
-}
-
-function submitEntry(event) {
-    event.preventDefault();
-    
-    // NOTE: To send email directly without opening a mail app, you need a backend service.
-    // You can use a service like Formspree.io. Register there, get a form ID, 
-    // and uncomment the fetch code below, replacing 'YOUR_FORM_ID'.
-    
-    /*
-    const form = event.target;
-    const data = new FormData(form);
-    fetch("https://formspree.io/f/YOUR_FORM_ID", {
-        method: "POST",
-        body: data,
-        headers: { 'Accept': 'application/json' }
-    });
-    */
-
-    // Show confirmation message
-    document.getElementById('entry-form').style.display = 'none';
-    document.getElementById('submit-confirmation').style.display = 'block';
 }
 
 // Show mute button immediately since autoplay is enabled
@@ -1031,6 +931,10 @@ function startExperience() {
     
     // Ensure audio is playing (if not already started)
     initGlobalAudio();
+
+    // Show VR button
+    const vrBtn = document.querySelector('.a-enter-vr');
+    if (vrBtn) vrBtn.style.display = 'block';
 
     // Fade out the overlay
     overlay.style.opacity = '0';
