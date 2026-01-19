@@ -50,18 +50,7 @@ const ARCHIVE_DATABASE = {
             description: ""
         }
     },
-    "artefact_faiz_aaj_kay_naam_cd_rom": {
-        type: "image",
-        room: "office",
-        title: "Faiz Aaj Kay Naam (For today's name)",
-        src: "Assets/Images/Sabeens Office_Artefact_ Faiz Aaj Kay Naam CD Rom.webp",
-        meta: {
-            author: "Humayun Memon",
-            date: "July 11, 2019",
-            relation: "N/A",
-            description: "Pakistan’s First interactive CD ROM on Faiz Ahmed Faiz, for which Sabeen did the research and collaboratively designed with Zaheer Kidvai, Jehan Ara, and others."
-        }
-    },
+    
     "artefact_frames_quotes": {
         type: "image",
         room: "office",
@@ -72,18 +61,6 @@ const ARCHIVE_DATABASE = {
             date: "July 11, 2019",
             relation: "N/A",
             description: ""
-        }
-    },
-    "artefact_hackathon_sticker": {
-        type: "image",
-        room: "office",
-        title: "Civic Hackathon Sticker",
-        src: "Assets/Images/Sabeens Office_Artefact_ Hackathon Sticker.webp",
-        meta: {
-            author: "Humayun Memon",
-            date: "July 11, 2019",
-            relation: "N/A",
-            description: "This sticker was part of Pakistan’s First Civic Hackathon where participants filled out their vision for their neighbourhood. This was what sabeen wanted in hers."
         }
     },
     "artefact_last_sticky_note": {
@@ -144,18 +121,6 @@ const ARCHIVE_DATABASE = {
             date: "July 11, 2019",
             relation: "N/A",
             description: "Dear Sabeen & Rania, Thank you so much for your support & for accomodating us at such short notice. Your space looks like its a real labour of love and we look foward to collaborating with you in the future. When you're in Delhi next do give us a shout! warmly, Rahaab and Tanvi on behalf of the DIX team & Geothe Institut"
-        }
-    },
-    "artefact_note_natasha_ejaz": {
-        type: "image",
-        room: "office",
-        title: "Note from Natasha Ejaz",
-        src: "Assets/Images/Sabeens Office_Artefact_ Note Natasha Ejaz.webp",
-        meta: {
-            author: "Humayun Memon",
-            date: "July 11, 2019",
-            relation: "N/A",
-            description: "Dear ZAK & Sabeen, Poppy sends her love & support to T2F through this cheque. My sincerest love & regards, Natasha Ejaz"
         }
     },
     "artefact_note_nilofer_halai": {
@@ -607,18 +572,6 @@ const ARCHIVE_DATABASE = {
             description: "Her fun loving nature and antics."
         }
     },
-    "music_sheila": {
-        type: "audio",
-        room: "bedroom",
-        title: "Sabeen's Music",
-        src: "Assets/Audios/Sabeens Bedroom_Her Music Taste_Sheila Fazal_06.01.2020.mp3",
-        meta: {
-            date: "January 6, 2020",
-            author: "Sheila Fazal",
-            relation: "Sabeen’s Aunt",
-            description: "Her passion for and taste in music."
-        }
-    },
     "father_zahir": {
         type: "audio",
         room: "bedroom",
@@ -665,18 +618,6 @@ const ARCHIVE_DATABASE = {
             author: "Zaheer Alam Kidvai †",
             relation: "Sabeen’s Mentor and CEO of Beyond Information Technology Solutions (BITS)",
             description: "How sabeen got her first mac."
-        }
-    },
-    "tech_faiz": {
-        type: "audio",
-        room: "bedroom",
-        title: "Sabeen and Tech",
-        src: "Assets/Audios/Sabeens Bedroom_Sabeen and technology_Faiz Somji_27.09.2021.mp3",
-        meta: {
-            date: "September 27, 2021",
-            author: "Faiz Somji",
-            relation: "Sabeen’s Cousin",
-            description: "On Sabeen's love for technology."
         }
     },
     "school_zareena": {
@@ -884,18 +825,6 @@ const ARCHIVE_DATABASE = {
             description: "How Sabeen's family saw her work."
         }
     },
-    "hackathon_sheba": {
-        type: "audio",
-        room: "office",
-        title: "Civic Hackathon",
-        src: "Assets/Audios/Sabeens Office_Civic Hackathon_Sheba Najmi_24.07.2023.mp3",
-        meta: {
-            date: "July 25, 2023",
-            author: "Sheba Najmi",
-            relation: "Founder & Executive Director of Code for Pakistan",
-            description: "Organising Pakistan's first civic hackathon."
-        }
-    },
     "borders_salima": {
         type: "audio",
         room: "office",
@@ -920,18 +849,6 @@ const ARCHIVE_DATABASE = {
             description: "On Sabeen's work for the Faiz Ahmed Faiz CD ROM (Pakistan's first interactive CD ROM)."
         }
     },
-    "faiz_zak": {
-        type: "audio",
-        room: "office",
-        title: "Faiz CD ROM",
-        src: "Assets/Audios/Sabeens Office_Faiz CD_Zaheer Kidvai_25.09.25.mp3",
-        meta: {
-            date: "September 25, 2025",
-            author: "Zaheer Alam Kidvai †",
-            relation: "Sabeen’s Mentor and CEO of Beyond Information Technology Solutions (BITS)",
-            description: "On Sabeen's work for the Faiz Ahmed Faiz CD ROM (Pakistan's first interactive CD ROM)."
-        }
-    },
     "bits_zak": {
         type: "audio",
         room: "office",
@@ -942,18 +859,6 @@ const ARCHIVE_DATABASE = {
             author: "Zaheer Alam Kidvai †",
             relation: "Sabeen’s Mentor and CEO of Beyond Information Technology Solutions (BITS)",
             description: "How Sabeen became a Partner at BITS."
-        }
-    },
-    "pn_chand": {
-        type: "audio",
-        room: "office",
-        title: "Peaceniche",
-        src: "Assets/Audios/Sabeens Office_On Peaceniche_Chand Singhara_21.06.2023.mp3",
-        meta: {
-            date: "September 21, 2023",
-            author: "Chand Singhara",
-            relation: "Manager Music Room at Habib University, Former Gallery Manager at T2F",
-            description: "What is Peaceniche?"
         }
     },
     "t2f_zak": {
@@ -1026,30 +931,6 @@ const ARCHIVE_DATABASE = {
             author: "Zeenia Shaukat",
             relation: "Co-Founder and Director of The Knowledge Forum",
             description: "On Sabeen’s activism and humility."
-        }
-    },
-    "impact_omer": {
-        type: "audio",
-        room: "office",
-        title: "Sabeen's Impact and Vision",
-        src: "Assets/Audios/Sabeens Office_Sabeens Impact_Omer Dossani_27.09.2021.mp3",
-        meta: {
-            date: "September 27, 2021",
-            author: "Omer Dossani",
-            relation: "Sabeen's Cousin",
-            description: "What was Sabeen’s Impact and Vision?"
-        }
-    },
-    "impact_sameer": {
-        type: "audio",
-        room: "office",
-        title: "Sabeen's Impact in South Asia",
-        src: "Assets/Audios/Sabeens Office_Sabeens Impact_Sameer Dossani_27.09.2021.mp3",
-        meta: {
-            date: "September 27, 2021",
-            author: "Sameer Dossani",
-            relation: "Sabeen's Cousin",
-            description: "What was Sabeen’s Impact and Vision?"
         }
     },
     "workethic_seema": {
@@ -1692,7 +1573,7 @@ const ARCHIVE_DATABASE = {
         content: "Feel ancient entering the world of blogging as late as 2003... The 'shock and awe' of the Iraq war has pushed me to finally find my voice."
     },
     
-    // --- Combined Audio-Image Entries ---
+    // --- Bedroom Audio-Image Entries ---
     "mac_zak_combined": {
         type: "audio-image",
         room: "bedroom",
@@ -1707,6 +1588,108 @@ const ARCHIVE_DATABASE = {
             relation: "Sabeen’s Mentor",
             description: "How Sabeen got her first mac."
         }
-    }
-    
-};
+    },
+    "music_sheila_combined": {
+        type: "audio-image",
+        room: "bedroom",
+        title: "Jim Morrison Poster",
+        src: "Assets/Images/Sabeens Bedroom_Artefact_Jim Morrison Poster.webp",
+        audioSrc: "Assets/Audios/Sabeens Bedroom_Her Music Taste_Sheila Fazal_06.01.2020.mp3",
+        meta: {
+            photographer: "Schokofeh Kamiz",
+            author: "Sheila Fazal",
+            picture_date: "January 23, 2018",
+            date: "January 6, 2020",
+            relation: "Sabeen’s  Aunt",
+            description: "Her passion for and taste in music."
+        }
+    },
+    "tech_faiz_combined": {
+        type: "audio-image",
+        room: "bedroom",
+        title: "Apple Poster",
+        src: "Assets/Images/Sabeens Bedroom_Artefact_Apple Poster.webp",
+        audioSrc: "Assets/Audios/Sabeens Bedroom_Sabeen and technology_Faiz Somji_27.09.2021.mp3",
+        meta: {
+            photographer: "Schokofeh Kamiz",
+            picture_date: "January 23, 2018",
+            author: "Faiz Somji",
+            date: "September 27, 2021",
+            relation: "Sabeen’s Cousin",
+            description: "On Sabeen's love for technology."
+        }
+    },
+    // --- Office Audio-Image Entries ---
+    "Peaceniche_chand_combined": {
+        type: "audio-image",
+        room: "office",
+        title: "Peaceniche Patch",
+        src: "Assets/Images/Sabeens Office_Artefact_ Peaceniche Patch.webp",
+        audioSrc: "Assets/Audios/Sabeens Office_On Peaceniche_Chand Singhara_21.06.2023.mp3",
+        meta: {
+            photographer: "Humayun Memon",
+            picture_date: "July 11, 2019",
+            author: "Chand Singhara",
+            date: "September 27, 2021",
+            relation: "Manager Music Room at Habib University/Former Gallery Manager at T2F",
+            description: "What was Peaceniche "
+        }
+    },
+    "Hackathon_sheba_combined": {
+        type: "audio-image",
+        room: "office",
+        title: "Civic Hackathon Sticker",
+        src: "Assets/Images/Sabeens Office_Artefact_ Hackathon Sticker.webp",
+        audioSrc: "Assets/Audios/Sabeens Office_Civic Hackathon_Sheba Najmi_24.07.2023.mp3",
+        meta: {
+            photographer: "Humayun Memon",
+            picture_date: "July 11, 2019",
+            author: "Sheba Najmi",
+            date: "July 25, 2023",
+            relation: "Founder & Executive Director of Code for Pakistan",
+            description: "Pakistan's First Civic Hackathon organized by Sabeen. Participants filled out their vision for their neighbourhood on this sticker. This was what sabeen wanted in hers"
+        }
+    },
+    "artefact_faiz_aaj_kay_naam_cd_rom": {
+        type: "audio-image",
+        room: "office",
+        title: "Faiz Aaj Kay Naam (For today's name)",
+        src: "Assets/Images/Sabeens Office_Artefact_ Faiz Aaj Kay Naam CD Rom.webp",
+        audioSrc: "Assets/Audios/Sabeens Office_Faiz CD_Zaheer Kidvai_25.09.25.mp3",
+        meta: {
+            photographer: "Humayun Memon",
+            picture_date: "July 11, 2019",
+            author: "Zaheer Alam Kidvai (deceased)",
+            date: "September 25, 2025",
+            relation: "Sabeen’s Mentor and CEO of Beyond Information Technology Solutions (BITS)",
+            description: "Pakistan’s First interactive CD ROM on Faiz Ahmed Faiz, for which Sabeen did the research and collaboratively designed with Zaheer Kidvai, Jehan Ara, and others."
+        }
+    },
+    "impact_omer": {
+        type: "audio-image",
+        room: "office",
+        title: "Note from Natasha Ejaz",
+        src: "Assets/Images/Sabeens Office_Artefact_ Note Natasha Ejaz.webp",
+        audioSrc: "Assets/Audios/Sabeens Office_Sabeens Impact_Omer Dossani_27.09.2021.mp3",
+        meta: {
+            photographer: "Humayun Memon",
+            picture_date: "July 11, 2019",
+            date: "September 27, 2021",
+            author: "Omer Dossani",
+            relation: "Sabeen's Cousin",
+            description: "Dear ZAK & Sabeen, Poppy sends her love & support to T2F through this cheque. My sincerest love & regards, Natasha Ejaz"
+        }
+    },
+    "impact_sameer": {
+        type: "audio",
+        room: "office",
+        title: "Sabeen's Impact in South Asia",
+        src: "Assets/Audios/Sabeens Office_Sabeens Impact_Sameer Dossani_27.09.2021.mp3",
+        meta: {
+            date: "September 27, 2021",
+            author: "Sameer Dossani",
+            relation: "Sabeen's Cousin",
+            description: "What was Sabeen’s Impact and Vision?"
+        }
+    },
+}
