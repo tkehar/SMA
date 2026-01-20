@@ -111,18 +111,6 @@ const ARCHIVE_DATABASE = {
             description: "To T2F, Thanks for always being there. ♡ Fahad and Marium"
         }
     },
-    "artefact_note_goethe": {
-        type: "image",
-        room: "office",
-        title: "Note from Goethe Institut",
-        src: "Assets/Images/Sabeens Office_Artefact_ Note Goethe.webp",
-        meta: {
-            author: "Humayun Memon",
-            date: "July 11, 2019",
-            relation: "N/A",
-            description: "Dear Sabeen & Rania, Thank you so much for your support & for accomodating us at such short notice. Your space looks like its a real labour of love and we look foward to collaborating with you in the future. When you're in Delhi next do give us a shout! warmly, Rahaab and Tanvi on behalf of the DIX team & Geothe Institut"
-        }
-    },
     "artefact_note_nilofer_halai": {
         type: "image",
         room: "office",
@@ -293,18 +281,7 @@ const ARCHIVE_DATABASE = {
             description: "A pin/brooch that Sabeen would wear as a child."
         }
     },
-    "artefact_raggedy_ann": {
-        type: "image",
-        room: "Baby_Box",
-        title: "Raggedy Ann doll",
-        src: "Assets/Images/Baby Box_Artefact_ Raggedy Ann.webp",
-        meta: {
-            author: "Insiyah Syed",
-            date: "September 24, 2020",
-            relation: "N/A",
-            description: "A doll that Sabeen was inseparable from as a child. She would drag it everywhere and so the doll is now tattered."
-        }
-    },
+    
     "artefact_sabeen_with_cricketball": {
         type: "image",
         room: "Baby_Box",
@@ -327,18 +304,6 @@ const ARCHIVE_DATABASE = {
             date: "September 24, 2020",
             relation: "N/A",
             description: "Sabeen’s Childhood Sandals"
-        }
-    },
-    "artefact_shoes": {
-        type: "image",
-        room: "Baby_Box",
-        title: "Childhood Shoes",
-        src: "Assets/Images/Baby Box_Artefact_ Shoes.webp",
-        meta: {
-            author: "Insiyah Syed",
-            date: "September 24, 2020",
-            relation: "N/A",
-            description: "Sabeen’s Childhood Shoes"
         }
     },
     "artefact_view_master": {
@@ -615,7 +580,7 @@ const ARCHIVE_DATABASE = {
         src: "Assets/Audios/Sabeens Bedroom_How Sabeen got her first mac_Zaheer Kidvai_25.09.25.mp3",
         meta: {
             date: "September 25, 2025",
-            author: "Zaheer Alam Kidvai †",
+            author: "Zaheer Alam Kidvai (deceased)",
             relation: "Sabeen’s Mentor and CEO of Beyond Information Technology Solutions (BITS)",
             description: "How sabeen got her first mac."
         }
@@ -1383,18 +1348,7 @@ const ARCHIVE_DATABASE = {
             description: "Remembering Sabeen as a child."
         }
     },
-    "dolls_tallat": {
-        type: "audio",
-        room: "Baby_Box",
-        title: "Sabeen’s Dolls and Toys",
-        src: "Assets/Audios/Baby Box_Dolls and Shoes_Tallat Mahmud_21.03.2022.mp3",
-        meta: {
-            date: "March 21, 2022",
-            author: "Tallat Mahmud",
-            relation: "Sabeen's Father",
-            description: "Remembering Sabeen as a child."
-        }
-    },
+
     "school_omer": {
         type: "audio",
         room: "Baby_Box",
@@ -1681,15 +1635,52 @@ const ARCHIVE_DATABASE = {
         }
     },
     "impact_sameer": {
-        type: "audio",
+        type: "audio-image",
         room: "office",
-        title: "Sabeen's Impact in South Asia",
-        src: "Assets/Audios/Sabeens Office_Sabeens Impact_Sameer Dossani_27.09.2021.mp3",
+        title: "Note from Goethe Institut Delhi",
+        src: "Assets/Images/Sabeens Office_Artefact_ Note Goethe.webp",
+        audioSrc: "Assets/Audios/Sabeens Office_Sabeens Impact_Sameer Dossani_27.09.2021.mp3",
         meta: {
+            photographer: "Humayun Memon",
+            picture_date: "July 11, 2019",
             date: "September 27, 2021",
             author: "Sameer Dossani",
             relation: "Sabeen's Cousin",
-            description: "What was Sabeen’s Impact and Vision?"
+            description: "Dear Sabeen & Raania, Thank you so much for your support & for accomodating us at such short notice. Your space looks like its a real labour of love and we look foward to collaborating with you in the future. When you're in Delhi next do give us a shout! warmly, Rahaab and Tanvi on behalf of the DIX team & Geothe Institut"
+        }
+    },
+
+// --- Baby box Audio Image Entries ---
+
+"artefact_raggedy_ann": {
+        type: "audio-image",
+        room: "Baby_Box",
+        title: "Raggedy Ann doll",
+        src: "Assets/Images/Baby Box_Artefact_ Raggedy Ann.webp",
+        audioSrc: "Assets/Audios/Baby Box_Dolls and Shoes_Tallat Mahmud_21.03.2022.mp3",
+        meta: {
+            photographer: "Insiyah Syed",
+            picture_date: "September 24, 2020",
+            author: "Tallat Mahmud",
+            date: "March 21, 2022",
+            relation: "Sabeen's Father",
+            description: "A doll that Sabeen was inseparable from as a child. She would drag it everywhere and so the doll is now tattered."
+        },
+    },
+
+"artefact_shoes": {
+        type: "audio-image",
+        room: "Baby_Box",
+        title: "Sabeen's Shoes",
+        src: "Assets/Images/Baby Box_Artefact_ Shoes.webp",
+        audioSrc: "Assets/Audios/Baby Box_Dolls and Shoes_Tallat Mahmud_21.03.2022.mp3",
+        meta: {
+            photographer: "Insiyah Syed",
+            picture_date: "September 24, 2020",
+            author: "Tallat Mahmud",
+            date: "March 21, 2022",
+            relation: "Sabeen's Father",
+            description: "Sabeen's shoes from her childhood."
         }
     },
 }

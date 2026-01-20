@@ -284,8 +284,9 @@ nav button:hover { color: #D6B743; }
 }
 
 .back-btn {
-    background: transparent !important;
-    border: 1px solid #393939 !important;
+    background-color: #000000 !important;
+    border: 0 !important;
+    color: #ffffff !important; 
     margin-top: 0;
     margin-bottom: 20px;
     padding: 8px 16px;
@@ -460,6 +461,7 @@ nav button:hover { color: #D6B743; }
                 
                 <nav>
                     <button onclick="showSection('about-section')">About</button>
+                    <button onclick="showSection('curatorial-section')">Curatorial Note</button>
                     <button onclick="showSection('instructions-section')">Enter Archive</button>
                     <button onclick="showSection('message-section')">Leave a message</button>
                     <button onclick="showSection('submit-section')">Contribute</button>
@@ -474,6 +476,12 @@ nav button:hover { color: #D6B743; }
         <p>Sabeen Mahmud was a human rights activist, entrepreneur and design enthusiast who stood for community, culture and open dialogue. In 2007 she founded The Second Floor (T2F) a café and community space.</p>
         <p>In April 2015 Sabeen hosted an event titled “Unsilencing Balochistan” opening a discourse on Balochistan’s disappeared people. Following this Sabeen was shot at a signal as she was leaving the event, cutting short a life that had impacted and changed so many.</p>
         <p>This archive allows viewers to get to know Sabeen Mahmud and her work through virtual reconstructions of spaces she inhabited. Explore these spaces to discover the stories behind artefacts and memories from her friends, colleagues, and family.</p>
+    </div>
+
+     <div id="curatorial-section" class="overlay-content" style="display:none">
+        <button class="back-btn" onclick="showSection('home-section')">← Back</button>
+        <h3>Curatorial Note</h3>
+        <p>In progress </p>
     </div>
 
     <div id="instructions-section" class="overlay-content" style="display:none">
@@ -506,9 +514,9 @@ nav button:hover { color: #D6B743; }
 
     </div>
 
-    <div id="acknowledgments-section" class="overlay-content" style="display:none">
+    <div id="acknowledgments-section" class="overlay-content" style="display:none; text-align: center;">
         <button class="back-btn" onclick="showSection('home-section')">← Back</button>
-        <h2>Acknowledgments</h2>
+        <h3>Acknowledgments</h3>
         <p>Design & Development by Talha Kehar</p>
         <p>Data provided by Mahenaz Mahmud</p>
         <p>Data compilation by Marvi Mazhar & Associates</p>
@@ -558,7 +566,7 @@ nav button:hover { color: #D6B743; }
             
             <a-circle class="clickable" src="Assets/Icons/Audio.png" rotation="0 0 0" position="-1 2.4 -3" radius="0.1" material="transparent: true; opacity: 0.9" proximity-reveal="threshold: 0.98" color="#000000" onclick="interact('meeting_zak')" hover-info="id: meeting_zak"></a-circle>
 
-            <a-circle class="clickable" src="Assets/Icons/Image.png" rotation="0 45 0" position="-2 1.1 -1" radius="0.1" material="transparent: true; opacity: 0.9" proximity-reveal="threshold: 0.98" color="#000000" onclick="interact('mac_zak_combined')" hover-info="id: mac_zak_combined"></a-circle>
+            <a-circle class="clickable" src="Assets/Icons/Image.png" rotation="0 45 0" position="-2 1.1 -1" radius="0.1" material="transparent: true; opacity: 0.9" proximity-reveal="threshold: 0.95" color="#000000" onclick="interact('mac_zak_combined')" hover-info="id: mac_zak_combined"></a-circle>
 
             <a-circle class="clickable" src="Assets/Icons/Audio.png" rotation="0 0 0" position="0.65 2.4 -3" radius="0.1" material="transparent: true; opacity: 0.9" proximity-reveal="threshold: 0.98" color="#000000" onclick="interact('tech_faiz_combined')" hover-info="id: tech_faiz_combined"></a-circle>
 
@@ -671,7 +679,7 @@ nav button:hover { color: #D6B743; }
         <a-entity id="room-babybox" visible="false">
             <a-sky src="#bg-Baby_Box"></a-sky>
 
-            <a-circle class="clickable" src="Assets/Icons/Image.png" rotation="0 90 0" position="-2.5 1.5 0" radius="0.1" material="transparent: true; opacity: 0.9" proximity-reveal="threshold: 0.98" color="#000000" onclick="interact('artefact_raggedy_ann')" hover-info="id: artefact_raggedy_ann"></a-circle>
+            <a-circle class="clickable" src="Assets/Icons/Image.png" rotation="0 90 0" position="-2.5 1.5 0" radius="0.1" material="transparent: true; opacity: 0.9" proximity-reveal="threshold: 0.95" color="#000000" onclick="interact('artefact_raggedy_ann')" hover-info="id: artefact_raggedy_ann"></a-circle>
 
             <a-circle class="clickable" src="Assets/Icons/Image.png" rotation="0 90 0" position="0 -1.5 -1.5" radius="0.1" material="transparent: true; opacity: 0.9" proximity-reveal="threshold: 0.98" color="#000000" onclick="interact('artefact_flower_earrings')" hover-info="id: artefact_flower_earrings"></a-circle>
 
