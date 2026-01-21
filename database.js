@@ -320,195 +320,195 @@ const ARCHIVE_DATABASE = {
     },
     // --- Sabeen's Room Images ---
     "bedside_table": {
-        "type": "image",
-        "room": "bedroom",
-        "title": "Sabeen’s Bedside Table",
-        "src": "Assets/Images/Sabeens Bedroom_Artefact_ Bedside Table.webp",
-        "meta": {
-            "author": "Unknown",
-            "date": "N/A",
-            "relation": "N/A",
-            "description": ""
+        type: "image",
+        room: "bedroom",
+        title: "Sabeen’s Bedside Table",
+        src: "Assets/Images/Sabeens Bedroom_Artefact_ Bedside Table.webp",
+        meta: {
+            author: "Unknown",
+            date: "N/A",
+            relation: "N/A",
+            description: ""
         }
     },
     "kgs_kameez": {
-        "type": "image",
-        "room": "bedroom",
-        "title": "Sabeen’s KGS Uniform",
-        "src": "Assets/Images/Sabeens Bedroom_Artefact_ KGS Kameez.webp",
-        "meta": {
-            "author": "Insiyah Syed",
-            "date": "October 22, 2020",
-            "relation": "N/A",
-            "description": "Sabeen’s uniform from Karachi Grammar School signed by her friends and cohorts on the last day of school"
+        type: "image",
+        room: "bedroom",
+        title: "Sabeen’s KGS Uniform",
+        src: "Assets/Images/Sabeens Bedroom_Artefact_ KGS Kameez.webp",
+        meta: {
+            author: "Insiyah Syed",
+            date: "October 22, 2020",
+            relation: "N/A",
+            description: "Sabeen’s uniform from Karachi Grammar School signed by her friends and cohorts on the last day of school"
         }
     },
     "kgs_shalwaar": {
-        "type": "image",
-        "room": "bedroom",
-        "title": "Sabeen’s uniform from Karachi Grammar School signed by her friends and cohorts on the last day of school",
-        "src": "Assets/Images/Sabeens Bedroom_Artefact_ KGS Shalwaar.webp",
-        "meta": {
-            "author": "Insiyah Syed",
-            "date": "October 22, 2020",
-            "relation": "N/A",
-            "description": ""
+        type: "image",
+        room: "bedroom",
+        title: "Sabeen’s uniform from Karachi Grammar School signed by her friends and cohorts on the last day of school",
+        src: "Assets/Images/Sabeens Bedroom_Artefact_ KGS Shalwaar.webp",
+        meta: {
+            author: "Insiyah Syed",
+            date: "October 22, 2020",
+            relation: "N/A",
+            description: ""
         }
     },
     "macintosh_se": {
-        "type": "image",
-        "room": "bedroom",
-        "title": "Sabeen’s Macintosh SE",
-        "src": "Assets/Images/Sabeens Bedroom_Artefact_ Macintosh SE.webp",
-        "meta": {
-            "author": "Unknown",
-            "date": "N/A",
-            "relation": "N/A",
-            "description": "Sabeen’s First Macintosh "
+        type: "image",
+        room: "bedroom",
+        title: "Sabeen’s Macintosh SE",
+        src: "Assets/Images/Sabeens Bedroom_Artefact_ Macintosh SE.webp",
+        meta: {
+            author: "Unknown",
+            date: "N/A",
+            relation: "N/A",
+            description: "Sabeen’s First Macintosh "
         }
     },
     "sabeens_mac_in_kc": {
-        "type": "image",
-        "room": "bedroom",
-        "title": "Sabeen’s Macintosh in Kinnaird College",
-        "src": "Assets/Images/Sabeens Bedroom_Artefact_ Sabeens Mac in KC.webp",
-        "meta": {
-            "author": "Unknown",
-            "date": "N/A",
-            "relation": "N/A",
-            "description": "Sabeen transported this macintosh with her to university in Kinnaird College and paid a monthly fee out of her own pocket so the dorm would allow her to keep it."
+        type: "image",
+        room: "bedroom",
+        title: "Sabeen’s Macintosh in Kinnaird College",
+        src: "Assets/Images/Sabeens Bedroom_Artefact_ Sabeens Mac in KC.webp",
+        meta: {
+            author: "Unknown",
+            date: "N/A",
+            relation: "N/A",
+            description: "Sabeen transported this macintosh with her to university in Kinnaird College and paid a monthly fee out of her own pocket so the dorm would allow her to keep it."
         }
     },
     "apple_poster": {
-        "type": "image",
-        "room": "bedroom",
-        "title": "An Apple poster in Sabeen’s Room",
-        "src": "Assets/Images/Sabeens Bedroom_Artefact_Apple Poster.webp",
-        "meta": {
-            "author": "Schokofeh Kamiz",
-            "date": "January 23, 2018",
-            "relation": "N/A",
-            "description": ""
+        type: "image",
+        room: "bedroom",
+        title: "An Apple poster in Sabeen’s Room",
+        src: "Assets/Images/Sabeens Bedroom_Artefact_Apple Poster.webp",
+        meta: {
+            author: "Schokofeh Kamiz",
+            date: "January 23, 2018",
+            relation: "N/A",
+            description: ""
         }
     },
     "ball_marks_on_ceiling": {
-        "type": "image",
-        "room": "bedroom",
-        "title": "Ball Marks on the ceiling",
-        "src": "Assets/Images/Sabeens Bedroom_Artefact_Ball marks on ceiling.webp",
-        "meta": {
-            "author": "Schokofeh Kamiz",
-            "date": "January 23, 2018",
-            "relation": "N/A",
-            "description": "Sabeen was an avid Cricket player and would often bounce her cricket ball on the ceiling while playing catch which led to these marks."
+        type: "image",
+        room: "bedroom",
+        title: "Ball Marks on the ceiling",
+        src: "Assets/Images/Sabeens Bedroom_Artefact_Ball marks on ceiling.webp",
+        meta: {
+            author: "Schokofeh Kamiz",
+            date: "January 23, 2018",
+            relation: "N/A",
+            description: "Sabeen was an avid Cricket player and would often bounce her cricket ball on the ceiling while playing catch which led to these marks."
         }
     },
     "chamakpati_ac": {
-        "type": "image",
-        "room": "bedroom",
-        "title": "Chamakpati AC",
-        "src": "Assets/Images/Sabeens Bedroom_Artefact_Chamakpati AC.webp",
-        "meta": {
-            "author": "Unknown",
-            "date": "N/A",
-            "relation": "N/A",
-            "description": ""
+        type: "image",
+        room: "bedroom",
+        title: "Chamakpati AC",
+        src: "Assets/Images/Sabeens Bedroom_Artefact_Chamakpati AC.webp",
+        meta: {
+            author: "Unknown",
+            date: "N/A",
+            relation: "N/A",
+            description: ""
         }
     },
     "cricket_bats": {
-        "type": "image",
-        "room": "bedroom",
-        "title": "Cricket and Baseball Bats",
-        "src": "Assets/Images/Sabeens Bedroom_Artefact_Cricket Bats.webp",
-        "meta": {
-            "author": "Schokofeh Kamiz",
-            "date": "January 23, 2018",
-            "relation": "N/A",
-            "description": ""
+        type: "image",
+        room: "bedroom",
+        title: "Cricket and Baseball Bats",
+        src: "Assets/Images/Sabeens Bedroom_Artefact_Cricket Bats.webp",
+        meta: {
+            author: "Schokofeh Kamiz",
+            date: "January 23, 2018",
+            relation: "N/A",
+            description: ""
         }
     },
     "cupboard": {
-        "type": "image",
-        "room": "bedroom",
-        "title": "Sabeen’s Cupboard",
-        "src": "Assets/Images/Sabeens Bedroom_Artefact_Cupboard.webp",
-        "meta": {
-            "author": "Schokofeh Kamiz",
-            "date": "January 23, 2018",
-            "relation": "N/A",
-            "description": ""
+        type: "image",
+        room: "bedroom",
+        title: "Sabeen’s Cupboard",
+        src: "Assets/Images/Sabeens Bedroom_Artefact_Cupboard.webp",
+        meta: {
+            author: "Schokofeh Kamiz",
+            date: "January 23, 2018",
+            relation: "N/A",
+            description: ""
         }
     },
     "hugh_laurie_portrait": {
-        "type": "image",
-        "room": "bedroom",
-        "title": "Hugh Laurie Portrait",
-        "src": "Assets/Images/Sabeens Bedroom_Artefact_Hugh Laurie Portrait.webp",
-        "meta": {
-            "author": "Unknown",
-            "date": "N/A",
-            "relation": "N/A",
-            "description": ""
+        type: "image",
+        room: "bedroom",
+        title: "Hugh Laurie Portrait",
+        src: "Assets/Images/Sabeens Bedroom_Artefact_Hugh Laurie Portrait.webp",
+        meta: {
+            author: "Unknown",
+            date: "N/A",
+            relation: "N/A",
+            description: ""
         }
     },
     "jim_morrison_poster": {
-        "type": "image",
-        "room": "bedroom",
-        "title": "Jim Morrison Poster",
-        "src": "Assets/Images/Sabeens Bedroom_Artefact_Jim Morrison Poster.webp",
-        "meta": {
-            "author": "Schokofeh Kamiz",
-            "date": "January 23, 2018",
-            "relation": "N/A",
-            "description": ""
+        type: "image",
+        room: "bedroom",
+        title: "Jim Morrison Poster",
+        src: "Assets/Images/Sabeens Bedroom_Artefact_Jim Morrison Poster.webp",
+        meta: {
+            author: "Schokofeh Kamiz",
+            date: "January 23, 2018",
+            relation: "N/A",
+            description: ""
         }
     },
     "sabeens_desk": {
-        "type": "image",
-        "room": "bedroom",
-        "title": "Sabeen’s Desk",
-        "src": "Assets/Images/Sabeens Bedroom_Artefact_Sabeens Desk.webp",
-        "meta": {
-            "author": "Unknown",
-            "date": "N/A",
-            "relation": "N/A",
-            "description": ""
+        type: "image",
+        room: "bedroom",
+        title: "Sabeen’s Desk",
+        src: "Assets/Images/Sabeens Bedroom_Artefact_Sabeens Desk.webp",
+        meta: {
+            author: "Unknown",
+            date: "N/A",
+            relation: "N/A",
+            description: ""
         }
     },
     "sabeens_shelf": {
-        "type": "image",
-        "room": "bedroom",
-        "title": "Sabeen’s Shelf",
-        "src": "Assets/Images/Sabeens Bedroom_Artefact_Shelf.webp",
-        "meta": {
-            "author": "Unknown",
-            "date": "N/A",
-            "relation": "N/A",
-            "description": ""
+        type: "image",
+        room: "bedroom",
+        title: "Sabeen’s Shelf",
+        src: "Assets/Images/Sabeens Bedroom_Artefact_Shelf.webp",
+        meta: {
+            author: "Unknown",
+            date: "N/A",
+            relation: "N/A",
+            description: ""
         }
     },
     "side_wall_cupboard": {
-        "type": "image",
-        "room": "bedroom",
-        "title": "Sabeen’s wall cupboard",
-        "src": "Assets/Images/Sabeens Bedroom_Artefact_Wall Cupboard.webp",
-        "meta": {
-            "author": "Schokofeh Kamiz",
-            "date": "January 23, 2018",
-            "relation": "N/A",
-            "description": ""
+        type: "image",
+        room: "bedroom",
+        title: "Sabeen’s wall cupboard",
+        src: "Assets/Images/Sabeens Bedroom_Artefact_Wall Cupboard.webp",
+        meta: {
+            author: "Schokofeh Kamiz",
+            date: "January 23, 2018",
+            relation: "N/A",
+            description: ""
         }
     },
     "license Plate": {
-        "type": "image",
-        "room": "bedroom",
-        "title": "Tu Mera Hero(You are my Hero)License Plate",
-        "src": "Assets/Images/Sabeens Bedroom_Artefact_Tu Mera Hero.webp",
-        "meta": {
-            "author": "Unknown",
-            "date": "N/A",
-            "relation": "N/A",
-            "description": "Sabeen holds a license plate that was hand painted by Truck artist Haider Ali. It says 'Tu Mera Hero' which translates to 'You are my Hero'."
+        type: "image",
+        room: "bedroom",
+        title: "Tu Mera Hero(You are my Hero)License Plate",
+        src: "Assets/Images/Sabeens Bedroom_Artefact_Tu Mera Hero.webp",
+        meta: {
+            author: "Unknown",
+            date: "N/A",
+            relation: "N/A",
+            description: "Sabeen holds a license plate that was hand painted by Truck artist Haider Ali. It says 'Tu Mera Hero' which translates to 'You are my Hero'."
         }
     },
 
