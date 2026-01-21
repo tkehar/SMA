@@ -164,6 +164,11 @@ async function deleteMessage(key) {
         el.addEventListener('mouseleave', () => {
             const cursorTooltip = document.querySelector('#cursor-tooltip');
             if (cursorTooltip) cursorTooltip.setAttribute('visible', false);
+
+            // Mobile: Reset hover state when looking away/tapping elsewhere
+            if (AFRAME.utils.device.isMobile() && window.mobileHoverId === this.data.id) {
+                window.mobileHoverId = null;
+            }
         });
         }
         });
@@ -670,27 +675,51 @@ nav button:hover { color: #D6B743; }
         <a-entity id="rig">
             <a-entity id="main-camera" camera look-controls="magicWindowTrackingEnabled: true" position="0 1.6 0">
                 
+                <!-- HUD Container -->
+                <a-entity id="hud" position="0 0 -1">
+                    
+                    <!-- Tooltip (Attached to Gaze) -->
+                    <a-entity id="cursor-tooltip" visible="false" position="0 -0.25 0" scale="0.3 0.3 0.3">
+                        <a-rounded id="tooltip-bg" 
+                            width="1" height="0.4" 
+                            radius="0.05" 
+                            color="black" 
+                            opacity="0.8">
+                        </a-rounded>
+                        <a-text id="tooltip-text" 
+                            value="" 
+                            align="center" 
+                            color="#FFFFFF"
+                            width="2.5" 
+                            position="0 0.2 0.01">
+                        </a-text>
+                    </a-entity>
+
+                    <!-- Info Panel (Attached to Gaze) -->
+                    <a-entity id="info-panel" visible="false" scale="0.55 0.55 0.55" position="0 0.1 0">
+                        <a-plane id="panel-bg" width="1.6" height="2.2" color="#1a1a1a" opacity="0.9"></a-plane>
+
+                        <a-text id="panel-title" value="" position="-0.6 0.9 0.02" align="left" width="1.2" color="#f1c40f"></a-text>
+                        <a-image id="panel-img" visible="false" position="0 0.3 0.02" width="1.2" height="1.5"></a-image>
+                        <a-text id="panel-desc" value="" position="-0.6 0.2 0.02" align="left" width="1.2"></a-text>
+                        <a-text id="panel-meta" value="" position="-0.6 0 0.02" align="left" width="1.2"></a-text>
+
+                        <a-entity id="audio-player-ui" visible="false" position="0 -0.6 0.02">
+                            <a-text id="audio-time" value="0:00 / 0:00" align="center" width="1.2" position="0 0.1 0" scale="0.8 0.8 0.8"></a-text>
+                    
+                            <a-circle id="play-pause-btn" class="clickable panel-button" src="Assets/Icons/Pause.png" position="0 -0.1 0.01" radius="0.1" material="transparent: true; shader: flat" onclick="togglePlayback()"></a-circle>
+                        </a-entity>
+
+                        <a-circle class="clickable panel-button" src="Assets/Icons/Cross Circle.png" position="0.6 0.9 0.05" radius="0.08" material="transparent: true; shader: flat" onclick="closePanel()"></a-circle>
+                        <a-circle id="zoom-btn" class="clickable panel-button" position="0.6 0.7 0.05" radius="0.08" src="Assets/Icons/Zoom in.png" visible="false" material="transparent: true; shader: flat" onclick="toggleZoom()"></a-circle>
+                    </a-entity>
+
+                </a-entity>
+
             </a-entity>
             <a-entity laser-controls="hand: right" raycaster="objects: .clickable"></a-entity>
         </a-entity>
         
-        <a-entity id="info-panel" visible="false" scale="0.7 0.7 0.7" look-at="#main-camera">
-            <a-plane id="panel-bg" width="1.6" height="2.2" color="#1a1a1a" opacity="0.9"></a-plane>
-
-            <a-text id="panel-title" value="" position="-0.6 0.9 0.02" align="left" width="1.2" color="#f1c40f"></a-text>
-            <a-image id="panel-img" visible="false" position="0 0.3 0.02" width="1.2" height="1.5"></a-image>
-            <a-text id="panel-desc" value="" position="-0.6 0.2 0.02" align="left" width="1.2"></a-text>
-            <a-text id="panel-meta" value="" position="-0.6 0 0.02" align="left" width="1.2"></a-text>
-
-            <a-entity id="audio-player-ui" visible="false" position="0 -0.6 0.02">
-                <a-text id="audio-time" value="0:00 / 0:00" align="center" width="1.2" position="0 0.1 0" scale="0.8 0.8 0.8"></a-text>
-        
-                <a-circle id="play-pause-btn" class="clickable panel-button" src="Assets/Icons/Pause.png" position="0 -0.1 0.01" radius="0.1" color="#ffffff" onclick="togglePlayback()"></a-circle>
-            </a-entity>
-
-             <a-circle class="clickable panel-button" src="Assets/Icons/Cross Circle.png" position="0.6 0.9 0.05" radius="0.08" onclick="closePanel()"></a-circle>
-        </a-entity>
-
         <!-- Global Background Audio: Adjust 'volume' (0 to 1) and 'src' here -->
         <a-entity id="global-audio" sound="src: #bg-music; autoplay: false; loop: true; volume: 0.25; positional: false"></a-entity>
 
@@ -702,12 +731,41 @@ nav button:hover { color: #D6B743; }
     <script>
 // 1. GLOBAL OBJECTS
 let currentAudio = new Audio();
+window.mobileHoverId = null; // Track the currently hovered item on mobile
+let isZoomed = false;
+let imgOriginalState = { pos: null, scale: null };
 let updateTimer = null;
 
 // 2. INTERACTION LOGIC
 function interact(id) {
     const data = ARCHIVE_DATABASE[id];
     if (!data) return console.error("Entry not found:", id);
+
+    // Mobile Two-Tap Logic
+    if (AFRAME.utils.device.isMobile()) {
+        // First Tap: Show Hover State
+        if (window.mobileHoverId !== id) {
+            window.mobileHoverId = id;
+            
+            // Manually trigger tooltip (needed if raycaster didn't leave/re-enter)
+            const cursorTooltip = document.querySelector('#cursor-tooltip');
+            const tooltipText = document.querySelector('#tooltip-text');
+            const tooltipBg = document.querySelector('#tooltip-bg');
+            
+            if (cursorTooltip && tooltipText && tooltipBg && data.title) {
+                tooltipText.setAttribute('value', data.title);
+                const estimatedWidth = Math.max(0.8, (data.title.length * 0.05) + 0.2);
+                tooltipBg.setAttribute('width', estimatedWidth);
+                tooltipBg.setAttribute('position', { x: -(estimatedWidth / 2), y: 0, z: 0 });
+                cursorTooltip.setAttribute('visible', true);
+            }
+            return; // Stop here, do not open panel
+        }
+        
+        // Second Tap: Proceed to open panel
+        // Reset hover id so next interaction starts fresh
+        window.mobileHoverId = null;
+    }
 
     // FIX: Hide tooltip immediately when interacting
     const cursorTooltip = document.querySelector('#cursor-tooltip');
@@ -721,14 +779,7 @@ function interact(id) {
     const audioPlayerUI = document.querySelector('#audio-player-ui');
     const playPauseBtn = document.querySelector('#play-pause-btn');
     const audioTime = document.querySelector('#audio-time');
-
-    // Position Panel
-    const pos = new THREE.Vector3();
-    camera.object3D.getWorldPosition(pos);
-    const direction = new THREE.Vector3(0, 0, -1).applyQuaternion(camera.object3D.quaternion);
-    const spawnPos = new THREE.Vector3().copy(pos).add(direction.multiplyScalar(1.2));
-    panel.setAttribute('position', spawnPos);
-    panel.setAttribute('look-at', '#main-camera');
+    const zoomBtn = document.querySelector('#zoom-btn');
 
     // Reset State
     stopAudio();
@@ -738,6 +789,21 @@ function interact(id) {
     document.querySelector('#panel-title').setAttribute('value', data.title);
     panelMeta.setAttribute('value', '');
     audioTime.setAttribute('position', '0 0.1 0');
+    
+    // Reset Zoom State
+    isZoomed = false;
+    if (zoomBtn) {
+        zoomBtn.setAttribute('visible', 'false');
+        zoomBtn.setAttribute('src', 'Assets/Icons/Zoom In.png');
+    }
+    // Reset UI Opacity
+    [document.querySelector('#panel-title'), panelDesc, panelMeta, audioPlayerUI].forEach(el => {
+        if (el) {
+            el.setAttribute('opacity', 1);
+            if (el.components.text) el.setAttribute('text', 'opacity', 1);
+        }
+    });
+    panelImg.setAttribute('scale', '1 1 1');
 
     if (data.type === 'image') {
         const imgLoader = new Image();
@@ -757,6 +823,7 @@ function interact(id) {
             panelDesc.setAttribute('position', {x: -0.6, y: -0.4, z: 0.02});
             panelDesc.setAttribute('value', `${data.meta.description}\n\nPhotographer: ${data.meta.author}`);
             panelMeta.setAttribute('position', {x: -0.6, y: -0.8, z: 0.02});
+            if (zoomBtn) zoomBtn.setAttribute('visible', 'true');
         };
         imgLoader.src = data.src;
 
@@ -806,6 +873,7 @@ function interact(id) {
 
             const playerY = 0.45 - (finalHeight / 2) - 0.15;
             audioPlayerUI.setAttribute('position', {x: 0, y: playerY, z: 0.02});
+            if (zoomBtn) zoomBtn.setAttribute('visible', 'true');
         };
         imgLoader.src = data.src;
     }
@@ -859,6 +927,8 @@ function formatTime(secs) {
 
 function closePanel() {
     document.querySelector('#info-panel').setAttribute('visible', 'false');
+    // Ensure zoom is reset for next time
+    isZoomed = false;
     stopAudio();
 }
 
@@ -971,6 +1041,78 @@ function switchRoom(roomID) {
     }
 }
 
+function toggleZoom() {
+    const panelImg = document.querySelector('#panel-img');
+    const uiElements = [
+        document.querySelector('#panel-title'),
+        document.querySelector('#panel-desc'),
+        document.querySelector('#panel-meta'),
+        document.querySelector('#audio-player-ui')
+    ];
+    const zoomBtn = document.querySelector('#zoom-btn');
+
+    if (!panelImg || !panelImg.getAttribute('visible')) return;
+
+    if (!isZoomed) {
+        // ZOOM IN
+        isZoomed = true;
+
+        // Store original state
+        const pos = panelImg.getAttribute('position');
+        imgOriginalState.pos = `${pos.x} ${pos.y} ${pos.z}`;
+        
+        const currW = parseFloat(panelImg.getAttribute('width'));
+        const currH = parseFloat(panelImg.getAttribute('height'));
+
+        // Calculate target scale to fit panel (approx 1.6 x 2.2)
+        const maxW = 1.6;
+        const maxH = 2.2;
+        const scaleX = maxW / currW;
+        const scaleY = maxH / currH;
+        const targetScale = Math.min(scaleX, scaleY) * 0.95; 
+
+        // Animate Image
+        panelImg.setAttribute('animation__pos', {
+            property: 'position',
+            to: '0 0 0.04',
+            dur: 500,
+            easing: 'easeInOutQuad'
+        });
+        panelImg.setAttribute('animation__scale', {
+            property: 'scale',
+            to: `${targetScale} ${targetScale} 1`,
+            dur: 500,
+            easing: 'easeInOutQuad'
+        });
+
+        // Hide UI
+        uiElements.forEach(el => {
+            if(el) {
+                el.setAttribute('animation__opacity', { property: 'opacity', to: 0, dur: 300, easing: 'easeOutQuad' });
+                if(el.components.text) el.setAttribute('animation__textopacity', { property: 'text.opacity', to: 0, dur: 300, easing: 'easeOutQuad' });
+            }
+        });
+
+        if(zoomBtn) zoomBtn.setAttribute('src', 'Assets/Icons/Zoom Out.png');
+
+    } else {
+        // ZOOM OUT
+        isZoomed = false;
+
+        panelImg.setAttribute('animation__pos', { property: 'position', to: imgOriginalState.pos, dur: 500, easing: 'easeInOutQuad' });
+        panelImg.setAttribute('animation__scale', { property: 'scale', to: '1 1 1', dur: 500, easing: 'easeInOutQuad' });
+
+        // Show UI
+        uiElements.forEach(el => {
+            if(el) {
+                el.setAttribute('animation__opacity', { property: 'opacity', to: 1, dur: 300, easing: 'easeInQuad' });
+                if(el.components.text) el.setAttribute('animation__textopacity', { property: 'text.opacity', to: 1, dur: 300, easing: 'easeInQuad' });
+            }
+        });
+
+        if(zoomBtn) zoomBtn.setAttribute('src', 'Assets/Icons/Zoom In.png');
+    }
+}
 
     </script>
     
