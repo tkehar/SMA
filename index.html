@@ -411,7 +411,9 @@ nav button:hover { color: #D6B743; }
 <body>
     
     <a-scene loading-screen="dotsColor: #393939; backgroundColor: #F9F6E4"
-             webxr="overlayElement: #dom-overlay-root; optionalFeatures: dom-overlay">
+             webxr="overlayElement: #dom-overlay-root; optionalFeatures: dom-overlay"
+             cursor="rayOrigin: mouse"
+             raycaster="objects: .clickable">
 
     <div id="dom-overlay-root" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 9999;">
         <div id="landing-overlay">
@@ -668,30 +670,6 @@ nav button:hover { color: #D6B743; }
         <a-entity id="rig">
             <a-entity id="main-camera" camera look-controls="magicWindowTrackingEnabled: true" position="0 1.6 0">
                 
-                 <a-cursor 
-                    fuse="false"
-                    raycaster="objects: .clickable; showLine: false; far: 100; interval: 50"
-                    color="#D6B743"
-                    scale="4 4 4"
-                    border-color="#000000"
-                    border-width="1">
-                    <a-entity id="cursor-tooltip" visible="false" position="0 0.04 -0.1" scale="0.1 0.1 0.1">
-                        <a-rounded id="tooltip-bg" 
-                            width="1" height="0.4" 
-                            radius="0.05" 
-                            color="black" 
-                            opacity="0.8">
-                        </a-rounded>
-                        <a-text id="tooltip-text" 
-                            value="" 
-                            align="center" 
-                            color="#FFFFFF"
-                            width="2.5" 
-                            position="0 0.2 0.01">
-                        </a-text>
-                    </a-entity>
-                </a-cursor>
-
             </a-entity>
             <a-entity laser-controls="hand: right" raycaster="objects: .clickable"></a-entity>
         </a-entity>
