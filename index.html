@@ -4,7 +4,7 @@
     <title>The Sabeen Mahmud Archive</title>
     <link rel="icon" href="Assets/Icons/favicon.svg" type="image/svg+xml">
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
 
 <script>
     // Replace this with YOUR actual config from the Firebase Console
@@ -108,9 +108,10 @@ async function deleteMessage(key) {
 
 </script>
 
-    <script src="https://aframe.io/releases/1.4.0/aframe.min.js"></script>
+    <script src="https://aframe.io/releases/1.7.1/aframe.min.js"></script>
     <script src="https://unpkg.com/aframe-look-at-component@0.8.0/dist/aframe-look-at-component.min.js"></script>
     <script src="https://unpkg.com/aframe-rounded@1.0.3/dist/aframe-rounded-component.min.js"></script>
+
     <script>
 
         AFRAME.registerComponent('proximity-reveal', {
@@ -561,7 +562,7 @@ nav button:hover { color: #D6B743; }
         <!-- World Space -->
         <a-entity id="room-bedroom" visible="false">
             <a-sky src="#bg-bedroom"></a-sky>
-            
+
             <a-circle class="clickable" src="Assets/Icons/Audio.png" rotation="0 45 0" position="-3 3 -2.75" radius="0.1" material="transparent: true; opacity: 0.9" proximity-reveal="threshold: 0.98" color="#000000" onclick="interact('plants_mahenaz')" hover-info="id: plants_mahenaz"></a-circle>
             
             <a-circle class="clickable" src="Assets/Icons/Audio.png" rotation="0 0 0" position="0 0.5 -2" radius="0.1" material="transparent: true; opacity: 0.9" proximity-reveal="threshold: 0.98" color="#000000" onclick="interact('fun_zahir')" hover-info="id: fun_zahir"></a-circle>
@@ -706,8 +707,8 @@ nav button:hover { color: #D6B743; }
             <a-circle class="clickable" src="Assets/Icons/Exit_Room.png" rotation="0 90 0" position="-3 2 1" radius="0.1" material="transparent: true; opacity: 0.9" proximity-reveal="threshold: 0.98" color="#000000" onclick="switchRoom('gallery')" hover-info="title: Go to T2F Gallery"></a-circle>
         </a-entity>
 
-        <a-entity id="rig">
-            <a-camera id="main-camera" look-controls="reverseTouchDrag: true; magicWindowTrackingEnabled: false">
+        <a-entity id="rig" look-controls="reverseTouchDrag: true; magicWindowTrackingEnabled: false">
+            <a-entity id="main-camera" camera>
                 
                  <a-cursor 
                     fuse="false"
@@ -733,7 +734,7 @@ nav button:hover { color: #D6B743; }
                     </a-entity>
                 </a-cursor>
 
-            </a-camera>
+            </a-entity>
             <a-entity laser-controls="hand: right" raycaster="objects: .clickable"></a-entity>
         </a-entity>
         
