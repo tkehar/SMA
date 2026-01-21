@@ -500,18 +500,6 @@ const ARCHIVE_DATABASE = {
             description: ""
         }
     },
-    "license Plate": {
-        type: "image",
-        room: "bedroom",
-        title: "Tu Mera Hero(You are my Hero)License Plate",
-        src: "Assets/Images/Sabeens Bedroom_Artefact_Tu Mera Hero.webp",
-        meta: {
-            author: "Unknown",
-            date: "N/A",
-            relation: "N/A",
-            description: "Sabeen holds a license plate that was hand painted by Truck artist Haider Ali. It says 'Tu Mera Hero' which translates to 'You are my Hero'."
-        }
-    },
     
 
     // --- Sabeen's Room Audios ---
@@ -647,18 +635,7 @@ const ARCHIVE_DATABASE = {
             description: "Remembering Sabeen’s wish to adopt a child."
         }
     },
-    "catchphrase_hafza": {
-        type: "audio",
-        room: "bedroom",
-        title: "Sabeen’s Catchphrase",
-        src: "Assets/Audios/Sabeens Bedroom_Dekho Magar Pyaar Se_Hafza Rashid_21.03.2022.mp3",
-        meta: {
-            date: "March 21, 2022",
-            author: "Hafza Rashid",
-            relation: "Sabeen’s Cousin",
-            description: "Remembering Sabeen’s catchphrase."
-        }
-    },
+    
     "diana_zareena": {
         type: "audio",
         room: "bedroom",
@@ -1545,6 +1522,21 @@ const ARCHIVE_DATABASE = {
             description: "How Sabeen got her first mac."
         }
     },
+    "license Plate": {
+        type: "audio-image",
+        room: "bedroom",
+        title: "Tu Mera Hero(You are my Hero)License Plate",
+        src: "Assets/Images/Sabeens Bedroom_Artefact_Tu Mera Hero.webp",
+        audioSrc: "Assets/Audios/Sabeens Bedroom_Dekho Magar Pyaar Se_Hafza Rashid_21.03.2022.mp3",
+        meta: {
+            photographer: "Unknown",
+            picture_date: "N/A",
+            author: "Hafza Rashid",
+            date: "Sabeen’s Cousin",
+            relation: "N/A",
+            description: "Sabeen holds a license plate that was hand painted by Truck artist Haider Ali. It says 'Tu Mera Hero' which translates to 'You are my Hero'."
+        }
+    },
     "music_sheila_combined": {
         type: "audio-image",
         room: "bedroom",
@@ -1656,7 +1648,7 @@ const ARCHIVE_DATABASE = {
 
 "raggedy_ann_tallat_combined": {
         type: "audio-image",
-        room: "babybox",
+        room: "Baby_Box",
         title: "Raggedy Ann doll",
         src: "Assets/Images/Baby Box_Artefact_ Raggedy Ann.webp",
         audioSrc: "Assets/Audios/Baby Box_Dolls and Shoes_Tallat Mahmud_21.03.2022.mp3",
@@ -1672,7 +1664,7 @@ const ARCHIVE_DATABASE = {
 
 "shoes_tallat_combined": {
         type: "audio-image",
-        room: "babybox",
+        room: "Baby_Box",
         title: "Sabeen's Shoes",
         src: "Assets/Images/Baby Box_Artefact_ Shoes.webp",
         audioSrc: "Assets/Audios/Baby Box_Dolls and Shoes_Tallat Mahmud_21.03.2022.mp3",
