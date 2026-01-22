@@ -408,6 +408,15 @@ nav button:hover { color: #D6B743; }
 .icon-sound-on { -webkit-mask-image: url('Assets/Icons/Unmute.png'); mask-image: url('Assets/Icons/Unmute.png'); }
 .icon-sound-off { -webkit-mask-image: url('Assets/Icons/Mute.png'); mask-image: url('Assets/Icons/Mute.png'); }
 
+.instr-nav-btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    min-width: 80px;
+}
+
 /* Hide VR button initially */
 .a-enter-vr { display: none; }
 
@@ -455,15 +464,24 @@ nav button:hover { color: #D6B743; }
         <p>Creating this archive also means acknowledging it’s incompleteness. With its subject having no hand in the process and being only referred to or implied. This cannot be a chronology of life or a biographic retelling, rather it is a living archive that I invite you to explore, critique and contribute to. There is no clear journey in this archive rather it is about discovery and curiosity. It is about understanding and knowing Sabeen.</p>
     </div>
 
-    <div id="instructions-section" class="overlay-content" style="display:none">
-        <button class="back-btn" onclick="showSection('home-section')">← Back</button>
-        <h3>How to Navigate</h3>
-        <div style="text-align: left; margin-bottom: 25px; line-height: 1.6;">
-            <p><strong>Look Around:</strong> Click and drag your cursor or move your device.</p>
-            <p><strong>Interact:</strong> Hover over icons to reveal titles. Click to view content.</p>
-            <p><strong>Explore:</strong> Look for 'Exit' icons to move between rooms.</p>
+    <div id="instructions-section" class="overlay-content" style="display:none; text-align: center;">
+        <div style="text-align: left;">
+            <button class="back-btn" onclick="showSection('home-section')">← Back</button>
         </div>
-        <button class="back-btn" onclick="startExperience()">Enter Archive</button>
+        <h3>How to Navigate</h3>
+        
+        <div id="instr-text-container" style="min-height: 100px; display: flex; align-items: center; justify-content: center; margin-bottom: 20px; text-align: center;">
+            <!-- Dynamic Content -->
+        </div>
+
+        <div style="display: flex; align-items: center; justify-content: center; gap: 15px; flex-direction: column;">
+            <div id="instr-dots" style="display: flex; gap: 8px; margin-bottom: 10px;"></div>
+            <div style="display: flex; gap: 15px;">
+                <button id="btn-instr-prev" class="instr-nav-btn" style="background: #ccc; color: #333;" onclick="slideInstruction(-1)">Back</button>
+                <button id="btn-instr-next" class="instr-nav-btn" style="background: #D6B743; color: #393939;" onclick="slideInstruction(1)">Next</button>
+                <button id="btn-instr-enter" class="instr-nav-btn" style="background: #D6B743; color: #393939; display: none;" onclick="startExperience()">Enter Archive</button>
+            </div>
+        </div>
     </div>
 
     <div id="message-section" class="overlay-content" style="display:none">
@@ -941,6 +959,10 @@ function showSection(sectionId) {
     
     // Show the chosen one
     document.getElementById(sectionId).style.display = 'block';
+
+    if (sectionId === 'instructions-section') {
+        initInstructions();
+    }
 }
 
 // Show mute button immediately since autoplay is enabled
@@ -1039,6 +1061,88 @@ function switchRoom(roomID) {
     if (targetRoom) {
         targetRoom.setAttribute('visible', 'true');
     }
+}
+
+// --- INSTRUCTIONS SLIDER LOGIC ---
+let currentInstrIdx = 0;
+let activeInstructions = [];
+
+function initInstructions() {
+    currentInstrIdx = 0;
+    
+    // Detect Device
+    let type = 'desktop';
+    if (AFRAME.utils.device.isMobile()) {
+        type = 'mobile';
+    }
+    // Basic check for VR headset
+    if (AFRAME.utils.device.checkHeadsetConnected() || navigator.userAgent.includes('Oculus') || navigator.userAgent.includes('VR')) {
+        type = 'vr';
+    }
+
+    const content = {
+        desktop: [
+            { title: "Look Around", text: "Click and drag your cursor to rotate the view.", gif: "Assets/GIFs/Drag Move.gif" },
+            { title: "Interact", text: "Hover over icons to reveal titles. Click to view content.", gif: "Assets/GIFs/Click and Hover.gif" },
+            { title: "Explore", text: "Look for 'Exit' icons to move between rooms.", gif: "Assets/GIFs/explore.gif" }
+        ],
+        mobile: [
+            { title: "Look Around", text: "Move your device around or swipe the screen.", gif: "Assets/GIFs/Mobile_Drag Move.gif" },
+            { title: "Interact", text: "Tap an icon once to see its title. Tap again to open it.", gif: "Assets/GIFs/Mobile_Click and Hover.gif" },
+            { title: "Explore", text: "Look for 'Exit' icons to move between rooms.", gif: "Assets/Gifs/explore.gif" }
+        ],
+        vr: [
+            { title: "Look Around", text: "Turn your head to look around the space.", gif: "Assets/Gifs/look.gif" },
+            { title: "Interact", text: "Gaze at icons or use your controller trigger.", gif: "Assets/Gifs/interact.gif" },
+            { title: "Explore", text: "Look for 'Exit' icons to move between rooms.", gif: "Assets/Gifs/explore.gif" }
+        ]
+    };
+
+    activeInstructions = content[type] || content['desktop'];
+    renderInstructionSlide();
+}
+
+function renderInstructionSlide() {
+    const container = document.getElementById('instr-text-container');
+    const btnPrev = document.getElementById('btn-instr-prev');
+    const btnNext = document.getElementById('btn-instr-next');
+    const btnEnter = document.getElementById('btn-instr-enter');
+    const dotsContainer = document.getElementById('instr-dots');
+
+    if (!container) return;
+
+    // Render Text
+    const slide = activeInstructions[currentInstrIdx];
+    container.innerHTML = `
+        <div style="animation: fadeIn 0.5s; display: flex; flex-direction: column; align-items: center;">
+            <strong style="font-size: 1.2rem; margin-bottom: 10px;">${slide.title}</strong>
+            <img src="${slide.gif}" style="width: 100%; max-width: 400px; height: auto; margin-bottom: 10px; border-radius: 8px; display: block;">
+            <p style="font-size: 1rem; margin: 0;">${slide.text}</p>
+        </div>`;
+
+    // Render Dots
+    let dotsHtml = '';
+    activeInstructions.forEach((_, idx) => {
+        const color = idx === currentInstrIdx ? '#D6B743' : '#ccc';
+        dotsHtml += `<span style="display:inline-block; width:8px; height:8px; background:${color}; border-radius:50%;"></span>`;
+    });
+    dotsContainer.innerHTML = dotsHtml;
+
+    // Handle Buttons
+    btnPrev.style.visibility = currentInstrIdx === 0 ? 'hidden' : 'visible';
+    
+    if (currentInstrIdx === activeInstructions.length - 1) {
+        btnNext.style.display = 'none';
+        btnEnter.style.display = 'inline-block';
+    } else {
+        btnNext.style.display = 'inline-block';
+        btnEnter.style.display = 'none';
+    }
+}
+
+function slideInstruction(dir) {
+    currentInstrIdx += dir;
+    renderInstructionSlide();
 }
 
 function toggleZoom() {
