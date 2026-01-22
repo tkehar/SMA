@@ -200,8 +200,8 @@ async function deleteMessage(key) {
     color: #393939;
 }
 
-.home-menu h1 { font-family:'Helvetica Neue', Arial, sans-serif; font-style:bold; font-size:200; letter-spacing: 4px; margin-bottom: 5px; }
-.home-menu h2 { font-family:'Helvetica Neue', Arial, sans-serif; font-weight: 200; font-style: italic; margin-bottom: 40px; }
+.home-menu h1 { font-family:'Helvetica Neue', Arial, sans-serif; font-style:bold; font-size:100; letter-spacing: 4px; margin-bottom: 5px; }
+.home-menu h2 { font-family:'Helvetica Neue', Arial, sans-serif; font-weight: 200; font-style: bold; margin-bottom: 40px; }
 
 nav button {
     display: block;
@@ -268,28 +268,28 @@ nav button:hover { color: #D6B743; }
     }
 }
 
-     /* 1. Change the Loading Text */
-        .a-loader-title {
-            color: #393939 !important; /* Matches your dot color */
-            font-family: sans-serif;
-            font-size: 1.5rem !important;
-            font-weight: thin !important;
-            align-content: center;
+    /* Custom Loading Screen */
+    #custom-loader {
+        position: fixed;
+        top: 0; left: 0;
+        width: 100%; height: 100%;
+        background-color: #F9F6E4;
+        z-index: 9000;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        transition: opacity 1s ease-out;
     }
-
-    /* To replace the "A-Frame" text with your project name: */
-        .a-loader-title::after {
-            content: "Entering the Archive"; /* Your custom text */
-            display: block;
-            margin-top: 250px;
-            
+    #custom-loader img {
+        max-width: 300px;
+        width: 60%;
+        height: auto;
+        opacity: 0;
+        animation: fadeInLoader 3s ease-in forwards;
     }
-
-    /* 2. Change the Size of the Dots */
-        .a-loader {
-        /* Scale the entire loader container */
-        transform: scale(1.5) !important; 
-        border-color: #393939 !important;
+    @keyframes fadeInLoader {
+        0% { opacity: 0; transform: scale(0.95); }
+        100% { opacity: 1; transform: scale(1); }
     }
 
     /* 3. Ensure the background covers everything */
@@ -424,7 +424,12 @@ nav button:hover { color: #D6B743; }
 </head>
 <body>
     
-    <a-scene loading-screen="dotsColor: #393939; backgroundColor: #F9F6E4"
+    <!-- Custom Loader -->
+    <div id="custom-loader">
+        <img src="Assets/Images/Logo.png" alt="Loading...">
+    </div>
+
+    <a-scene loading-screen="enabled: false"
              webxr="overlayElement: #dom-overlay-root; optionalFeatures: dom-overlay"
              cursor="rayOrigin: mouse"
              raycaster="objects: .clickable">
@@ -434,8 +439,7 @@ nav button:hover { color: #D6B743; }
     <div id="home-section" class="overlay-content">
             <div class="home-menu">
                 <h1>UNDER THE AMALTAAS TREE</h1>
-                <h2>The Sabeen Mahmud Archive</h2>
-                
+                <img src="Assets/Images/Logo.png" alt="The Sabeen Mahmud Archive" style="display: block; margin: 0 auto 40px auto; width: 80%; max-width: 400px; height: auto;">
                 <nav>
                     <button onclick="showSection('about-section')">About</button>
                     <button onclick="showSection('curatorial-section')">Curatorial Note</button>
@@ -1217,6 +1221,17 @@ function toggleZoom() {
         if(zoomBtn) zoomBtn.setAttribute('src', 'Assets/Icons/Zoom in.png');
     }
 }
+
+// --- CUSTOM LOADER LOGIC ---
+document.querySelector('a-scene').addEventListener('loaded', function () {
+    const loader = document.getElementById('custom-loader');
+    if (loader) {
+        loader.style.opacity = '0';
+        setTimeout(() => {
+            loader.style.display = 'none';
+        }, 1000);
+    }
+});
 
     </script>
     
