@@ -181,7 +181,7 @@ async function deleteMessage(key) {
     top: 0; left: 0;
     width: 100%; height: 100%;
     background: #F9F6E4 url('Assets/Images/Home page.png') no-repeat center center;
-    background-size: cover;
+    background-size: 100% 100%;
     z-index: 9999; /* Stay above A-Frame */
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -200,7 +200,7 @@ async function deleteMessage(key) {
     color: #393939;
 }
 
-.home-menu h1 { font-family:'Helvetica Neue', Arial, sans-serif; font-style:bold; font-size:100; letter-spacing: 4px; margin-bottom: 5px; }
+.home-menu h1 { font-family:'Helvetica Neue', Arial, sans-serif; font-weight:bold; font-size: 1.5rem; letter-spacing: 4px; margin-bottom: 5px; }
 .home-menu h2 { font-family:'Helvetica Neue', Arial, sans-serif; font-weight: 200; font-style: bold; margin-bottom: 40px; }
 
 nav button {
@@ -439,7 +439,7 @@ nav button:hover { color: #D6B743; }
     <div id="home-section" class="overlay-content">
             <div class="home-menu">
                 <h1>UNDER THE AMALTAAS TREE</h1>
-                <img src="Assets/Images/Logo.png" alt="The Sabeen Mahmud Archive" style="display: block; margin: 0 auto 40px auto; width: 80%; max-width: 400px; height: auto;">
+                <img src="Assets/Images/Logo.png" alt="The Sabeen Mahmud Archive" style="display: block; margin: 0 auto 40px auto; width: 80%; max-width: 600px; height: auto;">
                 <nav>
                     <button onclick="showSection('about-section')">About</button>
                     <button onclick="showSection('curatorial-section')">Curatorial Note</button>
