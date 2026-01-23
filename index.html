@@ -7,6 +7,13 @@
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
 
 <script>
+    // Suppress benign Chrome Extension errors from cluttering the console
+    window.addEventListener('unhandledrejection', function(event) {
+        if (event.reason && event.reason.message && event.reason.message.includes('message channel closed')) {
+            event.preventDefault();
+        }
+    });
+
     // Replace this with YOUR actual config from the Firebase Console
     const firebaseConfig = {
         apiKey: "AIzaSyAvA4JDbbaHCLenqM1hOLBIW55-9SnVLQI",
@@ -262,6 +269,7 @@ nav button:hover { color: #D6B743; }
 @media (max-width: 768px) {
     #landing-overlay {
         grid-template-columns: 1fr;
+        background-image: url('Assets/Images/Home page- mobile.png');
         background-size: cover;
     }
     .overlay-content {
@@ -282,7 +290,7 @@ nav button:hover { color: #D6B743; }
         transition: opacity 1s ease-out;
     }
     #custom-loader img {
-        max-width: 300px;
+        max-width: 500px;
         width: 60%;
         height: auto;
         opacity: 0;
@@ -672,7 +680,9 @@ nav button:hover { color: #D6B743; }
         <a-entity id="room-babybox" visible="false">
             <a-sky src="#bg-Baby_Box"></a-sky>
 
-            <a-circle class="clickable" src="Assets/Icons/Image.png" rotation="0 90 0" position="-2.5 1.5 0" radius="0.1" material="transparent: true; opacity: 0.9" color="#000000" onclick="interact('raggedy_ann_tallat_combined')" hover-info="id: araggedy_ann_tallat_combined"></a-circle>
+            <a-circle class="clickable" src="Assets/Icons/Image.png" rotation="0 90 0" position="-2.5 1.5 -0.5" radius="0.1" material="transparent: true; opacity: 0.9" color="#000000" onclick="interact('artefact_raggedy_ann')" hover-info="id: artefact_raggedy_ann"></a-circle>
+
+            <a-circle class="clickable" src="Assets/Icons/Image.png" rotation="0 90 0" position="-2.5 2.5 1.75" radius="0.1" material="transparent: true; opacity: 0.9" color="#000000" onclick="interact('artefact_bean_on_tv_am')" hover-info="id: artefact_bean_on_tv_am"></a-circle>
 
             <a-circle class="clickable" src="Assets/Icons/Image.png" rotation="0 90 0" position="0 -1.5 -1.5" radius="0.1" material="transparent: true; opacity: 0.9" color="#000000" onclick="interact('artefact_flower_earrings')" hover-info="id: artefact_flower_earrings"></a-circle>
 

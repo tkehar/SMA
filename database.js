@@ -1,7 +1,8 @@
 /* --- database.js --- */
 const ARCHIVE_DATABASE = {
-    
-    // --- Sabeen's office Images ---
+
+    // --- Sabeen's office data ---
+        //--- Images ---
     "artefact_billie_holiday_poster": {
         type: "image",
         room: "office",
@@ -147,18 +148,6 @@ const ARCHIVE_DATABASE = {
             description: ""
         }
     },
-    "artefact_peaceniche_patch": {
-        type: "image",
-        room: "office",
-        title: "Peaceniche Patch",
-        src: "Assets/Images/Sabeens Office_Artefact_ Peaceniche Patch.webp",
-        meta: {
-            author: "Humayun Memon",
-            date: "July 11, 2019",
-            relation: "N/A",
-            description: ""
-        }
-    },
     "artefact_sabeens_pinboard": {
         type: "image",
         room: "office",
@@ -219,8 +208,242 @@ const ARCHIVE_DATABASE = {
             description: ""
         }
     },
+            // --- Audios ---
+    "work_ayesha": {
+        type: "audio",
+        room: "office",
+        title: "Sabeen's Work",
+        src: "Assets/Audios/Sabeens Office_Apple of the Eye_Ayesha Sajun_27.09.2021.mp3",
+        meta: {
+            date: "September 27, 2021",
+            author: "Ayesha Sajun",
+            relation: "Sabeen’s Cousin",
+            description: "How Sabeen's family saw her work."
+        }
+    },
+    "borders_salima": {
+        type: "audio",
+        room: "office",
+        title: "Erasing Borders",
+        src: "Assets/Audios/Sabeens Office_Erasing Borders_Salima Hashmi_04.07.23.mp3",
+        meta: {
+            date: "July 4, 2023",
+            author: "Salima Hashmi",
+            relation: "Artist, Curator, and Contemporary art historian",
+            description: "On Sabeen's work with South Asia Foundation."
+        }
+    },
+    "faiz_salima": {
+        type: "audio",
+        room: "office",
+        title: "Faiz CD ROM",
+        src: "Assets/Audios/Sabeens Office_Faiz CD_Salima Hashmi_04.07.23.mp3",
+        meta: {
+            date: "July 4, 2023",
+            author: "Salima Hashmi",
+            relation: "Artist, Curator, and Contemporary art historian",
+            description: "On Sabeen's work for the Faiz Ahmed Faiz CD ROM (Pakistan's first interactive CD ROM)."
+        }
+    },
+    "bits_zak": {
+        type: "audio",
+        room: "office",
+        title: "Becoming a Partner at BITS",
+        src: "Assets/Audios/Sabeens Office_How Sabeen became a Partner at BITS_Zaheer Kidvai_25.09.25.mp3",
+        meta: {
+            date: "September 25, 2025",
+            author: "Zaheer Alam Kidvai †",
+            relation: "Sabeen’s Mentor and CEO of Beyond Information Technology Solutions (BITS)",
+            description: "How Sabeen became a Partner at BITS."
+        }
+    },
+    "t2f_zak": {
+        type: "audio",
+        room: "office",
+        title: "Starting T2F",
+        src: "Assets/Audios/Sabeens Office_On Starting T2F and the first event_Zaheer Kidvai_25.09.25.mp3",
+        meta: {
+            date: "September 25, 2025",
+            author: "Zaheer Alam Kidvai †",
+            relation: "Sabeen’s Mentor and CEO of Beyond Information Technology Solutions (BITS)",
+            description: "How the dream of T2F started."
+        }
+    },
+    "pfa_alia": {
+        type: "audio",
+        room: "office",
+        title: "Pakistan For All",
+        src: "Assets/Audios/Sabeens Office_Pakistan For All_Alia Chugtai_Unknown.mp3",
+        meta: {
+            date: "N/A",
+            author: "Alia Chugtai",
+            relation: "Journalist, specialising in visual journalism",
+            description: "On Sabeen's Involvment in Pakistan For All."
+        }
+    },
+    "discriminate_zeenia": {
+        type: "audio",
+        room: "office",
+        title: "Sabeen didn't discriminate",
+        src: "Assets/Audios/Sabeens Office_Sabeen didn't Discriminate_Zeenia Shaukat_17.07.2023.mp3",
+        meta: {
+            date: "July 17, 2023",
+            author: "Zeenia Shaukat",
+            relation: "Co-Founder and Director of The Knowledge Forum",
+            description: "On Sabeen's ability to be fair and hear the counter argument."
+        }
+    },
+    "afraid_zeenia": {
+        type: "audio",
+        room: "office",
+        title: "Sabeen wasn't afraid",
+        src: "Assets/Audios/Sabeens Office_Sabeen wasn't Afraid_Zeenia Shaukat_17.07.2023.mp3",
+        meta: {
+            date: "July 17, 2023",
+            author: "Zeenia Shaukat",
+            relation: "Co-Founder and Director of The Knowledge Forum",
+            description: "On Sabeen’s bravery and sense of justice."
+        }
+    },
+    "activism_zeenia": {
+        type: "audio",
+        room: "office",
+        title: "Sabeen's Activism",
+        src: "Assets/Audios/Sabeens Office_Sabeens Activism_Zeenia Shaukat_17.07.2023.mp3",
+        meta: {
+            date: "July 17, 2023",
+            author: "Zeenia Shaukat",
+            relation: "Co-Founder and Director of The Knowledge Forum",
+            description: "Sabeen's role as an activist and a leader."
+        }
+    },
+    "humility_zeenia": {
+        type: "audio",
+        room: "office",
+        title: "Sabeen's Humility",
+        src: "Assets/Audios/Sabeens Office_Sabeens Humility_Zeenia Shaukat_17.07.2023.mp3",
+        meta: {
+            date: "July 17, 2023",
+            author: "Zeenia Shaukat",
+            relation: "Co-Founder and Director of The Knowledge Forum",
+            description: "On Sabeen’s activism and humility."
+        }
+    },
+    "workethic_seema": {
+        type: "audio",
+        room: "office",
+        title: "Sabeen's Work Ethic",
+        src: "Assets/Audios/Sabeens Office_Sabeens Work Ethic_Seema Somji_27.09.2021.mp3",
+        meta: {
+            date: "September 27, 2021",
+            author: "Seema Somji",
+            relation: "Sabeen's Cousin",
+            description: "What was Sabeen’s work ethic like?"
+        }
+    },
+    "solutions_zak": {
+        type: "audio",
+        room: "office",
+        title: "Sabeen's at Solutions Unlimited",
+        src: "Assets/Audios/Sabeens Office_Solutions Unlimited_Zaheer Kidvai_25.09.25.mp3",
+        meta: {
+            date: "September 25, 2025",
+            author: "Zaheer Alam Kidvai †",
+            relation: "Sabeen’s Mentor and CEO of Beyond Information Technology Solutions (BITS)",
+            description: "How Sabeen started working at Solutions Unlimited?"
+        }
+    },
+    "saf_salima": {
+        type: "audio",
+        room: "office",
+        title: "South Asia Foundation",
+        src: "Assets/Audios/Sabeens Office_South Asia Foundation_Salima Hashmi_04.07.23.mp3",
+        meta: {
+            date: "July 4, 2023",
+            author: "Salima Hashmi",
+            relation: "Artist, Curator, and Contemporary art historian",
+            description: "On Sabeen's work for the South Asia Foundation."
+        }
+    },
+        // --- Audio-Image ---
+    "Peaceniche_chand_combined": {
+        type: "audio-image",
+        room: "office",
+        title: "Peaceniche Patch",
+        src: "Assets/Images/Sabeens Office_Artefact_ Peaceniche Patch.webp",
+        audioSrc: "Assets/Audios/Sabeens Office_On Peaceniche_Chand Singhara_21.06.2023.mp3",
+        meta: {
+            photographer: "Humayun Memon",
+            picture_date: "July 11, 2019",
+            author: "Chand Singhara",
+            date: "September 27, 2021",
+            relation: "Manager Music Room at Habib University/Former Gallery Manager at T2F",
+            description: "What was Peaceniche "
+        }
+    },
+    "Hackathon_sheba_combined": {
+        type: "audio-image",
+        room: "office",
+        title: "Civic Hackathon Sticker",
+        src: "Assets/Images/Sabeens Office_Artefact_ Hackathon Sticker.webp",
+        audioSrc: "Assets/Audios/Sabeens Office_Civic Hackathon_Sheba Najmi_24.07.2023.mp3",
+        meta: {
+            photographer: "Humayun Memon",
+            picture_date: "July 11, 2019",
+            author: "Sheba Najmi",
+            date: "July 25, 2023",
+            relation: "Founder & Executive Director of Code for Pakistan",
+            description: "Pakistan's First Civic Hackathon organized by Sabeen. Participants filled out their vision for their neighbourhood on this sticker. This was what sabeen wanted in hers"
+        }
+    },
+    "artefact_faiz_aaj_kay_naam_cd_rom": {
+        type: "audio-image",
+        room: "office",
+        title: "Faiz Aaj Kay Naam (For today's name)",
+        src: "Assets/Images/Sabeens Office_Artefact_ Faiz Aaj Kay Naam CD Rom.webp",
+        audioSrc: "Assets/Audios/Sabeens Office_Faiz CD_Zaheer Kidvai_25.09.25.mp3",
+        meta: {
+            photographer: "Humayun Memon",
+            picture_date: "July 11, 2019",
+            author: "Zaheer Alam Kidvai (deceased)",
+            date: "September 25, 2025",
+            relation: "Sabeen’s Mentor and CEO of Beyond Information Technology Solutions (BITS)",
+            description: "Pakistan’s First interactive CD ROM on Faiz Ahmed Faiz, for which Sabeen did the research and collaboratively designed with Zaheer Kidvai, Jehan Ara, and others."
+        }
+    },
+    "impact_omer": {
+        type: "audio-image",
+        room: "office",
+        title: "Note from Natasha Ejaz",
+        src: "Assets/Images/Sabeens Office_Artefact_ Note Natasha Ejaz.webp",
+        audioSrc: "Assets/Audios/Sabeens Office_Sabeens Impact_Omer Dossani_27.09.2021.mp3",
+        meta: {
+            photographer: "Humayun Memon",
+            picture_date: "July 11, 2019",
+            date: "September 27, 2021",
+            author: "Omer Dossani",
+            relation: "Sabeen's Cousin",
+            description: "Dear ZAK & Sabeen, Poppy sends her love & support to T2F through this cheque. My sincerest love & regards, Natasha Ejaz"
+        }
+    },
+    "impact_sameer": {
+        type: "audio-image",
+        room: "office",
+        title: "Note from Goethe Institut Delhi",
+        src: "Assets/Images/Sabeens Office_Artefact_ Note Goethe.webp",
+        audioSrc: "Assets/Audios/Sabeens Office_Sabeens Impact_Sameer Dossani_27.09.2021.mp3",
+        meta: {
+            photographer: "Humayun Memon",
+            picture_date: "July 11, 2019",
+            date: "September 27, 2021",
+            author: "Sameer Dossani",
+            relation: "Sabeen's Cousin",
+            description: "Dear Sabeen & Raania, Thank you so much for your support & for accomodating us at such short notice. Your space looks like its a real labour of love and we look foward to collaborating with you in the future. When you're in Delhi next do give us a shout! warmly, Rahaab and Tanvi on behalf of the DIX team & Geothe Institut"
+        }
+    },
 
-    // --- Baby Box Images ---
+    // --- Baby Box Data ---
+            // --- Images ---
      "artefact_baby_tooth": {
         type: "image",
         room: "Baby_Box",
@@ -318,7 +541,224 @@ const ARCHIVE_DATABASE = {
             description: "A View-Master stereoscope toy that Sabeen played with as child."
         }
     },
-    // --- Sabeen's Room Images ---
+    // --- Audios ---
+    "meeting_sabina": {
+        type: "audio",
+        room: "Baby_Box",
+        title: "Meeting Sabeen",
+        src: "Assets/Audios/Baby Box_A Summer with Sabeen_Sabina Paton_27.09.2021.mp3",
+        meta: {
+            date: "March 21, 2022",
+            author: "Sabina Paton",
+            relation: "Sabeen’s Cousin",
+            description: "Remembering Sabeen as a child."
+        }
+    },
+
+    "school_omer": {
+        type: "audio",
+        room: "Baby_Box",
+        title: "Sabeen in school",
+        src: "Assets/Audios/Baby Box_Earliest Memory_Omer Dossani_27.09.2021.mp3",
+        meta: {
+            date: "September 27, 2021",
+            author: "Omer Dossani",
+            relation: "Sabeen’s Cousin",
+            description: "Sabeen as a friendly young girl."
+        }
+    },
+    "child_ayesha": {
+        type: "audio",
+        room: "Baby_Box",
+        title: "Sabeen as a child",
+        src: "Assets/Audios/Baby Box_Eid_Ayesha Sajun_27.09.2021.mp3",
+        meta: {
+            date: "September 27, 2021",
+            author: "Ayesha Sajun",
+            relation: "Sabeen’s Cousin",
+            description: "Remembering time spent with Sabeen as a child."
+        }
+    },
+    "adventure_tallat": {
+        type: "audio",
+        room: "Baby_Box",
+        title: "Family Adventures",
+        src: "Assets/Audios/Baby Box_Family Adventures_Tallat Mahmud_21.03.2022.mp3",
+        meta: {
+            date: "March 21, 2022",
+            author: "Tallat Mahmud",
+            relation: "Sabeen's Father",
+            description: "Remembering time spent as a family with Sabeen."
+        }
+    },
+    "sabeen_mahenaz": {
+        type: "audio",
+        room: "Baby_Box",
+        title: "On Sabeen",
+        src: "Assets/Audios/Baby Box_On Sabeen_Mahenaz Mahmud_02.08.15.mp3",
+        meta: {
+            date: "August 2, 2015",
+            author: "Mahenaz Mahmud",
+            relation: "Sabeen’s Mother",
+            description: "Reflecting on her life and how she raised Sabeen."
+        }
+    },
+    "cricket_faiz": {
+        type: "audio",
+        room: "Baby_Box",
+        title: "Playing Cricket",
+        src: "Assets/Audios/Baby Box_Playing Cricket with Sabeen_Faiz Somji_27.09.2021.mp3",
+        meta: {
+            date: "September 27, 2021",
+            author: "Faiz Somji",
+            relation: "Sabeen’s Cousin",
+            description: "Sabeen’s Passion for Cricket."
+        }
+    },
+    "cricket_sabina": {
+        type: "audio",
+        room: "Baby_Box",
+        title: "Learning from Sabeen",
+        src: "Assets/Audios/Baby Box_Playing Cricket with Sabeen_Sabina Paton_27.09.2021.mp3",
+        meta: {
+            date: "March 21, 2022",
+            author: "Sabina Paton",
+            relation: "Sabeen's Cousin",
+            description: "Sabeen’s Passion for Cricket."
+        }
+    },
+    "pumpkin_tallat": {
+        type: "audio",
+        room: "Baby_Box",
+        title: "Pumpkin Sitar",
+        src: "Assets/Audios/Baby Box_Pumpkin Sitar_Tallat Mahmud_21.03.2022.mp3",
+        meta: {
+            date: "March 21, 2022",
+            author: "Tallat Mahmud",
+            relation: "Sabeen's Father",
+            description: "Remembering an anecdote of  Sabeen learning to play sitar."
+        }
+    },
+    "learning_zareena": {
+        type: "audio",
+        room: "Baby_Box",
+        title: "Sabeen as a student",
+        src: "Assets/Audios/Baby Box_Sabeen as a student_Zareena Saeed_07.07.2023.mp3",
+        meta: {
+            date: "July 7, 2023",
+            author: "Zareena Saeed",
+            relation: "Sabeen’s Literature Teacher and Assistant Prof at University of the Punjab",
+            description: "Remembering Sabeen in college."
+        }
+    },
+    "teenage_omer": {
+        type: "audio",
+        room: "Baby_Box",
+        title: "Sabeen’s teenage years",
+        src: "Assets/Audios/Baby Box_Sabeen In Middle School_Omer Dossani_27.09.2021.mp3",
+        meta: {
+            date: "September 27, 2021",
+            author: "Omer Dossani",
+            relation: "Sabeen’s Cousin",
+            description: "Remembering sabeen as a teenager."
+        }
+    },
+    "nonconformist_omer": {
+        type: "audio",
+        room: "Baby_Box",
+        title: "Sabeen was a nonconformist",
+        src: "Assets/Audios/Baby Box_Sabeen was a nonconformist_Omer Soomro_20.06.2023.mp3",
+        meta: {
+            date: "June 20, 2023",
+            author: "Omer Soomro",
+            relation: "Sabeen’s Childhood Friend",
+            description: "Remembering Sabeen’s school years."
+        }
+    },
+    "tomboy_omer": {
+        type: "audio",
+        room: "Baby_Box",
+        title: "Sabeen as a child",
+        src: "Assets/Audios/Baby Box_Sabeen was a Tom Boy_Omer Soomro_20.06.2023.mp3",
+        meta: {
+            date: "June 20, 2023",
+            author: "Omer Soomro",
+            relation: "Sabeen’s Childhood Friend",
+            description: "Remembering Sabeen as a child.."
+        }
+    },
+    "confident_zareena": {
+        type: "audio",
+        room: "Baby_Box",
+        title: "Sabeen was confident",
+        src: "Assets/Audios/Baby Box_Sabeen Was Confident_Zareena Saeed_07.07.2023.mp3",
+        meta: {
+            date: "July 7, 2023",
+            author: "Zareena Saeed",
+            relation: "Sabeen’s Literature Teacher and Assistant Prof at University of the Punjab",
+            description: "Remembering Sabeen’s style and her confidence."
+        }
+    },
+    "kgs_omer": {
+        type: "audio",
+        room: "Baby_Box",
+        title: "Sabeen in school",
+        src: "Assets/Audios/Baby Box_Sabeen was mischievious_Omer Soomro_20.06.2023.mp3",
+        meta: {
+            date: "June 20, 2023",
+            author: "Omer Soomro",
+            relation: "Sabeen’s Childhood Friend",
+            description: "Remembering Sabeen as a child."
+        }
+    },
+    "play_omer": {
+        type: "audio",
+        room: "Baby_Box",
+        title: "Playing with her cousins",
+        src: "Assets/Audios/Baby Box_Spitting Contest_Omer Dossani_27.09.2021.mp3",
+        meta: {
+            date: "September 27, 2021",
+            author: "Omer Dossani",
+            relation: "Sabeen’s Cousin",
+            description: "A playful memory of Sabeen as young girl."
+        }
+    },
+        // --- Audio-Image Entries ---
+
+    "artefact_raggedy_ann": {
+        type: "audio-image",
+        room: "Baby_Box",
+        title: "Raggedy Ann doll",
+        src: "Assets/Images/Baby Box_Artefact_ Raggedy Ann.webp",
+        audioSrc: "Assets/Audios/Baby Box_Dolls and Shoes_Tallat Mahmud_21.03.2022.mp3",
+        meta: {
+            photographer: "Insiyah Syed",
+            picture_date: "September 24, 2020",
+            author: "Tallat Mahmud",
+            date: "March 21, 2022",
+            relation: "Sabeen's Father",
+            description: "A doll that Sabeen was inseparable from as a child. She would drag it everywhere and so the doll is now tattered."
+        },
+    },
+
+    "artefact_shoes": {
+        type: "audio-image",
+        room: "Baby_Box",
+        title: "Sabeen's Shoes",
+        src: "Assets/Images/Baby Box_Artefact_ Shoes.webp",
+        audioSrc: "Assets/Audios/Baby Box_Dolls and Shoes_Tallat Mahmud_21.03.2022.mp3",
+        meta: {
+            photographer: "Insiyah Syed",
+            picture_date: "September 24, 2020",
+            author: "Tallat Mahmud",
+            date: "March 21, 2022",
+            relation: "Sabeen's Father",
+            description: "Sabeen's shoes from her childhood."
+        }
+    },
+
+    // --- Sabeen's Room Data ---
+        // --- Images ---
     "bedside_table": {
         type: "image",
         room: "bedroom",
@@ -511,8 +951,7 @@ const ARCHIVE_DATABASE = {
             description: "Sabeen holds a license plate that was hand painted by Truck artist Haider Ali. It says 'Tu Mera Hero' which translates to 'You are my Hero'."
         }
     },
-
-    // --- Sabeen's Room Audios ---
+        // --- Audios ---
     "plants_mahenaz": {
         type: "audio",
         room: "bedroom",
@@ -766,165 +1205,71 @@ const ARCHIVE_DATABASE = {
             description: "Remembering her deep empathy and openness, and acceptance."
         }
     },
-    // --- Sabeen's office Audios ---
-    "work_ayesha": {
-        type: "audio",
-        room: "office",
-        title: "Sabeen's Work",
-        src: "Assets/Audios/Sabeens Office_Apple of the Eye_Ayesha Sajun_27.09.2021.mp3",
+        // --- Audio-Image ---
+    "mac_zak_combined": {
+        type: "audio-image",
+        room: "bedroom",
+        title: "Sabeen's First Mac",
+        src: "Assets/Images/Sabeens Bedroom_Artefact_ Macintosh SE.webp",
+        audioSrc: "Assets/Audios/Sabeens Bedroom_How Sabeen got her first mac_Zaheer Kidvai_25.09.25.mp3",
         meta: {
+            photographer: "Unknown",
+            author: "Zaheer Alam Kidvai (deceased)",
+            picture_date: "N/A",
+            date: "September 25, 2025",
+            relation: "Sabeen’s Mentor",
+            description: "How Sabeen got her first mac."
+        }
+    },
+    "license Plate": {
+        type: "audio-image",
+        room: "bedroom",
+        title: "Tu Mera Hero(You are my Hero)License Plate",
+        src: "Assets/Images/Sabeens Bedroom_Artefact_Tu Mera Hero.webp",
+        audioSrc: "Assets/Audios/Sabeens Bedroom_Dekho Magar Pyaar Se_Hafza Rashid_21.03.2022.mp3",
+        meta: {
+            photographer: "Unknown",
+            picture_date: "N/A",
+            author: "Hafza Rashid",
+            date: "Sabeen’s Cousin",
+            relation: "N/A",
+            description: "Sabeen holds a license plate that was hand painted by Truck artist Haider Ali. It says 'Tu Mera Hero' which translates to 'You are my Hero'."
+        }
+    },
+    "music_sheila_combined": {
+        type: "audio-image",
+        room: "bedroom",
+        title: "Jim Morrison Poster",
+        src: "Assets/Images/Sabeens Bedroom_Artefact_Jim Morrison Poster.webp",
+        audioSrc: "Assets/Audios/Sabeens Bedroom_Her Music Taste_Sheila Fazal_06.01.2020.mp3",
+        meta: {
+            photographer: "Schokofeh Kamiz",
+            author: "Sheila Fazal",
+            picture_date: "January 23, 2018",
+            date: "January 6, 2020",
+            relation: "Sabeen’s  Aunt",
+            description: "Her passion for and taste in music."
+        }
+    },
+    "tech_faiz_combined": {
+        type: "audio-image",
+        room: "bedroom",
+        title: "Apple Poster",
+        src: "Assets/Images/Sabeens Bedroom_Artefact_Apple Poster.webp",
+        audioSrc: "Assets/Audios/Sabeens Bedroom_Sabeen and technology_Faiz Somji_27.09.2021.mp3",
+        meta: {
+            photographer: "Schokofeh Kamiz",
+            picture_date: "January 23, 2018",
+            author: "Faiz Somji",
             date: "September 27, 2021",
-            author: "Ayesha Sajun",
             relation: "Sabeen’s Cousin",
-            description: "How Sabeen's family saw her work."
+            description: "On Sabeen's love for technology."
         }
     },
-    "borders_salima": {
-        type: "audio",
-        room: "office",
-        title: "Erasing Borders",
-        src: "Assets/Audios/Sabeens Office_Erasing Borders_Salima Hashmi_04.07.23.mp3",
-        meta: {
-            date: "July 4, 2023",
-            author: "Salima Hashmi",
-            relation: "Artist, Curator, and Contemporary art historian",
-            description: "On Sabeen's work with South Asia Foundation."
-        }
-    },
-    "faiz_salima": {
-        type: "audio",
-        room: "office",
-        title: "Faiz CD ROM",
-        src: "Assets/Audios/Sabeens Office_Faiz CD_Salima Hashmi_04.07.23.mp3",
-        meta: {
-            date: "July 4, 2023",
-            author: "Salima Hashmi",
-            relation: "Artist, Curator, and Contemporary art historian",
-            description: "On Sabeen's work for the Faiz Ahmed Faiz CD ROM (Pakistan's first interactive CD ROM)."
-        }
-    },
-    "bits_zak": {
-        type: "audio",
-        room: "office",
-        title: "Becoming a Partner at BITS",
-        src: "Assets/Audios/Sabeens Office_How Sabeen became a Partner at BITS_Zaheer Kidvai_25.09.25.mp3",
-        meta: {
-            date: "September 25, 2025",
-            author: "Zaheer Alam Kidvai †",
-            relation: "Sabeen’s Mentor and CEO of Beyond Information Technology Solutions (BITS)",
-            description: "How Sabeen became a Partner at BITS."
-        }
-    },
-    "t2f_zak": {
-        type: "audio",
-        room: "office",
-        title: "Starting T2F",
-        src: "Assets/Audios/Sabeens Office_On Starting T2F and the first event_Zaheer Kidvai_25.09.25.mp3",
-        meta: {
-            date: "September 25, 2025",
-            author: "Zaheer Alam Kidvai †",
-            relation: "Sabeen’s Mentor and CEO of Beyond Information Technology Solutions (BITS)",
-            description: "How the dream of T2F started."
-        }
-    },
-    "pfa_alia": {
-        type: "audio",
-        room: "office",
-        title: "Pakistan For All",
-        src: "Assets/Audios/Sabeens Office_Pakistan For All_Alia Chugtai_Unknown.mp3",
-        meta: {
-            date: "N/A",
-            author: "Alia Chugtai",
-            relation: "Journalist, specialising in visual journalism",
-            description: "On Sabeen's Involvment in Pakistan For All."
-        }
-    },
-    "discriminate_zeenia": {
-        type: "audio",
-        room: "office",
-        title: "Sabeen didn't discriminate",
-        src: "Assets/Audios/Sabeens Office_Sabeen didn't Discriminate_Zeenia Shaukat_17.07.2023.mp3",
-        meta: {
-            date: "July 17, 2023",
-            author: "Zeenia Shaukat",
-            relation: "Co-Founder and Director of The Knowledge Forum",
-            description: "On Sabeen's ability to be fair and hear the counter argument."
-        }
-    },
-    "afraid_zeenia": {
-        type: "audio",
-        room: "office",
-        title: "Sabeen wasn't afraid",
-        src: "Assets/Audios/Sabeens Office_Sabeen wasn't Afraid_Zeenia Shaukat_17.07.2023.mp3",
-        meta: {
-            date: "July 17, 2023",
-            author: "Zeenia Shaukat",
-            relation: "Co-Founder and Director of The Knowledge Forum",
-            description: "On Sabeen’s bravery and sense of justice."
-        }
-    },
-    "activism_zeenia": {
-        type: "audio",
-        room: "office",
-        title: "Sabeen's Activism",
-        src: "Assets/Audios/Sabeens Office_Sabeens Activism_Zeenia Shaukat_17.07.2023.mp3",
-        meta: {
-            date: "July 17, 2023",
-            author: "Zeenia Shaukat",
-            relation: "Co-Founder and Director of The Knowledge Forum",
-            description: "Sabeen's role as an activist and a leader."
-        }
-    },
-    "humility_zeenia": {
-        type: "audio",
-        room: "office",
-        title: "Sabeen's Humility",
-        src: "Assets/Audios/Sabeens Office_Sabeens Humility_Zeenia Shaukat_17.07.2023.mp3",
-        meta: {
-            date: "July 17, 2023",
-            author: "Zeenia Shaukat",
-            relation: "Co-Founder and Director of The Knowledge Forum",
-            description: "On Sabeen’s activism and humility."
-        }
-    },
-    "workethic_seema": {
-        type: "audio",
-        room: "office",
-        title: "Sabeen's Work Ethic",
-        src: "Assets/Audios/Sabeens Office_Sabeens Work Ethic_Seema Somji_27.09.2021.mp3",
-        meta: {
-            date: "September 27, 2021",
-            author: "Seema Somji",
-            relation: "Sabeen's Cousin",
-            description: "What was Sabeen’s work ethic like?"
-        }
-    },
-    "solutions_zak": {
-        type: "audio",
-        room: "office",
-        title: "Sabeen's at Solutions Unlimited",
-        src: "Assets/Audios/Sabeens Office_Solutions Unlimited_Zaheer Kidvai_25.09.25.mp3",
-        meta: {
-            date: "September 25, 2025",
-            author: "Zaheer Alam Kidvai †",
-            relation: "Sabeen’s Mentor and CEO of Beyond Information Technology Solutions (BITS)",
-            description: "How Sabeen started working at Solutions Unlimited?"
-        }
-    },
-    "saf_salima": {
-        type: "audio",
-        room: "office",
-        title: "South Asia Foundation",
-        src: "Assets/Audios/Sabeens Office_South Asia Foundation_Salima Hashmi_04.07.23.mp3",
-        meta: {
-            date: "July 4, 2023",
-            author: "Salima Hashmi",
-            relation: "Artist, Curator, and Contemporary art historian",
-            description: "On Sabeen's work for the South Asia Foundation."
-        }
-    },
+    
 
-    // --- T2F Gallery Audios ---
+    // --- T2F Gallery Data ---
+        // --- Audios ---
     "as_chand": {
         type: "audio",
         room: "T2F_Gallery",
@@ -1118,7 +1463,8 @@ const ARCHIVE_DATABASE = {
         }
     },
 
-    // --- T2F Cafe Audios ---
+    // --- T2F Cafe Data ---
+        // --- Audios ---
     "critics_sheba": {
         type: "audio",
         room: "T2F_Cafe",
@@ -1324,189 +1670,6 @@ const ARCHIVE_DATABASE = {
         }
     },
 
-    // --- Baby Box Audios ---
-    "meeting_sabina": {
-        type: "audio",
-        room: "Baby_Box",
-        title: "Meeting Sabeen",
-        src: "Assets/Audios/Baby Box_A Summer with Sabeen_Sabina Paton_27.09.2021.mp3",
-        meta: {
-            date: "March 21, 2022",
-            author: "Sabina Paton",
-            relation: "Sabeen’s Cousin",
-            description: "Remembering Sabeen as a child."
-        }
-    },
-
-    "school_omer": {
-        type: "audio",
-        room: "Baby_Box",
-        title: "Sabeen in school",
-        src: "Assets/Audios/Baby Box_Earliest Memory_Omer Dossani_27.09.2021.mp3",
-        meta: {
-            date: "September 27, 2021",
-            author: "Omer Dossani",
-            relation: "Sabeen’s Cousin",
-            description: "Sabeen as a friendly young girl."
-        }
-    },
-    "child_ayesha": {
-        type: "audio",
-        room: "Baby_Box",
-        title: "Sabeen as a child",
-        src: "Assets/Audios/Baby Box_Eid_Ayesha Sajun_27.09.2021.mp3",
-        meta: {
-            date: "September 27, 2021",
-            author: "Ayesha Sajun",
-            relation: "Sabeen’s Cousin",
-            description: "Remembering time spent with Sabeen as a child."
-        }
-    },
-    "adventure_tallat": {
-        type: "audio",
-        room: "Baby_Box",
-        title: "Family Adventures",
-        src: "Assets/Audios/Baby Box_Family Adventures_Tallat Mahmud_21.03.2022.mp3",
-        meta: {
-            date: "March 21, 2022",
-            author: "Tallat Mahmud",
-            relation: "Sabeen's Father",
-            description: "Remembering time spent as a family with Sabeen."
-        }
-    },
-    "sabeen_mahenaz": {
-        type: "audio",
-        room: "Baby_Box",
-        title: "On Sabeen",
-        src: "Assets/Audios/Baby Box_On Sabeen_Mahenaz Mahmud_02.08.15.mp3",
-        meta: {
-            date: "August 2, 2015",
-            author: "Mahenaz Mahmud",
-            relation: "Sabeen’s Mother",
-            description: "Reflecting on her life and how she raised Sabeen."
-        }
-    },
-    "cricket_faiz": {
-        type: "audio",
-        room: "Baby_Box",
-        title: "Playing Cricket",
-        src: "Assets/Audios/Baby Box_Playing Cricket with Sabeen_Faiz Somji_27.09.2021.mp3",
-        meta: {
-            date: "September 27, 2021",
-            author: "Faiz Somji",
-            relation: "Sabeen’s Cousin",
-            description: "Sabeen’s Passion for Cricket."
-        }
-    },
-    "cricket_sabina": {
-        type: "audio",
-        room: "Baby_Box",
-        title: "Learning from Sabeen",
-        src: "Assets/Audios/Baby Box_Playing Cricket with Sabeen_Sabina Paton_27.09.2021.mp3",
-        meta: {
-            date: "March 21, 2022",
-            author: "Sabina Paton",
-            relation: "Sabeen's Cousin",
-            description: "Sabeen’s Passion for Cricket."
-        }
-    },
-    "pumpkin_tallat": {
-        type: "audio",
-        room: "Baby_Box",
-        title: "Pumpkin Sitar",
-        src: "Assets/Audios/Baby Box_Pumpkin Sitar_Tallat Mahmud_21.03.2022.mp3",
-        meta: {
-            date: "March 21, 2022",
-            author: "Tallat Mahmud",
-            relation: "Sabeen's Father",
-            description: "Remembering an anecdote of  Sabeen learning to play sitar."
-        }
-    },
-    "learning_zareena": {
-        type: "audio",
-        room: "Baby_Box",
-        title: "Sabeen as a student",
-        src: "Assets/Audios/Baby Box_Sabeen as a student_Zareena Saeed_07.07.2023.mp3",
-        meta: {
-            date: "July 7, 2023",
-            author: "Zareena Saeed",
-            relation: "Sabeen’s Literature Teacher and Assistant Prof at University of the Punjab",
-            description: "Remembering Sabeen in college."
-        }
-    },
-    "teenage_omer": {
-        type: "audio",
-        room: "Baby_Box",
-        title: "Sabeen’s teenage years",
-        src: "Assets/Audios/Baby Box_Sabeen In Middle School_Omer Dossani_27.09.2021.mp3",
-        meta: {
-            date: "September 27, 2021",
-            author: "Omer Dossani",
-            relation: "Sabeen’s Cousin",
-            description: "Remembering sabeen as a teenager."
-        }
-    },
-    "nonconformist_omer": {
-        type: "audio",
-        room: "Baby_Box",
-        title: "Sabeen was a nonconformist",
-        src: "Assets/Audios/Baby Box_Sabeen was a nonconformist_Omer Soomro_20.06.2023.mp3",
-        meta: {
-            date: "June 20, 2023",
-            author: "Omer Soomro",
-            relation: "Sabeen’s Childhood Friend",
-            description: "Remembering Sabeen’s school years."
-        }
-    },
-    "tomboy_omer": {
-        type: "audio",
-        room: "Baby_Box",
-        title: "Sabeen as a child",
-        src: "Assets/Audios/Baby Box_Sabeen was a Tom Boy_Omer Soomro_20.06.2023.mp3",
-        meta: {
-            date: "June 20, 2023",
-            author: "Omer Soomro",
-            relation: "Sabeen’s Childhood Friend",
-            description: "Remembering Sabeen as a child.."
-        }
-    },
-    "confident_zareena": {
-        type: "audio",
-        room: "Baby_Box",
-        title: "Sabeen was confident",
-        src: "Assets/Audios/Baby Box_Sabeen Was Confident_Zareena Saeed_07.07.2023.mp3",
-        meta: {
-            date: "July 7, 2023",
-            author: "Zareena Saeed",
-            relation: "Sabeen’s Literature Teacher and Assistant Prof at University of the Punjab",
-            description: "Remembering Sabeen’s style and her confidence."
-        }
-    },
-    "kgs_omer": {
-        type: "audio",
-        room: "Baby_Box",
-        title: "Sabeen in school",
-        src: "Assets/Audios/Baby Box_Sabeen was mischievious_Omer Soomro_20.06.2023.mp3",
-        meta: {
-            date: "June 20, 2023",
-            author: "Omer Soomro",
-            relation: "Sabeen’s Childhood Friend",
-            description: "Remembering Sabeen as a child."
-        }
-    },
-    "play_omer": {
-        type: "audio",
-        room: "Baby_Box",
-        title: "Playing with her cousins",
-        src: "Assets/Audios/Baby Box_Spitting Contest_Omer Dossani_27.09.2021.mp3",
-        meta: {
-            date: "September 27, 2021",
-            author: "Omer Dossani",
-            relation: "Sabeen’s Cousin",
-            description: "A playful memory of Sabeen as young girl."
-        }
-    },
-
     // --- FROM THE BLOG ARCHIVE (PDFs) ---
     "blog_2003_03_29": {
         type: "blog",
@@ -1516,175 +1679,4 @@ const ARCHIVE_DATABASE = {
         content: "Feel ancient entering the world of blogging as late as 2003... The 'shock and awe' of the Iraq war has pushed me to finally find my voice."
     },
     
-    // --- Bedroom Audio-Image Entries ---
-    "mac_zak_combined": {
-        type: "audio-image",
-        room: "bedroom",
-        title: "Sabeen's First Mac",
-        src: "Assets/Images/Sabeens Bedroom_Artefact_ Macintosh SE.webp",
-        audioSrc: "Assets/Audios/Sabeens Bedroom_How Sabeen got her first mac_Zaheer Kidvai_25.09.25.mp3",
-        meta: {
-            photographer: "Unknown",
-            author: "Zaheer Alam Kidvai (deceased)",
-            picture_date: "N/A",
-            date: "September 25, 2025",
-            relation: "Sabeen’s Mentor",
-            description: "How Sabeen got her first mac."
-        }
-    },
-    "license Plate": {
-        type: "audio-image",
-        room: "bedroom",
-        title: "Tu Mera Hero(You are my Hero)License Plate",
-        src: "Assets/Images/Sabeens Bedroom_Artefact_Tu Mera Hero.webp",
-        audioSrc: "Assets/Audios/Sabeens Bedroom_Dekho Magar Pyaar Se_Hafza Rashid_21.03.2022.mp3",
-        meta: {
-            photographer: "Unknown",
-            picture_date: "N/A",
-            author: "Hafza Rashid",
-            date: "Sabeen’s Cousin",
-            relation: "N/A",
-            description: "Sabeen holds a license plate that was hand painted by Truck artist Haider Ali. It says 'Tu Mera Hero' which translates to 'You are my Hero'."
-        }
-    },
-    "music_sheila_combined": {
-        type: "audio-image",
-        room: "bedroom",
-        title: "Jim Morrison Poster",
-        src: "Assets/Images/Sabeens Bedroom_Artefact_Jim Morrison Poster.webp",
-        audioSrc: "Assets/Audios/Sabeens Bedroom_Her Music Taste_Sheila Fazal_06.01.2020.mp3",
-        meta: {
-            photographer: "Schokofeh Kamiz",
-            author: "Sheila Fazal",
-            picture_date: "January 23, 2018",
-            date: "January 6, 2020",
-            relation: "Sabeen’s  Aunt",
-            description: "Her passion for and taste in music."
-        }
-    },
-    "tech_faiz_combined": {
-        type: "audio-image",
-        room: "bedroom",
-        title: "Apple Poster",
-        src: "Assets/Images/Sabeens Bedroom_Artefact_Apple Poster.webp",
-        audioSrc: "Assets/Audios/Sabeens Bedroom_Sabeen and technology_Faiz Somji_27.09.2021.mp3",
-        meta: {
-            photographer: "Schokofeh Kamiz",
-            picture_date: "January 23, 2018",
-            author: "Faiz Somji",
-            date: "September 27, 2021",
-            relation: "Sabeen’s Cousin",
-            description: "On Sabeen's love for technology."
-        }
-    },
-    // --- Office Audio-Image Entries ---
-    "Peaceniche_chand_combined": {
-        type: "audio-image",
-        room: "office",
-        title: "Peaceniche Patch",
-        src: "Assets/Images/Sabeens Office_Artefact_ Peaceniche Patch.webp",
-        audioSrc: "Assets/Audios/Sabeens Office_On Peaceniche_Chand Singhara_21.06.2023.mp3",
-        meta: {
-            photographer: "Humayun Memon",
-            picture_date: "July 11, 2019",
-            author: "Chand Singhara",
-            date: "September 27, 2021",
-            relation: "Manager Music Room at Habib University/Former Gallery Manager at T2F",
-            description: "What was Peaceniche "
-        }
-    },
-    "Hackathon_sheba_combined": {
-        type: "audio-image",
-        room: "office",
-        title: "Civic Hackathon Sticker",
-        src: "Assets/Images/Sabeens Office_Artefact_ Hackathon Sticker.webp",
-        audioSrc: "Assets/Audios/Sabeens Office_Civic Hackathon_Sheba Najmi_24.07.2023.mp3",
-        meta: {
-            photographer: "Humayun Memon",
-            picture_date: "July 11, 2019",
-            author: "Sheba Najmi",
-            date: "July 25, 2023",
-            relation: "Founder & Executive Director of Code for Pakistan",
-            description: "Pakistan's First Civic Hackathon organized by Sabeen. Participants filled out their vision for their neighbourhood on this sticker. This was what sabeen wanted in hers"
-        }
-    },
-    "artefact_faiz_aaj_kay_naam_cd_rom": {
-        type: "audio-image",
-        room: "office",
-        title: "Faiz Aaj Kay Naam (For today's name)",
-        src: "Assets/Images/Sabeens Office_Artefact_ Faiz Aaj Kay Naam CD Rom.webp",
-        audioSrc: "Assets/Audios/Sabeens Office_Faiz CD_Zaheer Kidvai_25.09.25.mp3",
-        meta: {
-            photographer: "Humayun Memon",
-            picture_date: "July 11, 2019",
-            author: "Zaheer Alam Kidvai (deceased)",
-            date: "September 25, 2025",
-            relation: "Sabeen’s Mentor and CEO of Beyond Information Technology Solutions (BITS)",
-            description: "Pakistan’s First interactive CD ROM on Faiz Ahmed Faiz, for which Sabeen did the research and collaboratively designed with Zaheer Kidvai, Jehan Ara, and others."
-        }
-    },
-    "impact_omer": {
-        type: "audio-image",
-        room: "office",
-        title: "Note from Natasha Ejaz",
-        src: "Assets/Images/Sabeens Office_Artefact_ Note Natasha Ejaz.webp",
-        audioSrc: "Assets/Audios/Sabeens Office_Sabeens Impact_Omer Dossani_27.09.2021.mp3",
-        meta: {
-            photographer: "Humayun Memon",
-            picture_date: "July 11, 2019",
-            date: "September 27, 2021",
-            author: "Omer Dossani",
-            relation: "Sabeen's Cousin",
-            description: "Dear ZAK & Sabeen, Poppy sends her love & support to T2F through this cheque. My sincerest love & regards, Natasha Ejaz"
-        }
-    },
-    "impact_sameer": {
-        type: "audio-image",
-        room: "office",
-        title: "Note from Goethe Institut Delhi",
-        src: "Assets/Images/Sabeens Office_Artefact_ Note Goethe.webp",
-        audioSrc: "Assets/Audios/Sabeens Office_Sabeens Impact_Sameer Dossani_27.09.2021.mp3",
-        meta: {
-            photographer: "Humayun Memon",
-            picture_date: "July 11, 2019",
-            date: "September 27, 2021",
-            author: "Sameer Dossani",
-            relation: "Sabeen's Cousin",
-            description: "Dear Sabeen & Raania, Thank you so much for your support & for accomodating us at such short notice. Your space looks like its a real labour of love and we look foward to collaborating with you in the future. When you're in Delhi next do give us a shout! warmly, Rahaab and Tanvi on behalf of the DIX team & Geothe Institut"
-        }
-    },
-
-// --- Baby box Audio Image Entries ---
-
-"artefact_raggedy_ann": {
-        type: "audio-image",
-        room: "Baby_Box",
-        title: "Raggedy Ann doll",
-        src: "Assets/Images/Baby Box_Artefact_ Raggedy Ann.webp",
-        audioSrc: "Assets/Audios/Baby Box_Dolls and Shoes_Tallat Mahmud_21.03.2022.mp3",
-        meta: {
-            photographer: "Insiyah Syed",
-            picture_date: "September 24, 2020",
-            author: "Tallat Mahmud",
-            date: "March 21, 2022",
-            relation: "Sabeen's Father",
-            description: "A doll that Sabeen was inseparable from as a child. She would drag it everywhere and so the doll is now tattered."
-        },
-    },
-
-"artefact_shoes": {
-        type: "audio-image",
-        room: "Baby_Box",
-        title: "Sabeen's Shoes",
-        src: "Assets/Images/Baby Box_Artefact_ Shoes.webp",
-        audioSrc: "Assets/Audios/Baby Box_Dolls and Shoes_Tallat Mahmud_21.03.2022.mp3",
-        meta: {
-            photographer: "Insiyah Syed",
-            picture_date: "September 24, 2020",
-            author: "Tallat Mahmud",
-            date: "March 21, 2022",
-            relation: "Sabeen's Father",
-            description: "Sabeen's shoes from her childhood."
-        }
-    },
 }
