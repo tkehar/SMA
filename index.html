@@ -712,44 +712,44 @@ nav button:hover { color: #D6B743; }
                 <a-entity id="hud" position="0 0 -1">
                     
                     <!-- Navigation Menu (Left) -->
-                    <a-entity id="nav-menu" position="0 0.6 0" scale="0.3 0.3 0.3">
+                    <a-entity id="nav-menu" position="0 -0.6 0" scale="0.3 0.3 0.3">
                         <!-- Background Panel -->
-                        <a-plane color="#F9F6E4" opacity="0.9" width="2.2" height="0.6" position="0.1 0 -0.02"></a-plane>
+                        <a-plane color="#393939" opacity="0.8" width="2.2" height="0.6" position="0.1 0 -0.02" corner-radius="1"></a-plane>
 
                         <!-- Label -->
-                        <a-text value="Currently in" align="left" position="-0.9 0.15 0" width="1.5" color="#393939"></a-text>
+                        <a-text value="Currently in" align="left" position="-0.75 0.45 0.5" width="1.5" color="#FFFFFF"></a-text>
                         
                         <!-- Dropdown Header -->
                         <a-entity id="nav-header" position="-0.4 -0.05 0">
-                            <a-plane class="clickable" color="#C3BEA4" borderwidth="2.0" bordercolor="#393939" width="1.0" height="0.25" onclick="toggleNavMenu()"></a-plane>
-                            <a-text id="nav-current-room" value="Bedroom" align="left" position="-0.4 0 0.01" color="#393939" width="2.5"></a-text>
-                            <a-image id="nav-arrow" class="clickable" onclick="toggleNavMenu()" src="Assets/Icons/Arrow_Down.png" color="#393939" width="0.125" height="0.125" position="0.4 0 0.01"></a-image>
+                            <a-plane class="clickable" color="#393939" width="1.0" height="0.25" onclick="toggleNavMenu()"></a-plane>
+                            <a-text id="nav-current-room" value="Bedroom" align="left" position="-0.4 0 0.01" color="#FFFFFF" width="2.5"></a-text>
+                            <a-image id="nav-arrow" class="clickable" onclick="toggleNavMenu()" src="Assets/Icons/Arrow_Down.png" color="#FFFFFF" width="0.125" height="0.125" position="0.4 0 0.01"></a-image>
                         </a-entity>
                         
                         <!-- Dropdown List -->
-                        <a-entity id="nav-items-container" visible="false" position="-0.4 -0.15 0">
+                        <a-entity id="nav-items-container" visible="false" position="-0.4 0.15 0">
                             <!-- Background -->
-                            <a-plane color="#F9F6E4" opacity="0.9" width="1.1" height="1.1" position="0 -0.59 0">
+                            <a-plane color="#393939" opacity="0.9" width="1" height="1.1" position="0 0.59 0">
                             
                             <a-entity id="nav-items" position="0 0.59 0.01">
                                 <a-entity class="nav-item" position="0 -0.15 0" data-room="bedroom">
-                                    <a-plane class="clickable" width="1.0" height="0.2" color="#C3BEA4" onclick="switchRoom('bedroom')"></a-plane>
+                                    <a-plane class="clickable" width="1.0" height="0.2" color="#393939" onclick="switchRoom('bedroom')"></a-plane>
                                     <a-text value="Bedroom" align="left" position="-0.4 0 0" width="2.5"></a-text>
                                 </a-entity>
                                 <a-entity class="nav-item" position="0 -0.37 0" data-room="office">
-                                    <a-plane class="clickable" width="1.0" height="0.2" color="#C3BEA4" onclick="switchRoom('office')"></a-plane>
+                                    <a-plane class="clickable" width="1.0" height="0.2" color="#393939" onclick="switchRoom('office')"></a-plane>
                                     <a-text value="Office" align="left" position="-0.4 0 0" width="2.5"></a-text>
                                 </a-entity>
                                 <a-entity class="nav-item" position="0 -0.59 0" data-room="babybox">
-                                    <a-plane class="clickable" width="1.0" height="0.2" color="#C3BEA4" onclick="switchRoom('babybox')"></a-plane>
+                                    <a-plane class="clickable" width="1.0" height="0.2" color="#393939" onclick="switchRoom('babybox')"></a-plane>
                                     <a-text value="Baby Box" align="left" position="-0.4 0 0" width="2.5"></a-text>
                                 </a-entity>
                                 <a-entity class="nav-item" position="0 -0.81 0" data-room="gallery">
-                                    <a-plane class="clickable" width="1.0" height="0.2" color="#C3BEA4" onclick="switchRoom('gallery')"></a-plane>
+                                    <a-plane class="clickable" width="1.0" height="0.2" color="#393939" onclick="switchRoom('gallery')"></a-plane>
                                     <a-text value="Gallery" align="left" position="-0.4 0 0" width="2.5"></a-text>
                                 </a-entity>
                                 <a-entity class="nav-item" position="0 -1.03 0" data-room="cafe">
-                                    <a-plane class="clickable" width="1.0" height="0.2" color="#C3BEA4" onclick="switchRoom('cafe')"></a-plane>
+                                    <a-plane class="clickable" width="1.0" height="0.2" color="#393939" onclick="switchRoom('cafe')"></a-plane>
                                     <a-text value="Cafe" align="left" position="-0.4 0 0" width="2.5"></a-text>
                                 </a-entity>
                             </a-entity>
@@ -757,10 +757,10 @@ nav button:hover { color: #D6B743; }
                         </a-entity>
 
                         <!-- Exit Button -->
-                        <a-image id="nav-exit-icon" class="clickable" onclick="exitToHome()" src="Assets/Icons/Exit_Room.png" opacity="0.9" color="#393939" width="0.35" height="0.35" position="0.5 0 0.01" hover-info="title: Exit Archive"></a-image>
+                        <a-image id="nav-exit-icon" class="clickable" onclick="exitToHome()" src="Assets/Icons/Exit_Room.png" opacity="0.9" color="#FFFFF" width="0.3" height="0.3" position="0.5 0 0.01" hover-info="title: Exit Archive"></a-image>
 
                         <!-- Mute Button -->
-                        <a-image id="nav-mute-icon" class="clickable" onclick="toggleGlobalAudio()" src="Assets/Icons/Unmute.png" opacity="0.9" color="#393939" width="0.35" height="0.35" position="1 0 0.01" hover-info="title: Mute/Unmute Audio"></a-image>
+                        <a-image id="nav-mute-icon" class="clickable" onclick="toggleGlobalAudio()" src="Assets/Icons/Unmute.png" opacity="0.9" color="#FFFFFF" width="0.3" height="0.3" position="1 0 0.01" hover-info="title: Mute/Unmute Audio"></a-image>
                     </a-entity>
 
                     <!-- Tooltip (Attached to Gaze) -->
@@ -1350,11 +1350,11 @@ function updateNavHighlight(activeRoom) {
         const room = el.getAttribute('data-room');
         
         if (room === activeRoom) {
-            bg.setAttribute('color', '#C3BEA4');
-            text.setAttribute('color', '#393939');
+            bg.setAttribute('color', '#5F4C05');
+            text.setAttribute('color', '#FFFFFF');
         } else {
-            bg.setAttribute('color', '#F9F6E4');
-            text.setAttribute('color', '#393939');
+            bg.setAttribute('color', '#393939');
+            text.setAttribute('color', '#FFFFFF');
         }
     });
 }
