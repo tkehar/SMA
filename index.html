@@ -711,6 +711,58 @@ nav button:hover { color: #D6B743; }
                 <!-- HUD Container -->
                 <a-entity id="hud" position="0 0 -1">
                     
+                    <!-- Navigation Menu (Left) -->
+                    <a-entity id="nav-menu" position="0 0.6 0" scale="0.3 0.3 0.3">
+                        <!-- Background Panel -->
+                        <a-plane color="#F9F6E4" opacity="0.9" width="2.2" height="0.6" position="0.1 0 -0.02"></a-plane>
+
+                        <!-- Label -->
+                        <a-text value="Currently in" align="left" position="-0.9 0.15 0" width="1.5" color="#393939"></a-text>
+                        
+                        <!-- Dropdown Header -->
+                        <a-entity id="nav-header" position="-0.4 -0.05 0">
+                            <a-plane class="clickable" color="#C3BEA4" borderwidth="2.0" bordercolor="#393939" width="1.0" height="0.25" onclick="toggleNavMenu()"></a-plane>
+                            <a-text id="nav-current-room" value="Bedroom" align="left" position="-0.4 0 0.01" color="#393939" width="2.5"></a-text>
+                            <a-image id="nav-arrow" class="clickable" onclick="toggleNavMenu()" src="Assets/Icons/Arrow_Down.png" color="#393939" width="0.125" height="0.125" position="0.4 0 0.01"></a-image>
+                        </a-entity>
+                        
+                        <!-- Dropdown List -->
+                        <a-entity id="nav-items-container" visible="false" position="-0.4 -0.15 0">
+                            <!-- Background -->
+                            <a-plane color="#F9F6E4" opacity="0.9" width="1.1" height="1.1" position="0 -0.59 0">
+                            
+                            <a-entity id="nav-items" position="0 0.59 0.01">
+                                <a-entity class="nav-item" position="0 -0.15 0" data-room="bedroom">
+                                    <a-plane class="clickable" width="1.0" height="0.2" color="#C3BEA4" onclick="switchRoom('bedroom')"></a-plane>
+                                    <a-text value="Bedroom" align="left" position="-0.4 0 0" width="2.5"></a-text>
+                                </a-entity>
+                                <a-entity class="nav-item" position="0 -0.37 0" data-room="office">
+                                    <a-plane class="clickable" width="1.0" height="0.2" color="#C3BEA4" onclick="switchRoom('office')"></a-plane>
+                                    <a-text value="Office" align="left" position="-0.4 0 0" width="2.5"></a-text>
+                                </a-entity>
+                                <a-entity class="nav-item" position="0 -0.59 0" data-room="babybox">
+                                    <a-plane class="clickable" width="1.0" height="0.2" color="#C3BEA4" onclick="switchRoom('babybox')"></a-plane>
+                                    <a-text value="Baby Box" align="left" position="-0.4 0 0" width="2.5"></a-text>
+                                </a-entity>
+                                <a-entity class="nav-item" position="0 -0.81 0" data-room="gallery">
+                                    <a-plane class="clickable" width="1.0" height="0.2" color="#C3BEA4" onclick="switchRoom('gallery')"></a-plane>
+                                    <a-text value="Gallery" align="left" position="-0.4 0 0" width="2.5"></a-text>
+                                </a-entity>
+                                <a-entity class="nav-item" position="0 -1.03 0" data-room="cafe">
+                                    <a-plane class="clickable" width="1.0" height="0.2" color="#C3BEA4" onclick="switchRoom('cafe')"></a-plane>
+                                    <a-text value="Cafe" align="left" position="-0.4 0 0" width="2.5"></a-text>
+                                </a-entity>
+                            </a-entity>
+                            </a-plane>
+                        </a-entity>
+
+                        <!-- Exit Button -->
+                        <a-image id="nav-exit-icon" class="clickable" onclick="exitToHome()" src="Assets/Icons/Exit_Room.png" opacity="0.9" color="#393939" width="0.35" height="0.35" position="0.5 0 0.01" hover-info="title: Exit Archive"></a-image>
+
+                        <!-- Mute Button -->
+                        <a-image id="nav-mute-icon" class="clickable" onclick="toggleGlobalAudio()" src="Assets/Icons/Unmute.png" opacity="0.9" color="#393939" width="0.35" height="0.35" position="1 0 0.01" hover-info="title: Mute/Unmute Audio"></a-image>
+                    </a-entity>
+
                     <!-- Tooltip (Attached to Gaze) -->
                     <a-entity id="cursor-tooltip" visible="false" position="0 -0.25 0" scale="0.3 0.3 0.3">
                         <a-rounded id="tooltip-bg" 
@@ -768,6 +820,7 @@ window.mobileHoverId = null; // Track the currently hovered item on mobile
 let isZoomed = false;
 let imgOriginalState = { pos: null, scale: null };
 let updateTimer = null;
+let isNavMenuOpen = false;
 
 // 2. INTERACTION LOGIC
 function interact(id) {
@@ -1046,17 +1099,33 @@ function startExperience() {
     }, 800);
 }
 
+function exitToHome() {
+    const overlay = document.getElementById('landing-overlay');
+    overlay.style.display = 'grid';
+    // Force reflow to ensure transition works if needed, though mostly for display switch
+    setTimeout(() => {
+        overlay.style.opacity = '1';
+    }, 10);
+
+    // Hide VR button
+    const vrBtn = document.querySelector('.a-enter-vr');
+    if (vrBtn) vrBtn.style.display = 'none';
+}
+
 function toggleGlobalAudio() {
     const globalAudio = document.querySelector('#global-audio');
     const icon = document.getElementById('mute-icon');
+    const vrIcon = document.getElementById('nav-mute-icon');
     
     if (globalAudio && globalAudio.components.sound) {
         if (globalAudio.components.sound.isPlaying) {
             globalAudio.components.sound.pauseSound();
             if (icon) icon.className = 'icon-sound-off';
+            if (vrIcon) vrIcon.setAttribute('src', 'Assets/Icons/Mute.png');
         } else {
             globalAudio.components.sound.playSound();
             if (icon) icon.className = 'icon-sound-on';
+            if (vrIcon) vrIcon.setAttribute('src', 'Assets/Icons/Unmute.png');
         }
     }
 }
@@ -1075,6 +1144,14 @@ function switchRoom(roomID) {
     const targetRoom = document.getElementById('room-' + roomID);
     if (targetRoom) {
         targetRoom.setAttribute('visible', 'true');
+    }
+
+    // 4. Update Navigation Highlight
+    updateNavHighlight(roomID);
+
+    // 5. Close the nav menu if it's open
+    if (isNavMenuOpen) {
+        toggleNavMenu();
     }
 }
 
@@ -1231,6 +1308,55 @@ function toggleZoom() {
 
         if(zoomBtn) zoomBtn.setAttribute('src', 'Assets/Icons/Zoom in.png');
     }
+}
+
+function toggleNavMenu() {
+    isNavMenuOpen = !isNavMenuOpen;
+
+    const navItemsContainer = document.querySelector('#nav-items-container');
+    const navArrow = document.querySelector('#nav-arrow');
+
+    if (!navItemsContainer || !navArrow) return;
+
+    if (isNavMenuOpen) {
+        // Open menu
+        navItemsContainer.setAttribute('visible', true);
+        navArrow.setAttribute('src', 'Assets/Icons/Arrow_Up.png'); // Point up
+    } else {
+        // Close menu
+        navItemsContainer.setAttribute('visible', false);
+        navArrow.setAttribute('src', 'Assets/Icons/Arrow_Down.png'); // Point down
+    }
+}
+
+function updateNavHighlight(activeRoom) {
+    const roomNames = {
+        'bedroom': 'Bedroom',
+        'office': 'Office',
+        'babybox': 'Baby Box',
+        'gallery': 'Gallery',
+        'cafe': 'Cafe'
+    };
+
+    // Update Header Text
+    const headerText = document.querySelector('#nav-current-room');
+    if (headerText) {
+        headerText.setAttribute('value', roomNames[activeRoom] || activeRoom);
+    }
+
+    document.querySelectorAll('.nav-item').forEach(el => {
+        const bg = el.querySelector('a-plane');
+        const text = el.querySelector('a-text');
+        const room = el.getAttribute('data-room');
+        
+        if (room === activeRoom) {
+            bg.setAttribute('color', '#C3BEA4');
+            text.setAttribute('color', '#393939');
+        } else {
+            bg.setAttribute('color', '#F9F6E4');
+            text.setAttribute('color', '#393939');
+        }
+    });
 }
 
 // --- CUSTOM LOADER LOGIC ---
