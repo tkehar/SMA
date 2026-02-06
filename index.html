@@ -188,7 +188,7 @@ async function deleteMessage(key) {
     top: 0; left: 0;
     width: 100%; height: 100%;
     background: #F9F6E4 url('Assets/Images/Home page.png') no-repeat center center;
-    background-size: 100% 100%;
+    background-size: cover;
     z-index: 9999; /* Stay above A-Frame */
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -1166,9 +1166,11 @@ function initInstructions() {
     let type = 'desktop';
     if (AFRAME.utils.device.isMobile()) {
         type = 'mobile';
-    }
-    // Basic check for VR headset
-    if (AFRAME.utils.device.checkHeadsetConnected() || navigator.userAgent.includes('Oculus') || navigator.userAgent.includes('VR')) {
+        // Override for Oculus Browser (which is mobile but VR)
+        if (navigator.userAgent.includes('Oculus')) {
+            type = 'vr';
+        }
+    } else if (AFRAME.utils.device.checkHeadsetConnected() || navigator.userAgent.includes('VR')) {
         type = 'vr';
     }
 
