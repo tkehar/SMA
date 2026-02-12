@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Instructions - The Sabeen Mahmud Archive</title>
+    <link rel="icon" href="Assets/Icons/favicon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="styles.css">
+    <!-- A-Frame needed for device detection in scripts.js -->
+    <script src="https://aframe.io/releases/1.4.0/aframe.min.js"></script>
+</head>
+<body>
+    <div id="landing-overlay" class="instructions-page" style="opacity: 1; display: grid;">
+        <div id="instructions-section" class="overlay-content" style="display:block; text-align: center; max-width: 1000px; width: 90%;">
+            <div style="text-align: left;">
+                <button class="back-btn" onclick="window.location.href='index.html'">← Back</button>
+            </div>
+            <h3>How to Navigate</h3>
+            
+            <div id="instr-grid" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; margin-bottom: 30px; align-items: start;">
+                <!-- Dynamic Content -->
+            </div>
+
+            <div style="text-align: center; margin-bottom: 20px;">
+                <button class="instr-nav-btn" style="background: #D6B743; color: #393939; padding: 12px 30px; font-size: 1.1rem;" onclick="window.location.href='archive.html'">Enter Archive</button>
+            </div>
+        </div>
+    </div>
+    <script src="database.js"></script>
+    <script src="scripts.js"></script>
+    <script>
+        window.onload = function() {
+            initInstructions();
+        };
+    </script>
+</body>
+</html>

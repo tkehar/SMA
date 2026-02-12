@@ -1,0 +1,258 @@
+#landing-overlay {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: #F9F6E4 url('Assets/Images/Home page.png') no-repeat center center;
+    background-size: cover;
+    z-index: 9999; /* Stay above A-Frame */
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    justify-items: center;
+    align-items: start;
+    padding-top: 80px;
+    box-sizing: border-box;
+    overflow-y: auto;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    transition: opacity 0.8s ease;
+}
+
+#landing-overlay.instructions-page {
+    background-image: none;
+    grid-template-columns: 1fr;
+}
+
+#landing-overlay.instructions-page .overlay-content {
+    grid-column: 1;
+}
+
+
+.home-menu {
+    text-align: center;
+    color: #393939;
+}
+
+.home-menu h1 { font-family:'Helvetica Neue', Arial, sans-serif; font-weight:bold; font-size: 1.5rem; letter-spacing: 4px; margin-bottom: 5px; }
+.home-menu h2 { font-family:'Helvetica Neue', Arial, sans-serif; font-weight: 200; font-style: bold; margin-bottom: 40px; }
+
+nav button {
+    display: block;
+    background: none;
+    border: none;
+    color: #393939;
+    font-size: 1.2rem;
+    margin: 15px auto;
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+nav button:hover { color: #D6B743; }
+
+.overlay-content {
+    animation: fadeIn 0.5s ease;
+    grid-column: 2;
+    width: 80%;
+    max-width: 450px;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Additional styles for the new home layout */
+.overlay-content input, .overlay-content textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-family: inherit;
+    box-sizing: border-box;
+}
+
+.overlay-content button[type="submit"] {
+    padding: 10px 20px;
+    background: #D6B743;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    color: #393939;
+}
+
+.back-btn {
+    background-color: #000000 !important;
+    border: 0 !important;
+    color: #ffffff !important; 
+    margin-top: 0;
+    margin-bottom: 20px;
+    padding: 8px 16px;
+    border-radius: 5px;
+}
+
+@media (max-width: 768px) {
+    #landing-overlay {
+        grid-template-columns: 1fr;
+        background-image: url('Assets/Images/Home page- mobile.png');
+        background-size: cover;
+    }
+    .overlay-content {
+        grid-column: 1;
+    }
+}
+
+    /* Custom Loading Screen */
+    #custom-loader {
+        position: fixed;
+        top: 0; left: 0;
+        width: 100%; height: 100%;
+        background-color: #F9F6E4;
+        z-index: 9000;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        transition: opacity 1s ease-out;
+    }
+    #custom-loader img {
+        max-width: 500px;
+        width: 60%;
+        height: auto;
+        opacity: 0;
+        animation: fadeInLoader 3s ease-in forwards;
+    }
+    @keyframes fadeInLoader {
+        0% { opacity: 0; transform: scale(0.95); }
+        100% { opacity: 1; transform: scale(1); }
+    }
+
+    /* 3. Ensure the background covers everything */
+        .a-canvas {
+        background-color: #F9F6E4 !important;
+    }
+    .delete-btn {
+    float: right;
+    background: #ff4d4d;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 0.8rem;
+    margin-left: 10px;
+}
+
+.delete-btn:hover {
+    background: #cc0000;
+}
+
+.feed-item {
+    position: relative;
+    overflow: hidden; /* Clears the float */
+    background: #F9F6E4;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    text-align: left;
+}
+
+.feed-item strong {
+    display: block;
+    color: #D6B743;
+    font-size: 0.9rem;
+    margin-bottom: 5px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.feed-item p {
+    margin: 0;
+    line-height: 1.4;
+    color: #555;
+}
+
+.feed-item audio {
+    width: 100%;
+    height: 30px;
+    margin-top: 5px;
+}
+
+#feed-container {
+    max-height: 40vh;
+    overflow-y: auto;
+    background: rgba(255, 255, 255, 0.6);
+    border-radius: 8px;
+    padding: 10px;
+    margin-top: 20px;
+    border: 1px solid rgba(0,0,0,0.1);
+}
+
+.message-controls {
+    display: flex;
+    gap: 10px;
+}
+
+.message-controls button {
+    flex: 1;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: transform 0.1s;
+}
+
+.btn-post { background: #D6B743; color: #393939; }
+
+#global-mute-btn {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    z-index: 9999;
+    background: #D6B743;
+    color: #393939;
+    border: none;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s;
+    padding: 10px;
+}
+#landing-overlay, #global-mute-btn { pointer-events: auto; }
+#global-mute-btn:hover { transform: scale(1.1); }
+
+/* Icon Color Control */
+#mute-icon {
+    width: 100%;
+    height: 100%;
+    background-color: #393939; /* CHANGE THIS to control icon color */
+    -webkit-mask-size: contain;
+    mask-size: contain;
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    -webkit-mask-position: center;
+    mask-position: center;
+}
+.icon-sound-on { -webkit-mask-image: url('Assets/Icons/Unmute.png'); mask-image: url('Assets/Icons/Unmute.png'); }
+.icon-sound-off { -webkit-mask-image: url('Assets/Icons/Mute.png'); mask-image: url('Assets/Icons/Mute.png'); }
+
+.instr-nav-btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    min-width: 80px;
+}
+
+/* Hide VR button initially */
+.a-enter-vr { display: none; }
+
+@media (max-width: 768px) {
+    #instr-grid { grid-template-columns: 1fr !important; }
+}

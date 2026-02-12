@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Message - The Sabeen Mahmud Archive</title>
+    <link rel="icon" href="Assets/Icons/favicon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+</head>
+<body>
+    <div id="landing-overlay" style="opacity: 1; display: grid;">
+        <div id="message-section" class="overlay-content" style="display:block">
+            <button class="back-btn" onclick="window.location.href='index.html'">← Back</button>
+            <h3>Message to the Archive</h3>
+            
+            <div class="input-group">
+                <input type="text" id="guest-name" placeholder="Your Name (Optional)">
+                <textarea id="guest-text" placeholder="Share your memory or message..." rows="3"></textarea>
+                
+                <div class="message-controls">
+                    <button class="btn-post" onclick="saveTextMessage()">Post Message</button>
+                </div>
+            </div>
+
+            <div id="feed-container">
+                <p style="text-align:center; opacity:0.6;">Loading archive entries...</p>
+            </div>
+        </div>
+    </div>
+    <script src="scripts.js"></script>
+</body>
+</html>
