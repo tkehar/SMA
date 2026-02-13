@@ -15,26 +15,8 @@
 </head>
 <body>
     <!-- Custom Loader -->
-    <div id="custom-loader" style="display: none; opacity: 0;">
+    <div id="custom-loader" style="display: flex; opacity: 1; z-index: 10001;">
         <img src="Assets/Images/Logo.png" alt="Loading...">
-    </div>
-
-    <!-- Instructions Overlay -->
-    <div id="landing-overlay" class="instructions-page" style="opacity: 1; display: grid; z-index: 9999;">
-        <div id="instructions-section" class="overlay-content" style="display:block; text-align: center; max-width: 1000px; width: 90%;">
-            <div style="text-align: left;">
-                <button class="back-btn" onclick="window.location.href='index.html'">← Back</button>
-            </div>
-            <h3>How to Navigate</h3>
-            
-            <div id="instr-grid" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; margin-bottom: 30px; align-items: start;">
-                <!-- Dynamic Content -->
-            </div>
-
-            <div style="text-align: center; margin-bottom: 20px;">
-                <button class="instr-nav-btn" style="background: #D6B743; color: #393939; padding: 12px 30px; font-size: 1.1rem;" onclick="startExperience()">Enter Archive</button>
-            </div>
-        </div>
     </div>
 
     <a-scene loading-screen="enabled: false"
@@ -201,8 +183,6 @@
             <a-sky src="#bg-T2F_Cafe"></a-sky>
 
             <a-circle class="clickable" src="Assets/Icons/Exit_Room.png" rotation="0 90 0" position="-3 2 4" radius="0.1" material="transparent: true; opacity: 0.9; depthTest: false" color="#000000" onclick="switchRoom('office')" hover-info="title: Go to Sabeen's Office"></a-circle>
-
-            <a-circle class="clickable" src="Assets/Icons/Exit_Room.png" rotation="0 90 0" position="-3 2 1" radius="0.1" material="transparent: true; opacity: 0.9; depthTest: false" color="#000000" onclick="switchRoom('gallery')" hover-info="title: Go to T2F Gallery"></a-circle>
         </a-entity>
 
         <a-entity id="rig">
@@ -229,9 +209,9 @@
                         <!-- Dropdown List -->
                         <a-entity id="nav-items-container" visible="false" position="-0.4 0.15 0">
                             <!-- Background -->
-                            <a-plane color="#393939" opacity="0.9" width="1" height="1.1" position="0 0.59 0">
+                            <a-plane color="#393939" opacity="0.9" width="1" height="0.9" position="0 0.69 0">
                             
-                            <a-entity id="nav-items" position="0 0.59 0.01">
+                            <a-entity id="nav-items" position="0 0.49 0.01">
                                 <a-entity class="nav-item" position="0 -0.15 0" data-room="bedroom">
                                     <a-plane class="clickable" width="1.0" height="0.2" color="#393939" onclick="switchRoom('bedroom')"></a-plane>
                                     <a-text value="Bedroom" align="left" position="-0.4 0 0" width="2.5"></a-text>
@@ -244,11 +224,7 @@
                                     <a-plane class="clickable" width="1.0" height="0.2" color="#393939" onclick="switchRoom('babybox')"></a-plane>
                                     <a-text value="Baby Box" align="left" position="-0.4 0 0" width="2.5"></a-text>
                                 </a-entity>
-                                <a-entity class="nav-item" position="0 -0.81 0" data-room="gallery">
-                                    <a-plane class="clickable" width="1.0" height="0.2" color="#393939" onclick="switchRoom('gallery')"></a-plane>
-                                    <a-text value="Gallery" align="left" position="-0.4 0 0" width="2.5"></a-text>
-                                </a-entity>
-                                <a-entity class="nav-item" position="0 -1.03 0" data-room="cafe">
+                                <a-entity class="nav-item" position="0 -0.81 0" data-room="cafe">
                                     <a-plane class="clickable" width="1.0" height="0.2" color="#393939" onclick="switchRoom('cafe')"></a-plane>
                                     <a-text value="Cafe" align="left" position="-0.4 0 0" width="2.5"></a-text>
                                 </a-entity>
@@ -315,63 +291,7 @@
     <script src="database.js"></script>
     <script src="scripts.js"></script>
     <script>
-        var scene = document.querySelector('a-scene');
-
-        // Initialize instructions immediately
-        window.addEventListener('load', function() {
-            initInstructions();
-        });
-
-        // Override startExperience to implement the requested flow
-        window.startExperience = function() {
-            var overlay = document.getElementById('landing-overlay');
-            var loader = document.getElementById('custom-loader');
-
-            // Request Device Orientation Permission for iOS 13+
-            if (typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function') {
-                DeviceOrientationEvent.requestPermission()
-                    .catch(console.error);
-            }
-
-            // 1. Hide Instructions
-            overlay.style.opacity = '0';
-            setTimeout(function() {
-                overlay.style.display = 'none';
-            }, 500);
-
-            // 2. Show Loader
-            loader.style.display = 'flex';
-            // Force reflow
-            void loader.offsetWidth; 
-            loader.style.opacity = '1';
-
-            // 3. Wait for scene load if needed
-            if (scene.hasLoaded) {
-                setTimeout(enterVRMode, 1000);
-            } else {
-                scene.addEventListener('loaded', enterVRMode);
-            }
-        };
-
-        function enterVRMode() {
-            var loader = document.getElementById('custom-loader');
-            
-            // Hide Loader
-            loader.style.opacity = '0';
-            setTimeout(function() {
-                loader.style.display = 'none';
-                
-                // Show VR button
-                var vrBtn = document.querySelector('.a-enter-vr');
-                if (vrBtn) vrBtn.style.display = 'block';
-
-                // Start Experience
-                initGlobalAudio();
-                if (typeof switchRoom === "function") {
-                    switchRoom('bedroom'); 
-                }
-            }, 1000);
-        }
+        var archiveScene = document.querySelector('a-scene');
 
         function onSceneLoaded() {
             // Remove hover functionality on mobile devices (excluding VR headsets)
@@ -381,12 +301,17 @@
                     el.removeAttribute('hover-info');
                 });
             }
+
+            // Default to bedroom
+            if (typeof switchRoom === "function") {
+                switchRoom('bedroom'); 
+            }
         }
 
-        if (scene.hasLoaded) {
+        if (archiveScene.hasLoaded) {
             onSceneLoaded();
         } else {
-            scene.addEventListener('loaded', onSceneLoaded);
+            archiveScene.addEventListener('loaded', onSceneLoaded);
         }
     </script>
 </body>

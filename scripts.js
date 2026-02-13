@@ -17,8 +17,13 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase (using compat versions as per previous setup)
-firebase.initializeApp(firebaseConfig);
-const database = firebase.database();
+let database;
+try {
+    firebase.initializeApp(firebaseConfig);
+    database = firebase.database();
+} catch (e) {
+    console.warn("Firebase initialization failed:", e);
+}
 
 // --- 2. GLOBAL STATE ---
 let isAdmin = false;
@@ -30,12 +35,14 @@ function saveTextMessage() {
 
     if (!text) return alert("Please share your thoughts first!");
 
-    database.ref('messages').push({
-        name: name,
-        text: text,
-        type: 'text',
-        timestamp: Date.now()
-    });
+    if (database) {
+        database.ref('messages').push({
+            name: name,
+            text: text,
+            type: 'text',
+            timestamp: Date.now()
+        });
+    }
 
     document.getElementById('guest-text').value = "";
 }
@@ -69,10 +76,12 @@ function renderFeed() {
     container.innerHTML = html || "<p>No messages yet. Be the first!</p>";
 }
 
-database.ref('messages').orderByChild('timestamp').on('value', (snapshot) => {
-    feedSnapshot = snapshot;
-    renderFeed();
-});
+if (database) {
+    database.ref('messages').orderByChild('timestamp').on('value', (snapshot) => {
+        feedSnapshot = snapshot;
+        renderFeed();
+    });
+}
 
 // --- 6. MODERATION & ADMIN ---
 function enterAdminMode() {
@@ -96,11 +105,13 @@ document.addEventListener('keydown', (e) => {
 async function deleteMessage(key) {
     if (!confirm("Are you sure you want to delete this entry?")) return;
 
-    try {
-        await database.ref('messages').child(key).remove();
-        console.log("Deleted successfully");
-    } catch (error) {
-        console.error("Error deleting:", error);
+    if (database) {
+        try {
+            await database.ref('messages').child(key).remove();
+            console.log("Deleted successfully");
+        } catch (error) {
+            console.error("Error deleting:", error);
+        }
     }
 }
 
@@ -176,32 +187,6 @@ let isNavMenuOpen = false;
 function interact(id) {
     const data = ARCHIVE_DATABASE[id];
     if (!data) return console.error("Entry not found:", id);
-
-    // Mobile Two-Tap Logic
-    if (typeof AFRAME !== 'undefined' && AFRAME.utils.device.isMobile()) {
-        // First Tap: Show Hover State
-        if (window.mobileHoverId !== id) {
-            window.mobileHoverId = id;
-            
-            // Manually trigger tooltip (needed if raycaster didn't leave/re-enter)
-            const cursorTooltip = document.querySelector('#cursor-tooltip');
-            const tooltipText = document.querySelector('#tooltip-text');
-            const tooltipBg = document.querySelector('#tooltip-bg');
-            
-            if (cursorTooltip && tooltipText && tooltipBg && data.title) {
-                tooltipText.setAttribute('value', data.title);
-                const estimatedWidth = Math.max(0.8, (data.title.length * 0.05) + 0.2);
-                tooltipBg.setAttribute('width', estimatedWidth);
-                tooltipBg.setAttribute('position', { x: -(estimatedWidth / 2), y: 0, z: 0 });
-                cursorTooltip.setAttribute('visible', true);
-            }
-            return; // Stop here, do not open panel
-        }
-        
-        // Second Tap: Proceed to open panel
-        // Reset hover id so next interaction starts fresh
-        window.mobileHoverId = null;
-    }
 
     // FIX: Hide tooltip immediately when interacting
     const cursorTooltip = document.querySelector('#cursor-tooltip');
@@ -454,16 +439,7 @@ function startExperience() {
 }
 
 function exitToHome() {
-    const overlay = document.getElementById('landing-overlay');
-    overlay.style.display = 'grid';
-    // Force reflow to ensure transition works if needed, though mostly for display switch
-    setTimeout(() => {
-        overlay.style.opacity = '1';
-    }, 10);
-
-    // Hide VR button
-    const vrBtn = document.querySelector('.a-enter-vr');
-    if (vrBtn) vrBtn.style.display = 'none';
+    window.location.href = 'index.html';
 }
 
 function toggleGlobalAudio() {
@@ -514,33 +490,40 @@ function initInstructions() {
     
     // Detect Device
     let type = 'desktop';
-    if (typeof AFRAME !== 'undefined') {
-        if (AFRAME.utils.device.isMobile()) {
-            type = 'mobile';
-            // Override for Oculus Browser (which is mobile but VR)
-            if (navigator.userAgent.includes('Oculus')) {
-                type = 'vr';
-            }
-        } else if (AFRAME.utils.device.checkHeadsetConnected() || navigator.userAgent.includes('VR')) {
+    
+    // Robust mobile detection (A-Frame or Regex fallback)
+    const isMobile = (typeof AFRAME !== 'undefined' && AFRAME.utils.device.isMobile()) || 
+                     /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+
+    if (isMobile) {
+        type = 'mobile';
+        // Override for Oculus Browser (which is mobile but VR)
+        if (navigator.userAgent && navigator.userAgent.includes('Oculus')) {
+            type = 'vr';
+        }
+    } else {
+        // Desktop or VR Headset connected to Desktop
+        if ((typeof AFRAME !== 'undefined' && AFRAME.utils.device.checkHeadsetConnected()) || 
+            (navigator.userAgent && navigator.userAgent.includes('VR'))) {
             type = 'vr';
         }
     }
 
     const content = {
         desktop: [
-            { title: "Look Around", text: "Click and drag your cursor to rotate the view.", gif: "Assets/GIFs/Drag Move.gif" },
-            { title: "Interact", text: "Hover over icons to reveal titles. Click to view content.", gif: "Assets/GIFs/Click and Hover.gif" },
-            { title: "Explore", text: "Look for 'Exit' icons to move between rooms.", gif: "Assets/GIFs/explore.gif" }
+            { title: "Look Around", text: "Click and drag your cursor to rotate your view.", gif: "Assets/Icons/Info.png" },
+            { title: "Interact", text: "Hover over the amaltaas flowers to reveal details and click to view the content.", gif: "Assets/Icons/Info.png" },
+            { title: "Explore", text: "Use the dropdown menu to move between rooms.", gif: "Assets/Icons/Info.png" }
         ],
         mobile: [
-            { title: "Look Around", text: "Move your device around or swipe the screen.", gif: "Assets/GIFs/Mobile_Drag Move.gif" },
-            { title: "Interact", text: "Tap an icon once to see its title. Tap again to open it.", gif: "Assets/GIFs/Mobile_Click and Hover.gif" },
-            { title: "Explore", text: "Look for 'Exit' icons to move between rooms.", gif: "Assets/GIFs/explore.gif" }
+            { title: "Look Around", text: "Move your device around or swipe the screen.", gif: "Assets/Icons/Info.png" },
+            { title: "Interact", text: "Tap the amaltaas flowers to view the content.", gif: "Assets/Icons/Info.png" },
+            { title: "Explore", text: "Use the dropdown menu to move between rooms.", gif: "Assets/Icons/Info.png" }
         ],
         vr: [
-            { title: "Look Around", text: "Turn your head to look around the space.", gif: "Assets/GIFs/look.gif" },
-            { title: "Interact", text: "Gaze at icons or use your controller trigger.", gif: "Assets/GIFs/interact.gif" },
-            { title: "Explore", text: "Look for 'Exit' icons to move between rooms.", gif: "Assets/GIFs/explore.gif" }
+            { title: "Look Around", text: "Turn your head to look around the space.", gif: "Assets/Icons/Info.png" },
+            { title: "Interact", text: "Point and click the amaltaas flowers using your controller trigger.", gif: "Assets/Icons/Info.png" },
+            { title: "Explore", text: "Use the dropdown menu to move between rooms.", gif: "Assets/Icons/Info.png" }
         ]
     };
 
@@ -552,10 +535,19 @@ function initInstructions() {
     let html = '';
     instructions.forEach(slide => {
         html += `
-            <div style="display: flex; flex-direction: column; align-items: center; animation: fadeIn 0.5s;">
-                <strong style="font-size: 1.2rem; margin-bottom: 15px; color: #D6B743; text-transform: uppercase; letter-spacing: 1px;">${slide.title}</strong>
-                <img src="${slide.gif}" style="width: 100%; height: auto; margin-bottom: 15px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); display: block;">
-                <p style="font-size: 1rem; margin: 0; line-height: 1.5; color: #555;">${slide.text}</p>
+            <div style="display: flex; flex-direction: row; align-items: flex-start; gap: 15px; animation: fadeIn 0.5s; text-align: left;">
+                <div style="
+                    min-width: 40px; 
+                    width: 40px; 
+                    height: 40px; 
+                    background-color: #393939; 
+                    -webkit-mask: url('${slide.gif}') no-repeat center / contain; 
+                    mask: url('${slide.gif}') no-repeat center / contain;
+                "></div>
+                <div>
+                    <strong style="display: block; font-size: 1.1rem; margin-bottom: 5px; color: #393939; text-transform: uppercase; letter-spacing: 1px;">${slide.title}</strong>
+                    <p style="font-size: 0.9rem; margin: 0; line-height: 1.4; color: #555;">${slide.text}</p>
+                </div>
             </div>`;
     });
     container.innerHTML = html;
