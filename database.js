@@ -783,18 +783,7 @@ const ARCHIVE_DATABASE = {
             description: "Sabeen’s uniform from Karachi Grammar School signed by her friends and cohorts on the last day of school"
         }
     },
-    "kgs_shalwaar": {
-        type: "image",
-        room: "bedroom",
-        title: "Sabeen’s uniform from Karachi Grammar School signed by her friends and cohorts on the last day of school",
-        src: "Assets/Images/Sabeens Bedroom_Artefact_ KGS Shalwaar.webp",
-        meta: {
-            author: "Insiyah Syed",
-            date: "October 22, 2020",
-            relation: "N/A",
-            description: ""
-        }
-    },
+    
     "macintosh_se": {
         type: "image",
         room: "bedroom",
@@ -876,7 +865,7 @@ const ARCHIVE_DATABASE = {
             author: "Schokofeh Kamiz",
             date: "January 23, 2018",
             relation: "N/A",
-            description: ""
+            description: "Sabeen’s Cupboard where she kept her clothes and personal belongings."
         }
     },
     "hugh_laurie_portrait": {
@@ -936,7 +925,7 @@ const ARCHIVE_DATABASE = {
             author: "Schokofeh Kamiz",
             date: "January 23, 2018",
             relation: "N/A",
-            description: ""
+            description: "sabeen’s wall cupboard where she kept her clothes and personal belongings."
         }
     },
     "license Plate": {
@@ -1110,17 +1099,22 @@ const ARCHIVE_DATABASE = {
         }
     },
     "kinnaird_zak": {
-        type: "audio",
+        type: "audio-image",
         room: "bedroom",
         title: "Sabeen's at Kinnaird",
-        src: "Assets/Audios/Sabeens Bedroom_Sabeen at Kinnaird College_Zaheer Kidvai_25.09.25.mp3",
+        src: "Assets/Images/Sabeens Bedroom_Artefact_ Sabeens Mac in KC.webp",
+        audioSrc: "Assets/Audios/Sabeens Bedroom_Sabeen at Kinnaird College_Zaheer Kidvai_25.09.25.mp3",
         meta: {
+            photographer: "Unknown",
             date: "September 25, 2025",
+            picture_date: "September 25, 2025",
             author: "Zaheer Alam Kidvai †",
             relation: "Sabeen’s Mentor and CEO of Beyond Information Technology Solutions (BITS)",
-            description: "Remembering Sabeen’s time at Kinnaird and visiting her."
+            description: "How Sabeen took her macintosh with her to university in Kinnaird College."
         }
     },
+     
+        
     "bikes_tallat": {
         type: "audio",
         room: "bedroom",
