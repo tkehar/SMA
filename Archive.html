@@ -45,9 +45,6 @@
 
     <div id="dom-overlay-root" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 9999;">
         <!-- Only VR UI elements here -->
-        <button id="global-mute-btn" onclick="toggleGlobalAudio()" style="display:flex;">
-            <div id="mute-icon" class="icon-sound-on"></div>
-        </button>
     </div>
 
         <a-assets timeout="30000">
@@ -63,150 +60,150 @@
         <a-entity id="room-bedroom" visible="false">
             <a-sky src="#bg-bedroom"></a-sky>
 
-            <a-circle class="clickable" src="Assets/Icons/Audio.png" rotation="0 45 0" position="-3 3 -2.75" radius="0.1" material="transparent: true; opacity: 0.9" color="#000000" onclick="interact('plants_mahenaz')" hover-info="id: plants_mahenaz"></a-circle>
+            <a-circle class="clickable" src="Assets/Icons/Flower.png" rotation="0 45 0" position="-3 3 -2.75" radius="0.15" material="shader: flat; transparent: true; opacity: 1; depthTest: false" onclick="interact('plants_mahenaz')" hover-info="id: plants_mahenaz" animation="property: scale; to: 1.2 1.2 1; dir: alternate; dur: 1500; loop: true; easing: easeInOutSine"></a-circle>
             
-            <a-circle class="clickable" src="Assets/Icons/Audio.png" rotation="0 0 0" position="0 0.5 -2" radius="0.1" material="transparent: true; opacity: 0.9" color="#000000" onclick="interact('fun_zahir')" hover-info="id: fun_zahir"></a-circle>
+            <a-circle class="clickable" src="Assets/Icons/Flower.png" rotation="0 0 0" position="0 0.5 -2" radius="0.15" material="shader: flat; transparent: true; opacity: 1; depthTest: false" onclick="interact('fun_zahir')" hover-info="id: fun_zahir" animation="property: scale; to: 1.2 1.2 1; dir: alternate; dur: 1500; loop: true; easing: easeInOutSine"></a-circle>
 
-            <a-circle class="clickable" src="Assets/Icons/Audio.png" rotation="0 -90 0" position="3 3.4 -2" radius="0.1" material="transparent: true; opacity: 0.9" color="#000000" onclick="interact('music_sheila_combined')" hover-info="id: music_sheila_combined"></a-circle>
+            <a-circle class="clickable" src="Assets/Icons/Flower.png" rotation="0 -90 0" position="3 3.4 -2" radius="0.15" material="shader: flat; transparent: true; opacity: 1; depthTest: false" onclick="interact('music_sheila_combined')" hover-info="id: music_sheila_combined" animation="property: scale; to: 1.2 1.2 1; dir: alternate; dur: 1500; loop: true; easing: easeInOutSine"></a-circle>
 
-            <a-circle class="clickable" src="Assets/Icons/Audio.png" rotation="0 0 0" position="-0.1 2.4 -3" radius="0.1" material="transparent: true; opacity: 0.9" color="#000000" onclick="interact('mother_zahir')" hover-info="id: mother_zahir"></a-circle>
+            <a-circle class="clickable" src="Assets/Icons/Flower.png" rotation="0 0 0" position="-0.1 2.4 -3" radius="0.15" material="shader: flat; transparent: true; opacity: 1; depthTest: false" onclick="interact('mother_zahir')" hover-info="id: mother_zahir" animation="property: scale; to: 1.2 1.2 1; dir: alternate; dur: 1500; loop: true; easing: easeInOutSine"></a-circle>
             
-            <a-circle class="clickable" src="Assets/Icons/Audio.png" rotation="0 0 0" position="-1 2.4 -3" radius="0.1" material="transparent: true; opacity: 0.9" color="#000000" onclick="interact('meeting_zak')" hover-info="id: meeting_zak"></a-circle>
+            <a-circle class="clickable" src="Assets/Icons/Flower.png" rotation="0 0 0" position="-1 2.4 -3" radius="0.15" material="shader: flat; transparent: true; opacity: 1; depthTest: false" onclick="interact('meeting_zak')" hover-info="id: meeting_zak" animation="property: scale; to: 1.2 1.2 1; dir: alternate; dur: 1500; loop: true; easing: easeInOutSine"></a-circle>
 
-            <a-circle class="clickable" src="Assets/Icons/Image.png" rotation="0 45 0" position="-2 1.1 -1" radius="0.1" material="transparent: true; opacity: 0.9" color="#000000" onclick="interact('mac_zak_combined')" hover-info="id: mac_zak_combined"></a-circle>
+            <a-circle class="clickable" src="Assets/Icons/Flower.png" rotation="0 45 0" position="-2 1.1 -1" radius="0.15" material="shader: flat; transparent: true; opacity: 1; depthTest: false" onclick="interact('mac_zak_combined')" hover-info="id: mac_zak_combined" animation="property: scale; to: 1.2 1.2 1; dir: alternate; dur: 1500; loop: true; easing: easeInOutSine"></a-circle>
 
-            <a-circle class="clickable" src="Assets/Icons/Audio.png" rotation="0 0 0" position="0.65 2.4 -3" radius="0.1" material="transparent: true; opacity: 0.9" color="#000000" onclick="interact('tech_faiz_combined')" hover-info="id: tech_faiz_combined"></a-circle>
+            <a-circle class="clickable" src="Assets/Icons/Flower.png" rotation="0 0 0" position="0.65 2.4 -3" radius="0.15" material="shader: flat; transparent: true; opacity: 1; depthTest: false" onclick="interact('tech_faiz_combined')" hover-info="id: tech_faiz_combined" animation="property: scale; to: 1.2 1.2 1; dir: alternate; dur: 1500; loop: true; easing: easeInOutSine"></a-circle>
 
-            <a-circle class="clickable" src="Assets/Icons/Audio.png" rotation="0 45 0" position="-2 1.5 -3" radius="0.1" material="transparent: true; opacity: 0.9" color="#000000" onclick="interact('school_zareena')" hover-info="id: school_zareena"></a-circle>
+            <a-circle class="clickable" src="Assets/Icons/Flower.png" rotation="0 45 0" position="-2 1.5 -3" radius="0.15" material="shader: flat; transparent: true; opacity: 1; depthTest: false" onclick="interact('school_zareena')" hover-info="id: school_zareena" animation="property: scale; to: 1.2 1.2 1; dir: alternate; dur: 1500; loop: true; easing: easeInOutSine"></a-circle>
 
-            <a-circle class="clickable" src="Assets/Icons/Audio.png" rotation="0 180 0" position="-0.5 1.5 2" radius="0.1" material="transparent: true; opacity: 0.9" color="#000000" onclick="interact('free_hafza')" hover-info="id: free_hafza"></a-circle>
+            <a-circle class="clickable" src="Assets/Icons/Flower.png" rotation="0 180 0" position="-0.5 1.5 2" radius="0.15" material="shader: flat; transparent: true; opacity: 1; depthTest: false" onclick="interact('free_hafza')" hover-info="id: free_hafza" animation="property: scale; to: 1.2 1.2 1; dir: alternate; dur: 1500; loop: true; easing: easeInOutSine"></a-circle>
 
-            <a-circle class="clickable" src="Assets/Icons/Audio.png" rotation="0 0 0" position="-0.3 2.4 -3" radius="0.1" material="transparent: true; opacity: 0.9" color="#000000" onclick="interact('mother_salima')" hover-info="id: mother_salima"></a-circle>
+            <a-circle class="clickable" src="Assets/Icons/Flower.png" rotation="0 0 0" position="-0.3 2.4 -3" radius="0.15" material="shader: flat; transparent: true; opacity: 1; depthTest: false" onclick="interact('mother_salima')" hover-info="id: mother_salima" animation="property: scale; to: 1.2 1.2 1; dir: alternate; dur: 1500; loop: true; easing: easeInOutSine"></a-circle>
 
-            <a-circle class="clickable" src="Assets/Icons/Audio.png" rotation="0 45 0" position="-2 0.75 -3" radius="0.1" material="transparent: true; opacity: 0.9" color="#000000" onclick="interact('poem_zak')" hover-info="id: poem_zak"></a-circle>
+            <a-circle class="clickable" src="Assets/Icons/Flower.png" rotation="0 45 0" position="-2 0.75 -3" radius="0.15" material="shader: flat; transparent: true; opacity: 1; depthTest: false" onclick="interact('poem_zak')" hover-info="id: poem_zak" animation="property: scale; to: 1.2 1.2 1; dir: alternate; dur: 1500; loop: true; easing: easeInOutSine"></a-circle>
             
-            <a-circle class="clickable" src="Assets/Icons/Audio.png" rotation="0 180 0" position="-1 0.75 2" radius="0.1" material="transparent: true; opacity: 0.9" color="#000000" onclick="interact('adoption_ayesha')" hover-info="id: adoption_ayesha"></a-circle>
+            <a-circle class="clickable" src="Assets/Icons/Flower.png" rotation="0 180 0" position="-1 0.75 2" radius="0.15" material="shader: flat; transparent: true; opacity: 1; depthTest: false" onclick="interact('adoption_ayesha')" hover-info="id: adoption_ayesha" animation="property: scale; to: 1.2 1.2 1; dir: alternate; dur: 1500; loop: true; easing: easeInOutSine"></a-circle>
 
-            <a-circle class="clickable" src="Assets/Icons/Audio.png" rotation="0 45 0" position="-2 2.1 -3" radius="0.1" material="transparent: true; opacity: 0.9" color="#000000" onclick="interact('diana_zareena')" hover-info="id: diana_zareena"></a-circle>
+            <a-circle class="clickable" src="Assets/Icons/Flower.png" rotation="0 45 0" position="-2 2.1 -3" radius="0.15" material="shader: flat; transparent: true; opacity: 1; depthTest: false" onclick="interact('diana_zareena')" hover-info="id: diana_zareena" animation="property: scale; to: 1.2 1.2 1; dir: alternate; dur: 1500; loop: true; easing: easeInOutSine"></a-circle>
 
-            <a-circle class="clickable" src="Assets/Icons/Audio.png" rotation="0 0 0" position="0.65 2.7 -3" radius="0.1" material="transparent: true; opacity: 0.9" color="#000000" onclick="interact('tech_omer')" hover-info="id: tech_omer"></a-circle>
+            <a-circle class="clickable" src="Assets/Icons/Flower.png" rotation="0 0 0" position="0.65 2.7 -3" radius="0.15" material="shader: flat; transparent: true; opacity: 1; depthTest: false" onclick="interact('tech_omer')" hover-info="id: tech_omer" animation="property: scale; to: 1.2 1.2 1; dir: alternate; dur: 1500; loop: true; easing: easeInOutSine"></a-circle>
 
-            <a-circle class="clickable" src="Assets/Icons/Audio.png" rotation="0 45 0" position="-2 0.25 -3" radius="0.1" material="transparent: true; opacity: 0.9" color="#000000" onclick="interact('kinnaird_zak')" hover-info="id: kinnaird_zak"></a-circle>
+            <a-circle class="clickable" src="Assets/Icons/Flower.png" rotation="0 45 0" position="-2 0.25 -3" radius="0.15" material="shader: flat; transparent: true; opacity: 1; depthTest: false" onclick="interact('kinnaird_zak')" hover-info="id: kinnaird_zak" animation="property: scale; to: 1.2 1.2 1; dir: alternate; dur: 1500; loop: true; easing: easeInOutSine"></a-circle>
 
-            <a-circle class="clickable" src="Assets/Icons/Audio.png" rotation="0 0 0" position="-0.6 2.4 -3" radius="0.1" material="transparent: true; opacity: 0.9" color="#000000" onclick="interact('bikes_tallat')" hover-info="id: bikes_tallat"></a-circle>
+            <a-circle class="clickable" src="Assets/Icons/Flower.png" rotation="0 0 0" position="-0.6 2.4 -3" radius="0.15" material="shader: flat; transparent: true; opacity: 1; depthTest: false" onclick="interact('bikes_tallat')" hover-info="id: bikes_tallat" animation="property: scale; to: 1.2 1.2 1; dir: alternate; dur: 1500; loop: true; easing: easeInOutSine"></a-circle>
 
-            <a-circle class="clickable" src="Assets/Icons/Audio.png" rotation="0 0 0" position="0.8 0.5 -2" radius="0.1" material="transparent: true; opacity: 0.9" color="#000000" onclick="interact('humour_sheba')" hover-info="id: humour_sheba"></a-circle>
+            <a-circle class="clickable" src="Assets/Icons/Flower.png" rotation="0 0 0" position="0.8 0.5 -2" radius="0.15" material="shader: flat; transparent: true; opacity: 1; depthTest: false" onclick="interact('humour_sheba')" hover-info="id: humour_sheba" animation="property: scale; to: 1.2 1.2 1; dir: alternate; dur: 1500; loop: true; easing: easeInOutSine"></a-circle>
 
-            <a-circle class="clickable" src="Assets/Icons/Audio.png" rotation="0 0 0" position="-0.8 0.5 -2" radius="0.1" material="transparent: true; opacity: 0.9" color="#000000" onclick="interact('humour_salima')" hover-info="id: humour_salima"></a-circle>
+            <a-circle class="clickable" src="Assets/Icons/Flower.png" rotation="0 0 0" position="-0.8 0.5 -2" radius="0.15" material="shader: flat; transparent: true; opacity: 1; depthTest: false" onclick="interact('humour_salima')" hover-info="id: humour_salima" animation="property: scale; to: 1.2 1.2 1; dir: alternate; dur: 1500; loop: true; easing: easeInOutSine"></a-circle>
 
-            <a-circle class="clickable" src="Assets/Icons/Audio.png" rotation="0 0 0" position="1.4 1.5 -3" radius="0.1" material="transparent: true; opacity: 0.9" color="#000000" onclick="interact('music_faiz')" hover-info="id: music_faiz"></a-circle>
+            <a-circle class="clickable" src="Assets/Icons/Flower.png" rotation="0 0 0" position="1.4 1.5 -3" radius="0.15" material="shader: flat; transparent: true; opacity: 1; depthTest: false" onclick="interact('music_faiz')" hover-info="id: music_faiz" animation="property: scale; to: 1.2 1.2 1; dir: alternate; dur: 1500; loop: true; easing: easeInOutSine"></a-circle>
 
-            <a-circle class="clickable" src="Assets/Icons/Audio.png" rotation="-90 90 0" position="-1.2 0.5 1.2" radius="0.1" material="transparent: true; opacity: 0.9" color="#000000" onclick="interact('back_mahenaz')" hover-info="id: back_mahenaz"></a-circle>
+            <a-circle class="clickable" src="Assets/Icons/Flower.png" rotation="-90 90 0" position="-1.2 0.5 1.2" radius="0.15" material="shader: flat; transparent: true; opacity: 1; depthTest: false" onclick="interact('back_mahenaz')" hover-info="id: back_mahenaz" animation="property: scale; to: 1.2 1.2 1; dir: alternate; dur: 1500; loop: true; easing: easeInOutSine"></a-circle>
 
-            <a-circle class="clickable" src="Assets/Icons/Audio.png" rotation="0 0 0" position="0.25 2.4 -3" radius="0.1" material="transparent: true; opacity: 0.9" color="#000000" onclick="interact('sabeen_sabina')" hover-info="id: sabeen_sabina"></a-circle>
+            <a-circle class="clickable" src="Assets/Icons/Flower.png" rotation="0 0 0" position="0.25 2.4 -3" radius="0.15" material="shader: flat; transparent: true; opacity: 1; depthTest: false" onclick="interact('sabeen_sabina')" hover-info="id: sabeen_sabina" animation="property: scale; to: 1.2 1.2 1; dir: alternate; dur: 1500; loop: true; easing: easeInOutSine"></a-circle>
 
-            <a-circle class="clickable" src="Assets/Icons/Audio.png" rotation="0 90 0" position="-2.2 1.75 1" radius="0.1" material="transparent: true; opacity: 0.9" color="#000000" onclick="interact('open_shirin')" hover-info="id: open_shirin"></a-circle>
+            <a-circle class="clickable" src="Assets/Icons/Flower.png" rotation="0 90 0" position="-2.2 1.75 1" radius="0.15" material="shader: flat; transparent: true; opacity: 1; depthTest: false" onclick="interact('open_shirin')" hover-info="id: open_shirin" animation="property: scale; to: 1.2 1.2 1; dir: alternate; dur: 1500; loop: true; easing: easeInOutSine"></a-circle>
 
-            <a-circle class="clickable" src="Assets/Icons/Image.png" rotation="-90 90 0" position="-1.5 0.5 0.6" radius="0.1" material="transparent: true; opacity: 0.9" color="#000000" onclick="interact('bedside_table')" hover-info="id: bedside_table"></a-circle>
+            <a-circle class="clickable" src="Assets/Icons/Flower.png" rotation="-90 90 0" position="-1.5 0.5 0.6" radius="0.15" material="shader: flat; transparent: true; opacity: 1; depthTest: false" onclick="interact('bedside_table')" hover-info="id: bedside_table" animation="property: scale; to: 1.2 1.2 1; dir: alternate; dur: 1500; loop: true; easing: easeInOutSine"></a-circle>
 
-            <a-circle class="clickable" src="Assets/Icons/Image.png" rotation="0 -90 0" position="3 1 -1" radius="0.1" material="transparent: true; opacity: 0.9" color="#000000" onclick="interact('kgs_kameez')" hover-info="id: kgs_kameez"></a-circle>
+            <a-circle class="clickable" src="Assets/Icons/Flower.png" rotation="0 -90 0" position="3 1 -1" radius="0.15" material="shader: flat; transparent: true; opacity: 1; depthTest: false" onclick="interact('kgs_kameez')" hover-info="id: kgs_kameez" animation="property: scale; to: 1.2 1.2 1; dir: alternate; dur: 1500; loop: true; easing: easeInOutSine"></a-circle>
 
-            <a-circle class="clickable" src="Assets/Icons/Image.png" rotation="90 -90 90" position="0.75 4 1.5" radius="0.1" material="transparent: true; opacity: 0.9" color="#000000" onclick="interact('ball_marks_on_ceiling')" hover-info="id: ball_marks_on_ceiling"></a-circle>
+            <a-circle class="clickable" src="Assets/Icons/Flower.png" rotation="90 -90 90" position="0.75 4 1.5" radius="0.15" material="shader: flat; transparent: true; opacity: 1; depthTest: false" onclick="interact('ball_marks_on_ceiling')" hover-info="id: ball_marks_on_ceiling" animation="property: scale; to: 1.2 1.2 1; dir: alternate; dur: 1500; loop: true; easing: easeInOutSine"></a-circle>
 
-            <a-circle class="clickable" src="Assets/Icons/Image.png" rotation="0 180 0" position="0.2 3 2" radius="0.1" material="transparent: true; opacity: 0.9" color="#000000" onclick="interact('chamakpati_ac')" hover-info="id: chamakpati_ac"></a-circle>
+            <a-circle class="clickable" src="Assets/Icons/Flower.png" rotation="0 180 0" position="0.2 3 2" radius="0.15" material="shader: flat; transparent: true; opacity: 1; depthTest: false" onclick="interact('chamakpati_ac')" hover-info="id: chamakpati_ac" animation="property: scale; to: 1.2 1.2 1; dir: alternate; dur: 1500; loop: true; easing: easeInOutSine"></a-circle>
 
-            <a-circle class="clickable" src="Assets/Icons/Image.png" rotation="0 90 0" position="-2.2 1.2 0.1" radius="0.1" material="transparent: true; opacity: 0.9" color="#000000" onclick="interact('license Plate')" hover-info="id: license Plate"></a-circle>
+            <a-circle class="clickable" src="Assets/Icons/Flower.png" rotation="0 90 0" position="-2.2 1.2 0.1" radius="0.15" material="shader: flat; transparent: true; opacity: 1; depthTest: false" onclick="interact('license Plate')" hover-info="id: license Plate" animation="property: scale; to: 1.2 1.2 1; dir: alternate; dur: 1500; loop: true; easing: easeInOutSine"></a-circle>
 
-            <a-circle class="clickable" src="Assets/Icons/Image.png" rotation="0 45 0" position="-2 2.1 -3" radius="0.1" material="transparent: true; opacity: 0.9" color="#000000" onclick="interact('sabeens_shelf')" hover-info="id: sabeens_shelf"></a-circle>
+            <a-circle class="clickable" src="Assets/Icons/Flower.png" rotation="0 45 0" position="-2 2.1 -3" radius="0.15" material="shader: flat; transparent: true; opacity: 1; depthTest: false" onclick="interact('sabeens_shelf')" hover-info="id: sabeens_shelf" animation="property: scale; to: 1.2 1.2 1; dir: alternate; dur: 1500; loop: true; easing: easeInOutSine"></a-circle>
 
-            <a-circle class="clickable" src="Assets/Icons/Image.png" rotation="-90 90 0" position="-1.5 0.75 -0.5" radius="0.1" material="transparent: true; opacity: 0.9" color="#000000" onclick="interact('sabeens_desk')" hover-info="id: sabeens_desk"></a-circle>
+            <a-circle class="clickable" src="Assets/Icons/Flower.png" rotation="-90 90 0" position="-1.5 0.75 -0.5" radius="0.15" material="shader: flat; transparent: true; opacity: 1; depthTest: false" onclick="interact('sabeens_desk')" hover-info="id: sabeens_desk" animation="property: scale; to: 1.2 1.2 1; dir: alternate; dur: 1500; loop: true; easing: easeInOutSine"></a-circle>
 
-            <a-circle class="clickable" src="Assets/Icons/Image.png" rotation="0 90 0" position="-1.75 2 -0.4" radius="0.1" material="transparent: true; opacity: 0.9" color="#000000" onclick="interact('hugh_laurie_portrait')" hover-info="id: hugh_laurie_portrait"></a-circle>
+            <a-circle class="clickable" src="Assets/Icons/Flower.png" rotation="0 90 0" position="-1.75 2 -0.4" radius="0.15" material="shader: flat; transparent: true; opacity: 1; depthTest: false" onclick="interact('hugh_laurie_portrait')" hover-info="id: hugh_laurie_portrait" animation="property: scale; to: 1.2 1.2 1; dir: alternate; dur: 1500; loop: true; easing: easeInOutSine"></a-circle>
 
-            <a-circle class="clickable" src="Assets/Icons/Image.png" rotation="0 180 0" position="2 2 2" radius="0.1" material="transparent: true; opacity: 0.9" color="#000000" onclick="interact('cupboard')" hover-info="id: cupboard"></a-circle>
+            <a-circle class="clickable" src="Assets/Icons/Flower.png" rotation="0 180 0" position="2 2 2" radius="0.15" material="shader: flat; transparent: true; opacity: 1; depthTest: false" onclick="interact('cupboard')" hover-info="id: cupboard" animation="property: scale; to: 1.2 1.2 1; dir: alternate; dur: 1500; loop: true; easing: easeInOutSine"></a-circle>
 
-            <a-circle class="clickable" src="Assets/Icons/Image.png" rotation="0 0 0" position="2 -0.2 -3" radius="0.1" material="transparent: true; opacity: 0.9" color="#000000" onclick="interact('cricket_bats')" hover-info="id: cricket_bats"></a-circle>
+            <a-circle class="clickable" src="Assets/Icons/Flower.png" rotation="0 0 0" position="2 -0.2 -3" radius="0.15" material="shader: flat; transparent: true; opacity: 1; depthTest: false" onclick="interact('cricket_bats')" hover-info="id: cricket_bats" animation="property: scale; to: 1.2 1.2 1; dir: alternate; dur: 1500; loop: true; easing: easeInOutSine"></a-circle>
 
-            <a-circle class="clickable" src="Assets/Icons/Exit_Room.png" rotation="0 0 0" position="2 1 -2" radius="0.1" material="transparent: true; opacity: 0.9" color="#000000" onclick="switchRoom('office')" hover-info="title: Go to Sabeen's Office"></a-circle>
+            <a-circle class="clickable" src="Assets/Icons/Exit_Room.png" rotation="0 0 0" position="2 1 -2" radius="0.1" material="transparent: true; opacity: 0.9; depthTest: false" color="#000000" onclick="switchRoom('office')" hover-info="title: Go to Sabeen's Office"></a-circle>
 
-            <a-circle class="clickable" src="Assets/Icons/Exit_Room.png" rotation="0 -90 0" position="3 1 -0.5" radius="0.1" material="transparent: true; opacity: 0.9" color="#000000" onclick="switchRoom('babybox')" hover-info="title: Go to Baby Box"></a-circle>
+            <a-circle class="clickable" src="Assets/Icons/Exit_Room.png" rotation="0 -90 0" position="3 1 -0.5" radius="0.1" material="transparent: true; opacity: 0.9; depthTest: false" color="#000000" onclick="switchRoom('babybox')" hover-info="title: Go to Baby Box"></a-circle>
 
         </a-entity>
        
         <a-entity id="room-office" visible="false">
             <a-sky src="#bg-office"></a-sky>
             
-            <a-circle class="clickable" src="Assets/Icons/Image.png" rotation="0 90 0" position="-2 1.5 1" radius="0.1" material="transparent: true; opacity: 0.9" color="#000000" onclick="interact('artefact_note_fahad_and_marium')" hover-info="id: artefact_note_fahad_and_marium"></a-circle>
+            <a-circle class="clickable" src="Assets/Icons/Flower.png" rotation="0 90 0" position="-2 1.5 1" radius="0.15" material="shader: flat; transparent: true; opacity: 1; depthTest: false" onclick="interact('artefact_note_fahad_and_marium')" hover-info="id: artefact_note_fahad_and_marium" animation="property: scale; to: 1.2 1.2 1; dir: alternate; dur: 1500; loop: true; easing: easeInOutSine"></a-circle>
 
-            <a-circle class="clickable" src="Assets/Icons/Image.png" rotation="0 90 0" position="-2 1.5 -0.5" radius="0.1" material="transparent: true; opacity: 0.9" color="#000000" onclick="interact('note_sameer_combined')" hover-info="id: note_sameer_combined"></a-circle>
+            <a-circle class="clickable" src="Assets/Icons/Flower.png" rotation="0 90 0" position="-2 1.5 -0.5" radius="0.15" material="shader: flat; transparent: true; opacity: 1; depthTest: false" onclick="interact('note_sameer_combined')" hover-info="id: note_sameer_combined" animation="property: scale; to: 1.2 1.2 1; dir: alternate; dur: 1500; loop: true; easing: easeInOutSine"></a-circle>
 
-            <a-circle class="clickable" src="Assets/Icons/Image.png" rotation="0 90 0" position="-2 2 -1" radius="0.1" material="transparent: true; opacity: 0.9" color="#000000" onclick="interact('note_omer_combined')" hover-info="id: note_omer_combined"></a-circle>
+            <a-circle class="clickable" src="Assets/Icons/Flower.png" rotation="0 90 0" position="-2 2 -1" radius="0.15" material="shader: flat; transparent: true; opacity: 1; depthTest: false" onclick="interact('note_omer_combined')" hover-info="id: note_omer_combined" animation="property: scale; to: 1.2 1.2 1; dir: alternate; dur: 1500; loop: true; easing: easeInOutSine"></a-circle>
 
-            <a-circle class="clickable" src="Assets/Icons/Image.png" rotation="0 90 0" position="-2 1.5 0" radius="0.1" material="transparent: true; opacity: 0.9" color="#000000" onclick="interact('artefact_note_nilofer_halai')" hover-info="id: artefact_note_nilofer_halai"></a-circle>
+            <a-circle class="clickable" src="Assets/Icons/Flower.png" rotation="0 90 0" position="-2 1.5 0" radius="0.15" material="shader: flat; transparent: true; opacity: 1; depthTest: false" onclick="interact('artefact_note_nilofer_halai')" hover-info="id: artefact_note_nilofer_halai" animation="property: scale; to: 1.2 1.2 1; dir: alternate; dur: 1500; loop: true; easing: easeInOutSine"></a-circle>
 
-            <a-circle class="clickable" src="Assets/Icons/Image.png" rotation="0 90 0" position="-2 2.1 1" radius="0.1" material="transparent: true; opacity: 0.9" color="#000000" onclick="interact('artefact_note_shanzay_subzwari')" hover-info="id: artefact_note_shanzay_subzwari"></a-circle>
+            <a-circle class="clickable" src="Assets/Icons/Flower.png" rotation="0 90 0" position="-2 2.1 1" radius="0.15" material="shader: flat; transparent: true; opacity: 1; depthTest: false" onclick="interact('artefact_note_shanzay_subzwari')" hover-info="id: artefact_note_shanzay_subzwari" animation="property: scale; to: 1.2 1.2 1; dir: alternate; dur: 1500; loop: true; easing: easeInOutSine"></a-circle>
 
-            <a-circle class="clickable" src="Assets/Icons/Image.png" rotation="0 90 0" position="-2 1 0" radius="0.1" material="transparent: true; opacity: 0.9" color="#000000" onclick="interact('artefact_sabeens_pinboard')" hover-info="id: artefact_sabeens_pinboard"></a-circle>
+            <a-circle class="clickable" src="Assets/Icons/Flower.png" rotation="0 90 0" position="-2 1 0" radius="0.15" material="shader: flat; transparent: true; opacity: 1; depthTest: false" onclick="interact('artefact_sabeens_pinboard')" hover-info="id: artefact_sabeens_pinboard" animation="property: scale; to: 1.2 1.2 1; dir: alternate; dur: 1500; loop: true; easing: easeInOutSine"></a-circle>
 
-            <a-circle class="clickable" src="Assets/Icons/Image.png" rotation="0 180 0" position="0 1.2 4" radius="0.1" material="transparent: true; opacity: 0.9" color="#000000" onclick="interact('artefact_white_board')" hover-info="id: artefact_white_board"></a-circle>
+            <a-circle class="clickable" src="Assets/Icons/Flower.png" rotation="0 180 0" position="0 1.2 4" radius="0.15" material="shader: flat; transparent: true; opacity: 1; depthTest: false" onclick="interact('artefact_white_board')" hover-info="id: artefact_white_board" animation="property: scale; to: 1.2 1.2 1; dir: alternate; dur: 1500; loop: true; easing: easeInOutSine"></a-circle>
 
-            <a-circle class="clickable" src="Assets/Icons/Image.png" rotation="0 180 0" position="0.75 2 4" radius="0.1" material="transparent: true; opacity: 0.9" color="#000000" onclick="interact('artefact_whiteboard_urdu')" hover-info="id: artefact_whiteboard_urdu"></a-circle>
+            <a-circle class="clickable" src="Assets/Icons/Flower.png" rotation="0 180 0" position="0.75 2 4" radius="0.15" material="shader: flat; transparent: true; opacity: 1; depthTest: false" onclick="interact('artefact_whiteboard_urdu')" hover-info="id: artefact_whiteboard_urdu" animation="property: scale; to: 1.2 1.2 1; dir: alternate; dur: 1500; loop: true; easing: easeInOutSine"></a-circle>
 
-            <a-circle class="clickable" src="Assets/Icons/Image.png" rotation="0 180 0" position="-0.6 3 4" radius="0.1" material="transparent: true; opacity: 0.9" color="#000000" onclick="interact('Hackathon_sheba_combined')" hover-info="id: Hackathon_sheba_combined"></a-circle>
+            <a-circle class="clickable" src="Assets/Icons/Flower.png" rotation="0 180 0" position="-0.6 3 4" radius="0.15" material="shader: flat; transparent: true; opacity: 1; depthTest: false" onclick="interact('Hackathon_sheba_combined')" hover-info="id: Hackathon_sheba_combined" animation="property: scale; to: 1.2 1.2 1; dir: alternate; dur: 1500; loop: true; easing: easeInOutSine"></a-circle>
 
-            <a-circle class="clickable" src="Assets/Icons/Image.png" rotation="0 180 0" position="0 3 4" radius="0.1" material="transparent: true; opacity: 0.9" color="#000000" onclick="interact('artefact_dil_phaink')" hover-info="id: artefact_dil_phaink"></a-circle>
+            <a-circle class="clickable" src="Assets/Icons/Flower.png" rotation="0 180 0" position="0 3 4" radius="0.15" material="shader: flat; transparent: true; opacity: 1; depthTest: false" onclick="interact('artefact_dil_phaink')" hover-info="id: artefact_dil_phaink" animation="property: scale; to: 1.2 1.2 1; dir: alternate; dur: 1500; loop: true; easing: easeInOutSine"></a-circle>
             
-            <a-circle class="clickable" src="Assets/Icons/Image.png" rotation="0 0 0" position="0 1.5 -3.5" radius="0.1" material="transparent: true; opacity: 0.9" color="#000000" onclick="interact('artefact_paper_tray')" hover-info="id: artefact_paper_tray"></a-circle>
+            <a-circle class="clickable" src="Assets/Icons/Flower.png" rotation="0 0 0" position="0 1.5 -3.5" radius="0.15" material="shader: flat; transparent: true; opacity: 1; depthTest: false" onclick="interact('artefact_paper_tray')" hover-info="id: artefact_paper_tray" animation="property: scale; to: 1.2 1.2 1; dir: alternate; dur: 1500; loop: true; easing: easeInOutSine"></a-circle>
 
-            <a-circle class="clickable" src="Assets/Icons/Image.png" rotation="0 0 0" position="-0.5 2.25 -3.5" radius="0.1" material="transparent: true; opacity: 0.9" color="#FFFFFF" onclick="interact('artefact_last_sticky_note')" hover-info="id: artefact_last_sticky_note"></a-circle>
+            <a-circle class="clickable" src="Assets/Icons/Flower.png" rotation="0 0 0" position="-0.5 2.25 -3.5" radius="0.15" material="shader: flat; transparent: true; opacity: 1; depthTest: false" onclick="interact('artefact_last_sticky_note')" hover-info="id: artefact_last_sticky_note" animation="property: scale; to: 1.2 1.2 1; dir: alternate; dur: 1500; loop: true; easing: easeInOutSine"></a-circle>
 
-            <a-circle class="clickable" src="Assets/Icons/Image.png" rotation="0 0 0" position="-0.75 2 -3.5" radius="0.1" material="transparent: true; opacity: 0.9" color="#000000" onclick="interact('artefact_magnet_board')" hover-info="id: artefact_magnet_board"></a-circle>
+            <a-circle class="clickable" src="Assets/Icons/Flower.png" rotation="0 0 0" position="-0.75 2 -3.5" radius="0.15" material="shader: flat; transparent: true; opacity: 1; depthTest: false" onclick="interact('artefact_magnet_board')" hover-info="id: artefact_magnet_board" animation="property: scale; to: 1.2 1.2 1; dir: alternate; dur: 1500; loop: true; easing: easeInOutSine"></a-circle>
 
-            <a-circle class="clickable" src="Assets/Icons/Image.png" rotation="0 -90 0" position="2.5 2 -1" radius="0.1" material="transparent: true; opacity: 0.9" color="#000000" onclick="interact('artefact_billie_holiday_poster')" hover-info="id: artefact_billie_holiday_poster"></a-circle>
+            <a-circle class="clickable" src="Assets/Icons/Flower.png" rotation="0 -90 0" position="2.5 2 -1" radius="0.15" material="shader: flat; transparent: true; opacity: 1; depthTest: false" onclick="interact('artefact_billie_holiday_poster')" hover-info="id: artefact_billie_holiday_poster" animation="property: scale; to: 1.2 1.2 1; dir: alternate; dur: 1500; loop: true; easing: easeInOutSine"></a-circle>
 
-            <a-circle class="clickable" src="Assets/Icons/Image.png" rotation="0 -90 0" position="2.2 1 -2" radius="0.1" material="transparent: true; opacity: 0.9" color="#000000" onclick="interact('artefact_books')" hover-info="id: artefact_books"></a-circle>
+            <a-circle class="clickable" src="Assets/Icons/Flower.png" rotation="0 -90 0" position="2.2 1 -2" radius="0.15" material="shader: flat; transparent: true; opacity: 1; depthTest: false" onclick="interact('artefact_books')" hover-info="id: artefact_books" animation="property: scale; to: 1.2 1.2 1; dir: alternate; dur: 1500; loop: true; easing: easeInOutSine"></a-circle>
 
-            <a-circle class="clickable" src="Assets/Icons/Image.png" rotation="0 -90 0" position="2.5 2.5 2.5" radius="0.1" material="transparent: true; opacity: 0.9" color="#000000" onclick="interact('artefact_steve_jobs_painting')" hover-info="id: artefact_steve_jobs_painting"></a-circle>
+            <a-circle class="clickable" src="Assets/Icons/Flower.png" rotation="0 -90 0" position="2.5 2.5 2.5" radius="0.15" material="shader: flat; transparent: true; opacity: 1; depthTest: false" onclick="interact('artefact_steve_jobs_painting')" hover-info="id: artefact_steve_jobs_painting" animation="property: scale; to: 1.2 1.2 1; dir: alternate; dur: 1500; loop: true; easing: easeInOutSine"></a-circle>
 
-            <a-circle class="clickable" src="Assets/Icons/Image.png" rotation="0 -90 0" position="2.5 2 1.8" radius="0.1" material="transparent: true; opacity: 0.9" color="#000000" onclick="interact('artefact_steve_jobs_quote')" hover-info="id: artefact_steve_jobs_quote"></a-circle>
+            <a-circle class="clickable" src="Assets/Icons/Flower.png" rotation="0 -90 0" position="2.5 2 1.8" radius="0.15" material="shader: flat; transparent: true; opacity: 1; depthTest: false" onclick="interact('artefact_steve_jobs_quote')" hover-info="id: artefact_steve_jobs_quote" animation="property: scale; to: 1.2 1.2 1; dir: alternate; dur: 1500; loop: true; easing: easeInOutSine"></a-circle>
 
-            <a-circle class="clickable" src="Assets/Icons/Image.png" rotation="0 -90 0" position="2.75 4 -2" radius="0.1" material="transparent: true; opacity: 0.9" color="#000000" onclick="interact('Peaceniche_chand_combined')" hover-info="id: Peaceniche_chand_combined"></a-circle>
+            <a-circle class="clickable" src="Assets/Icons/Flower.png" rotation="0 -90 0" position="2.75 4 -2" radius="0.15" material="shader: flat; transparent: true; opacity: 1; depthTest: false" onclick="interact('Peaceniche_chand_combined')" hover-info="id: Peaceniche_chand_combined" animation="property: scale; to: 1.2 1.2 1; dir: alternate; dur: 1500; loop: true; easing: easeInOutSine"></a-circle>
 
-            <a-circle class="clickable" src="Assets/Icons/Image.png" rotation="0 180 0" position="2.5 1.5 3.75" radius="0.1" material="transparent: true; opacity: 0.9" color="#000000" onclick="interact('artefact_macintosh_se')" hover-info="id: artefact_macintosh_se"></a-circle>
+            <a-circle class="clickable" src="Assets/Icons/Flower.png" rotation="0 180 0" position="2.5 1.5 3.75" radius="0.15" material="shader: flat; transparent: true; opacity: 1; depthTest: false" onclick="interact('artefact_macintosh_se')" hover-info="id: artefact_macintosh_se" animation="property: scale; to: 1.2 1.2 1; dir: alternate; dur: 1500; loop: true; easing: easeInOutSine"></a-circle>
 
-            <a-circle class="clickable" src="Assets/Icons/Image.png" rotation="0 0 0" position="2 1.25 -3.75" radius="0.1" material="transparent: true; opacity: 0.9" color="#000000" onclick="interact('artefact_faiz_aaj_kay_naam_cd_rom')" hover-info="id: artefact_faiz_aaj_kay_naam_cd_rom"></a-circle>
+            <a-circle class="clickable" src="Assets/Icons/Flower.png" rotation="0 0 0" position="2 1.25 -3.75" radius="0.15" material="shader: flat; transparent: true; opacity: 1; depthTest: false" onclick="interact('artefact_faiz_aaj_kay_naam_cd_rom')" hover-info="id: artefact_faiz_aaj_kay_naam_cd_rom" animation="property: scale; to: 1.2 1.2 1; dir: alternate; dur: 1500; loop: true; easing: easeInOutSine"></a-circle>
 
-            <a-circle class="clickable" src="Assets/Icons/Exit_Room.png" rotation="0 -45 0" position="2.25 2 -3.5" radius="0.1" material="transparent: true; opacity: 0.9" color="#000000" onclick="switchRoom('bedroom')" hover-info="title: Go to Sabeen's Bedroom"></a-circle>
+            <a-circle class="clickable" src="Assets/Icons/Exit_Room.png" rotation="0 -45 0" position="2.25 2 -3.5" radius="0.1" material="transparent: true; opacity: 0.9; depthTest: false" color="#000000" onclick="switchRoom('bedroom')" hover-info="title: Go to Sabeen's Bedroom"></a-circle>
 
-            <a-circle class="clickable" src="Assets/Icons/Exit_Room.png" rotation="0 90 0" position="-2 2.1 2.5" radius="0.1" material="transparent: true; opacity: 0.9" color="#000000" onclick="switchRoom('cafe')" hover-info="title: Go to T2F Cafe"></a-circle>
+            <a-circle class="clickable" src="Assets/Icons/Exit_Room.png" rotation="0 90 0" position="-2 2.1 2.5" radius="0.1" material="transparent: true; opacity: 0.9; depthTest: false" color="#000000" onclick="switchRoom('cafe')" hover-info="title: Go to T2F Cafe"></a-circle>
         </a-entity>     
 
         <a-entity id="room-babybox" visible="false">
             <a-sky src="#bg-Baby_Box"></a-sky>
 
-            <a-circle class="clickable" src="Assets/Icons/Image.png" rotation="0 90 0" position="-2.5 1.5 -0.5" radius="0.1" material="transparent: true; opacity: 0.9" color="#000000" onclick="interact('artefact_raggedy_ann')" hover-info="id: artefact_raggedy_ann"></a-circle>
+            <a-circle class="clickable" src="Assets/Icons/Flower.png" rotation="0 90 0" position="-2.5 1.5 -0.5" radius="0.15" material="shader: flat; transparent: true; opacity: 1; depthTest: false" onclick="interact('artefact_raggedy_ann')" hover-info="id: artefact_raggedy_ann" animation="property: scale; to: 1.2 1.2 1; dir: alternate; dur: 1500; loop: true; easing: easeInOutSine"></a-circle>
 
-            <a-circle class="clickable" src="Assets/Icons/Image.png" rotation="0 90 0" position="-2.5 2.5 1.75" radius="0.1" material="transparent: true; opacity: 0.9" color="#000000" onclick="interact('artefact_bean_on_tv_am')" hover-info="id: artefact_bean_on_tv_am"></a-circle>
+            <a-circle class="clickable" src="Assets/Icons/Flower.png" rotation="0 90 0" position="-2.5 2.5 1.75" radius="0.15" material="shader: flat; transparent: true; opacity: 1; depthTest: false" onclick="interact('artefact_bean_on_tv_am')" hover-info="id: artefact_bean_on_tv_am" animation="property: scale; to: 1.2 1.2 1; dir: alternate; dur: 1500; loop: true; easing: easeInOutSine"></a-circle>
 
-            <a-circle class="clickable" src="Assets/Icons/Image.png" rotation="0 90 0" position="0 -1.5 -1.5" radius="0.1" material="transparent: true; opacity: 0.9" color="#000000" onclick="interact('artefact_flower_earrings')" hover-info="id: artefact_flower_earrings"></a-circle>
+            <a-circle class="clickable" src="Assets/Icons/Flower.png" rotation="0 90 0" position="0 -1.5 -1.5" radius="0.15" material="shader: flat; transparent: true; opacity: 1; depthTest: false" onclick="interact('artefact_flower_earrings')" hover-info="id: artefact_flower_earrings" animation="property: scale; to: 1.2 1.2 1; dir: alternate; dur: 1500; loop: true; easing: easeInOutSine"></a-circle>
 
-            <a-circle class="clickable" src="Assets/Icons/Image.png" rotation="0 180 0" position="1 2.5 2" radius="0.1" material="transparent: true; opacity: 0.9" color="#000000" onclick="interact('artefact_view_master')" hover-info="id: artefact_view_master"></a-circle>
+            <a-circle class="clickable" src="Assets/Icons/Flower.png" rotation="0 180 0" position="1 2.5 2" radius="0.15" material="shader: flat; transparent: true; opacity: 1; depthTest: false" onclick="interact('artefact_view_master')" hover-info="id: artefact_view_master" animation="property: scale; to: 1.2 1.2 1; dir: alternate; dur: 1500; loop: true; easing: easeInOutSine"></a-circle>
             
-            <a-circle class="clickable" src="Assets/Icons/Exit_Room.png" position="2 1 -2" radius="0.1" material="transparent: true; opacity: 0.9" color="#000000" onclick="switchRoom('bedroom')" hover-info="title: Go to Sabeen's Bedroom"></a-circle>
+            <a-circle class="clickable" src="Assets/Icons/Exit_Room.png" position="2 1 -2" radius="0.1" material="transparent: true; opacity: 0.9; depthTest: false" color="#000000" onclick="switchRoom('bedroom')" hover-info="title: Go to Sabeen's Bedroom"></a-circle>
         </a-entity>
 
         <a-entity id="room-gallery" visible="false">
             <a-sky src="#bg-T2F_Gallery"></a-sky>
 
-            <a-circle class="clickable" src="Assets/Icons/Exit_Room.png" position="2 1 -2" radius="0.1" material="transparent: true; opacity: 0.9" color="#000000" onclick="switchRoom('office')" hover-info="title: Go to Sabeen's Office"></a-circle>
+            <a-circle class="clickable" src="Assets/Icons/Exit_Room.png" position="2 1 -2" radius="0.1" material="transparent: true; opacity: 0.9; depthTest: false" color="#000000" onclick="switchRoom('office')" hover-info="title: Go to Sabeen's Office"></a-circle>
         </a-entity>
 
         <a-entity id="room-cafe" visible="false">
             <a-sky src="#bg-T2F_Cafe"></a-sky>
 
-            <a-circle class="clickable" src="Assets/Icons/Exit_Room.png" rotation="0 90 0" position="-3 2 4" radius="0.1" material="transparent: true; opacity: 0.9" color="#000000" onclick="switchRoom('office')" hover-info="title: Go to Sabeen's Office"></a-circle>
+            <a-circle class="clickable" src="Assets/Icons/Exit_Room.png" rotation="0 90 0" position="-3 2 4" radius="0.1" material="transparent: true; opacity: 0.9; depthTest: false" color="#000000" onclick="switchRoom('office')" hover-info="title: Go to Sabeen's Office"></a-circle>
 
-            <a-circle class="clickable" src="Assets/Icons/Exit_Room.png" rotation="0 90 0" position="-3 2 1" radius="0.1" material="transparent: true; opacity: 0.9" color="#000000" onclick="switchRoom('gallery')" hover-info="title: Go to T2F Gallery"></a-circle>
+            <a-circle class="clickable" src="Assets/Icons/Exit_Room.png" rotation="0 90 0" position="-3 2 1" radius="0.1" material="transparent: true; opacity: 0.9; depthTest: false" color="#000000" onclick="switchRoom('gallery')" hover-info="title: Go to T2F Gallery"></a-circle>
         </a-entity>
 
         <a-entity id="rig">
@@ -340,12 +337,28 @@
             }
         }
 
-        document.querySelector('a-scene').addEventListener('loaded', function () {
-             // Show start button after loader fades
-             setTimeout(() => {
-                 document.getElementById('start-overlay').style.display = 'flex';
-             }, 1500);
-        });
+        var scene = document.querySelector('a-scene');
+
+        function onSceneLoaded() {
+            // Remove hover functionality on mobile devices (excluding VR headsets)
+            if (AFRAME.utils.device.isMobile() && !AFRAME.utils.device.isMobileVR()) {
+                var hoverEls = document.querySelectorAll('[hover-info]');
+                hoverEls.forEach(function(el) {
+                    el.removeAttribute('hover-info');
+                });
+            }
+
+            // Show start button after loader fades
+            setTimeout(() => {
+                document.getElementById('start-overlay').style.display = 'flex';
+            }, 1500);
+        }
+
+        if (scene.hasLoaded) {
+            onSceneLoaded();
+        } else {
+            scene.addEventListener('loaded', onSceneLoaded);
+        }
         
         // Override exitToHome to redirect to index.html
         window.exitToHome = function() {

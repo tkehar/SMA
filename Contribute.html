@@ -5,16 +5,39 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="Assets/Icons/favicon.svg" type="image/svg+xml">
     <link rel="stylesheet" href="styles.css">
+    <style>
+        input[type="text"], input[type="email"], select, textarea {
+            width: 100%;
+            padding: 12px;
+            margin: 8px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-size: 1rem;
+            font-family: inherit;
+        }
+        select {
+            background-color: white;
+            padding-right: 30px; /* Increase padding to give the arrow more space */
+        }
+    </style>
 </head>
 <body>
     <div id="landing-overlay" style="opacity: 1; display: grid;">
         <div id="submit-section" class="overlay-content" style="display:block">
             <button class="back-btn" onclick="window.location.href='index.html'">← Back</button>
-            <h3>Contribute to the Archive</h3>
+            <h3>Collaborate with Us</h3>
             <form action="https://formspree.io/f/mbdddbqd" method="POST">
             <input type="text" name="name" placeholder="Your Name" required>
             <input type="email" name="_replyto" placeholder="Your Email" required>
-            <textarea name="message" placeholder="How would you like to contribute..." required></textarea>
+            <select name="contribution_type" required>
+                <option value="" disabled selected>How would you like to contribute?</option>
+                <option value="Design">Design</option>
+                <option value="Technical development">Technical development</option>
+                <option value="Content &amp; data handling">Content &amp; data handling</option>
+                <option value="Share a memory">Share a memory</option>
+            </select>
+            <textarea name="message" placeholder="Your Message..." required></textarea>
             <button type="submit">Send Message</button>
             </form>
         </div>
