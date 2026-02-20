@@ -182,9 +182,15 @@ let isZoomed = false;
 let imgOriginalState = { pos: null, scale: null };
 let updateTimer = null;
 let isNavMenuOpen = false;
+let currentId = null;
+let isMinimized = false;
+let isLoading = false;
 
 // 2. INTERACTION LOGIC
 function interact(id) {
+    currentId = id;
+    isMinimized = false;
+    isLoading = true;
     const data = ARCHIVE_DATABASE[id];
     if (!data) return console.error("Entry not found:", id);
 
@@ -195,20 +201,41 @@ function interact(id) {
     const panel = document.querySelector('#info-panel');
     if (!panel) return;
     const camera = document.querySelector('#main-camera');
+    const panelTitle = document.querySelector('#panel-title');
     const panelImg = document.querySelector('#panel-img');
     const panelDesc = document.querySelector('#panel-desc');
     const panelMeta = document.querySelector('#panel-meta');
     const audioPlayerUI = document.querySelector('#audio-player-ui');
+    const panelSkeleton = document.querySelector('#panel-skeleton');
     const playPauseBtn = document.querySelector('#play-pause-btn');
     const audioTime = document.querySelector('#audio-time');
     const zoomBtn = document.querySelector('#zoom-btn');
+    const minBtn = document.querySelector('#min-btn');
+    const maxBtn = document.querySelector('#max-btn');
 
     // Reset State
     stopAudio();
     panelImg.setAttribute('visible', 'false');
+    
+    // Show Skeleton, Hide Content
+    if (panelSkeleton) panelSkeleton.setAttribute('visible', 'true');
+    panelTitle.setAttribute('visible', 'false');
+    panelDesc.setAttribute('visible', 'false');
+    panelMeta.setAttribute('visible', 'false');
     audioPlayerUI.setAttribute('visible', 'false');
+    if (zoomBtn) zoomBtn.setAttribute('visible', 'false');
+    
+    // Reset Minimize/Maximize UI
+    if (minBtn) minBtn.setAttribute('visible', 'true');
+    if (maxBtn) maxBtn.setAttribute('visible', 'false');
+    const panelBg = document.querySelector('#panel-bg');
+    if (panelBg) {
+        panelBg.setAttribute('height', '2.2');
+        panelBg.setAttribute('position', '0 0 0');
+    }
+
     panelImg.setAttribute('position', '0 0.3 0.02');
-    document.querySelector('#panel-title').setAttribute('value', data.title);
+    panelTitle.setAttribute('value', data.title);
     panelMeta.setAttribute('value', '');
     audioTime.setAttribute('position', '0 0.1 0');
     
@@ -219,13 +246,22 @@ function interact(id) {
         zoomBtn.setAttribute('src', 'Assets/Icons/Zoom in.png');
     }
     // Reset UI Opacity
-    [document.querySelector('#panel-title'), panelDesc, panelMeta, audioPlayerUI].forEach(el => {
+    [panelTitle, panelDesc, panelMeta, audioPlayerUI].forEach(el => {
         if (el) {
             el.setAttribute('opacity', 1);
             if (el.components.text) el.setAttribute('text', 'opacity', 1);
         }
     });
     panelImg.setAttribute('scale', '1 1 1');
+
+    const showContent = () => {
+        isLoading = false;
+        if (isMinimized) return; // Don't show content if user minimized while loading
+        if (panelSkeleton) panelSkeleton.setAttribute('visible', 'false');
+        panelTitle.setAttribute('visible', 'true');
+        panelDesc.setAttribute('visible', 'true');
+        panelMeta.setAttribute('visible', 'true');
+    };
 
     if (data.type === 'image') {
         const imgLoader = new Image();
@@ -246,6 +282,7 @@ function interact(id) {
             panelDesc.setAttribute('value', `${data.meta.description}\n\nPhotographer: ${data.meta.author}`);
             panelMeta.setAttribute('position', {x: -0.6, y: -0.8, z: 0.02});
             if (zoomBtn) zoomBtn.setAttribute('visible', 'true');
+            showContent();
         };
         imgLoader.src = data.src;
 
@@ -258,8 +295,8 @@ function interact(id) {
         
         currentAudio.src = data.src;
         currentAudio.play().then(() => startProgressTracker()).catch(e => console.log("Play blocked"));
+        showContent();
     } else if (data.type === 'audio-image') {
-        audioPlayerUI.setAttribute('visible', 'true');
         playPauseBtn.setAttribute('src', 'Assets/Icons/Pause.png');
         panelDesc.setAttribute('position', {x: -0.6, y: -0.4, z: 0.02});
         
@@ -295,11 +332,82 @@ function interact(id) {
 
             const playerY = 0.45 - (finalHeight / 2) - 0.15;
             audioPlayerUI.setAttribute('position', {x: 0, y: playerY, z: 0.02});
+            audioPlayerUI.setAttribute('visible', 'true');
             if (zoomBtn) zoomBtn.setAttribute('visible', 'true');
+            showContent();
         };
         imgLoader.src = data.src;
     }
     panel.setAttribute('visible', 'true');
+}
+
+function toggleMinimize() {
+    const panelBg = document.querySelector('#panel-bg');
+    const panelImg = document.querySelector('#panel-img');
+    const panelDesc = document.querySelector('#panel-desc');
+    const panelMeta = document.querySelector('#panel-meta');
+    const audioPlayerUI = document.querySelector('#audio-player-ui');
+    const zoomBtn = document.querySelector('#zoom-btn');
+    const minBtn = document.querySelector('#min-btn');
+    const maxBtn = document.querySelector('#max-btn');
+    const panelSkeleton = document.querySelector('#panel-skeleton');
+
+    if (!isMinimized) {
+        // MINIMIZE
+        isMinimized = true;
+        
+        // Shrink Background to top bar
+        if (panelBg) {
+            panelBg.setAttribute('height', '0.4');
+            panelBg.setAttribute('position', '0 0.9 0');
+        }
+        
+        // Hide Content
+        if (panelImg) panelImg.setAttribute('visible', 'false');
+        if (panelDesc) panelDesc.setAttribute('visible', 'false');
+        if (panelMeta) panelMeta.setAttribute('visible', 'false');
+        if (audioPlayerUI) audioPlayerUI.setAttribute('visible', 'false');
+        if (zoomBtn) zoomBtn.setAttribute('visible', 'false');
+        if (panelSkeleton) panelSkeleton.setAttribute('visible', 'false');
+
+        // Toggle Buttons
+        if (minBtn) minBtn.setAttribute('visible', 'false');
+        if (maxBtn) maxBtn.setAttribute('visible', 'true');
+
+    } else {
+        // MAXIMIZE
+        isMinimized = false;
+
+        // Restore Background
+        if (panelBg) {
+            panelBg.setAttribute('height', '2.2');
+            panelBg.setAttribute('position', '0 0 0');
+        }
+
+        // Toggle Buttons
+        if (minBtn) minBtn.setAttribute('visible', 'true');
+        if (maxBtn) maxBtn.setAttribute('visible', 'false');
+
+        if (isLoading) {
+            if (panelSkeleton) panelSkeleton.setAttribute('visible', 'true');
+        } else {
+            // Restore Content based on current item type
+            if (currentId && ARCHIVE_DATABASE[currentId]) {
+                const data = ARCHIVE_DATABASE[currentId];
+                if (panelDesc) panelDesc.setAttribute('visible', 'true');
+                if (panelMeta) panelMeta.setAttribute('visible', 'true');
+
+                if (data.type === 'image' || data.type === 'audio-image') {
+                    if (panelImg) panelImg.setAttribute('visible', 'true');
+                    if (zoomBtn) zoomBtn.setAttribute('visible', 'true');
+                }
+                
+                if (data.type === 'audio' || data.type === 'audio-image') {
+                    if (audioPlayerUI) audioPlayerUI.setAttribute('visible', 'true');
+                }
+            }
+        }
+    }
 }
 
 // 3. AUDIO PLAYER UTILITIES
@@ -352,6 +460,14 @@ function formatTime(secs) {
 function closePanel() {
     const panel = document.querySelector('#info-panel');
     if (panel) panel.setAttribute('visible', 'false');
+    
+    // Reset Minimize State
+    isMinimized = false;
+    const panelBg = document.querySelector('#panel-bg');
+    if (panelBg) {
+        panelBg.setAttribute('height', '2.2');
+        panelBg.setAttribute('position', '0 0 0');
+    }
     // Ensure zoom is reset for next time
     isZoomed = false;
     stopAudio();
@@ -687,5 +803,18 @@ if (scene) {
                 loader.style.display = 'none';
             }, 1000);
         }
+
+        // Add slight rotation animation to flowers
+        document.querySelectorAll('a-circle[src*="Flower.png"]').forEach(el => {
+            el.setAttribute('animation__rot', {
+                property: 'rotation.z',
+                from: -5,
+                to: 5,
+                dir: 'alternate',
+                dur: 2000,
+                loop: true,
+                easing: 'easeInOutSine'
+            });
+        });
     });
 }

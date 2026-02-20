@@ -72,7 +72,7 @@ nav button:hover { color: #D6B743; }
 
 .overlay-content button[type="submit"] {
     padding: 10px 20px;
-    background: #D6B743;
+    background: #F6F0C6;
     border: none;
     border-radius: 5px;
     cursor: pointer;
@@ -81,9 +81,9 @@ nav button:hover { color: #D6B743; }
 }
 
 .back-btn {
-    background-color: #000000 !important;
+    background-color: #F6F0C6 !important;
     border: 0 !important;
-    color: #ffffff !important; 
+    color: #393939 !important; 
     margin-top: 0;
     margin-bottom: 20px;
     padding: 8px 16px;
@@ -202,14 +202,14 @@ nav button:hover { color: #D6B743; }
     transition: transform 0.1s;
 }
 
-.btn-post { background: #D6B743; color: #393939; }
+.btn-post { background: #F6F0C6; color: #393939; }
 
 #global-mute-btn {
     position: fixed;
     bottom: 20px;
     left: 20px;
     z-index: 9999;
-    background: #D6B743;
+    background: #F6F0C6;
     color: #393939;
     border: none;
     border-radius: 50%;
