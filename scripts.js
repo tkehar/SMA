@@ -803,18 +803,5 @@ if (scene) {
                 loader.style.display = 'none';
             }, 1000);
         }
-
-        // Add slight rotation animation to flowers
-        document.querySelectorAll('a-circle[src*="Flower.png"]').forEach(el => {
-            el.setAttribute('animation__rot', {
-                property: 'rotation.z',
-                from: -5,
-                to: 5,
-                dir: 'alternate',
-                dur: 2000,
-                loop: true,
-                easing: 'easeInOutSine'
-            });
-        });
     });
 }
